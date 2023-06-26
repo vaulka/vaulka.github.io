@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Vaulka">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+        
+            <link rel="preconnect" href="https://npm.elemecdn.com" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://www.vaulka.com/kubernetes-study/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="组件说明  API Server：所有服务访问的统一入口 Crontroller-Manager：维持副本期望数目控制器 Scheduler：负责任务调度，选择合适的节点进行分配任务 Etcd：键值对数据库，存储 Kubernetes 集群所有重要信息（持久化） Kubelet：直接跟容器引擎交互，实现容器的生命周期管理 Kube-Proxy：负责写入规则至 IPTABLES、IPVS 实现服务映">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 学习指北">
+<meta property="og:url" content="https://www.vaulka.com/kubernetes-study/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="组件说明  API Server：所有服务访问的统一入口 Crontroller-Manager：维持副本期望数目控制器 Scheduler：负责任务调度，选择合适的节点进行分配任务 Etcd：键值对数据库，存储 Kubernetes 集群所有重要信息（持久化） Kubelet：直接跟容器引擎交互，实现容器的生命周期管理 Kube-Proxy：负责写入规则至 IPTABLES、IPVS 实现服务映">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/20201229153412392.png">
+<meta property="article:published_time" content="2021-12-23T06:01:43.245Z">
+<meta property="article:modified_time" content="2023-06-26T02:22:55.304Z">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/20201229153412392.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Kubernetes 学习指北 -
+        
+        Vaulka&#39;s blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/fonts.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/Satoshi/satoshi.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/Chillax/chillax.css">
+    <!--- Font Part-->
+    
+        <link href="" rel="stylesheet">
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"www.vaulka.com","root":"/","language":"zh-CN","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"static","image":{"light":"https://cdn.jsdelivr.net/gh/vaulka/pic@main/wallpaper.4-253bbc0adef14eeeb5212b94f99ee5fb.webp","dark":"https://cdn.jsdelivr.net/gh/vaulka/pic@main/wallpaper.4-253bbc0adef14eeeb5212b94f99ee5fb.webp"},"title":"Hi,Friend","subtitle":{"text":["好久不見，今日營業中"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"4rem","subtitle_size":"1.5rem","line_height":0.8},"custom_font":{"enable":true,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"tags":{"path":"/tags/","icon":"fa-solid fa-tags"},"categories":{"path":"/categories/","icon":"fa-solid fa-folder"},"friends":{"icon":"fa-solid fa-link","path":"/links/"},"GitHub":{"icon":"fa-brands fa-github","path":"https://github.com/vaulka"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"YYYY-MM-DD","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/02/09 16:07:59"};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Vaulka&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/tags/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tags"></i>
+                                        
+                                        标签
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/categories/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-folder"></i>
+                                        
+                                        分类
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/links/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-link"></i>
+                                        
+                                        友情链接
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    target="_blank" rel="noopener" href="https://github.com/vaulka"  >
+                                    
+                                        
+                                            <i class="fa-brands fa-github"></i>
+                                        
+                                        GITHUB
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/tags/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tags"></i>
+                                
+                                标签
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/categories/"  >
+                             
+                                
+                                    <i class="fa-solid fa-folder"></i>
+                                
+                                分类
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/links/"  >
+                             
+                                
+                                    <i class="fa-solid fa-link"></i>
+                                
+                                友情链接
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        target="_blank" rel="noopener" href="https://github.com/vaulka"  >
+                             
+                                
+                                    <i class="fa-brands fa-github"></i>
+                                
+                                GITHUB
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">Kubernetes 学习指北</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/IMG_7805.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Vaulka</span>
+                            
+                                <span class="author-label">Lv2</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2021-12-23 14:01:43</span>
+        <span class="mobile">2021-12-23 14:01</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-06-26 10:22:55</span>
+            <span class="mobile">2023-06-26 10:22</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Kubernetes/">Kubernetes</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.9k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>7 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="组件说明"><a href="#组件说明" class="headerlink" title="组件说明"></a>组件说明</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/20201229153412392.png"
+                      alt="组件架构图"
+                ></p>
+<ul>
+<li>API Server：所有服务访问的统一入口</li>
+<li>Crontroller-Manager：维持副本期望数目控制器</li>
+<li>Scheduler：负责任务调度，选择合适的节点进行分配任务</li>
+<li>Etcd：键值对数据库，存储 Kubernetes 集群所有重要信息（持久化）</li>
+<li>Kubelet：直接跟容器引擎交互，实现容器的生命周期管理</li>
+<li>Kube-Proxy：负责写入规则至 IPTABLES、IPVS 实现服务映射访问</li>
+<li>Pod：容器组</li>
+</ul>
+<h2 id="Pod-控制器"><a href="#Pod-控制器" class="headerlink" title="Pod 控制器"></a>Pod 控制器</h2><h3 id="ReplicationController-和-ReplicaSet"><a href="#ReplicationController-和-ReplicaSet" class="headerlink" title="ReplicationController 和 ReplicaSet"></a>ReplicationController 和 ReplicaSet</h3><p>ReplicationController（RC）用来确保容器应用的副本始终保持在用户定义的副本数。即如果有容器异常退出，会自动创建新的 Pod 来替代；而如果异常多出来的容器也会自动回收。</p>
+<blockquote>
+<p>在新版本 Kuberntes 中建议使用 ReplicaSet 来取代 ReplicationController。</p>
+</blockquote>
+<p>ReplicaSet 跟 ReplicationController 没有本质的不同，只是名称不一样，并且 ReplicaSet 支持集合式的 selector。</p>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><p>Deployment 为 Pod 和 ReplicaSet 提供了一个声明式定义（declarative）方法，用来替代以前的 ReplicationController 来方便的管理应用。典型的应用场景包括：</p>
+<ul>
+<li>定义 Deployment 来创建 Pod 和 ReplicaSet</li>
+<li>滚动升级和回滚应用</li>
+<li>扩容和缩容</li>
+<li>暂停和继续 Deployment</li>
+</ul>
+<h3 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h3><p>StatefulSet 作为 Controller 为 Pod 提供唯一的标识。它可以保证部署和 scale 的顺序。 StatefulSet 是为了解决有状态服务的问题（对应 Deployments 和 ReplicaSets<br>是为无状态服务而设计），其应用场景包括：</p>
+<ul>
+<li>稳定的持久化存储：Pod 重新调度后，还是能访问到相同的持久化数据，基于 PVC 来实现</li>
+<li>稳定的网络标志：Pod 重新调度后，其 PodName 和 HostName 不变，基于 Headless Service（即没有 Cluster IP 的 Service）来实现</li>
+<li>有序部署、有序扩展：Pod 是有顺序的，在部署或者扩展的时候要依据定义的顺序依次一次进行（从 0 到 N-1，在下一个 Pod 运行之前，之前的所有 Pod 必须都是 Running 和 Ready 状态），基于 init<br>containers 来实现</li>
+<li>有序收缩、有序删除（从 N-1 到 0）</li>
+</ul>
+<h3 id="DaemonSet"><a href="#DaemonSet" class="headerlink" title="DaemonSet"></a>DaemonSet</h3><p>DaemonSet 确保全部（或者一些）Node 上运行一个 Pod 的副本。当有 Node 加入集群时，也会为他们心中一个 Pod。当有 Node 从集群移除时，这些 Pod 也会被回收。删除 DaemonSet 将会删除它创建的所有<br>Pod。典型的应用场景包括：</p>
+<ul>
+<li>运行集群存储 daemon，例如在每个 Node 上运行 <code>glusterd</code>、<code>ceph</code></li>
+<li>在每个 Node 上运行日志收集 daemon，例如 <code>fluentd</code>、<code>logstash</code></li>
+<li>在每个 Node 上运行监控 daemon，例如 <code>Prometheus Node Exporter</code>、<code>collectd</code></li>
+</ul>
+<h3 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h3><p>负责批处理任务，即仅执行一次的任务，它保证批处理任务的一个或多个 Pod 成功结束。</p>
+<h3 id="Cron-Job"><a href="#Cron-Job" class="headerlink" title="Cron Job"></a>Cron Job</h3><p>Cron Job 管理基于时间的 Job，即：</p>
+<ul>
+<li>在给定时间点只运行一次</li>
+<li>周期性地在给定时间点运行</li>
+</ul>
+<p>典型的应用场景包括：</p>
+<ul>
+<li>在给定的时间点调度 Job 运行</li>
+<li>创建周期性运行的 Job，例如：数据库备份、发送邮件</li>
+</ul>
+<h3 id="Horizontal-Pod-Autoscaling"><a href="#Horizontal-Pod-Autoscaling" class="headerlink" title="Horizontal Pod Autoscaling"></a>Horizontal Pod Autoscaling</h3><p>使 Pod 水平自动缩放，典型的应用场景包括：</p>
+<ul>
+<li>应用资源使用率高峰&#x2F;低谷的时候，削峰填谷时，自动调整</li>
+</ul>
+<h1 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h1><h2 id="资源类型"><a href="#资源类型" class="headerlink" title="资源类型"></a>资源类型</h2><ul>
+<li><p>工作负载型资源（workload）</p>
+<p>Pod、replicaSet、Deployment、StatefulSet、DaemonSet、Job、Cron Job（Replication Controller 在 v1.11 版本被废弃）</p>
+</li>
+<li><p>服务发现及负载均衡资源（Service Discovery LoadBalance）</p>
+<p>Service、Ingress、…</p>
+</li>
+<li><p>配置与存储型资源</p>
+<p>Volume（存储卷）、CSI（容器存储接口，可以扩展各种各样的第三方存储卷）</p>
+</li>
+<li><p>特殊类型的存储卷</p>
+<p>ConfigMap（当配置中心来使用的资源类型）、Secret（保存敏感数据）、DownwardAPI（把外部环境中的信息输出给容器）</p>
+</li>
+<li><p>集群级资源</p>
+<p>Namespace、Node、Role、ClusterRole、RoleBinding、ClusterRoleBinding</p>
+</li>
+<li><p>元数据型类型</p>
+<p>HPA、PodTemplate、LimitRange</p>
+</li>
+</ul>
+<h2 id="yaml-常用字段"><a href="#yaml-常用字段" class="headerlink" title="yaml 常用字段"></a>yaml 常用字段</h2><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>字段类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>version</td>
+<td>String</td>
+<td>这里指的是 Kubernetes API 的版本，目前基本上是 <code>v1</code> ，可以使用 <code>kubectl api-versions</code> 命令进行查询</td>
+</tr>
+<tr>
+<td>kind</td>
+<td>String</td>
+<td>这里指的是 yaml 文件定义的资源类型和角色，譬如 <code>Pod</code></td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>Object</td>
+<td>元数据对象，固定值就写 <code>metadata</code></td>
+</tr>
+<tr>
+<td>metadata.name</td>
+<td>String</td>
+<td>元数据对象的名称，这里由我们编写，比如命名 Pod 的名字</td>
+</tr>
+<tr>
+<td>metadata.namespace</td>
+<td>String</td>
+<td>元数据的命名空间，由我们自身定义</td>
+</tr>
+<tr>
+<td>spec</td>
+<td>Object</td>
+<td>详细定义对象，固定值就写 <code>Spec</code></td>
+</tr>
+<tr>
+<td>spec.containers[]</td>
+<td>List</td>
+<td>这里是 spec 对象的容器列表定义，是个列表</td>
+</tr>
+<tr>
+<td>spec.containers[].name</td>
+<td>String</td>
+<td>这里定义容器的名字</td>
+</tr>
+<tr>
+<td>spec.containers[].image</td>
+<td>String</td>
+<td>这里定义要用到的镜像名称</td>
+</tr>
+<tr>
+<td>spec.containers[].magePullPolicy</td>
+<td>String</td>
+<td>定义镜像拉取策略，有 <code>Always</code>、<code>Never</code>、<code>IfNotPresent</code> 三个值可选。（默认）<code>Always</code>：每次都尝试重新拉取镜像。<code>Never</code>：仅使用本地镜像。<code>IfNotPresent</code>：如果本地有镜像就使用本地镜像，没有就拉取在线镜像。</td>
+</tr>
+<tr>
+<td>spec.containers[].command[]</td>
+<td>List</td>
+<td>指定容器启动命令，因为是数组可以指定多个，不指定则使用镜像打包时使用的启动命令。</td>
+</tr>
+<tr>
+<td>spec.containers[].args[]</td>
+<td>List</td>
+<td>指定容器启动命令参数，因为是数组可以指定多个。</td>
+</tr>
+<tr>
+<td>spec.containers[].workingDir</td>
+<td>String</td>
+<td>指定容器的工作目录</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[]</td>
+<td>List</td>
+<td>指定容器内部的存储卷配置</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].name</td>
+<td>String</td>
+<td>指定可以被容器挂载的存储卷鹅名称</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].mountPath</td>
+<td>String</td>
+<td>指定可以被容器挂载的存储卷的路径</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].readOnly</td>
+<td>String</td>
+<td>设置存储卷路径的读写模式，true 或者 false，默认为读写模式</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[]</td>
+<td>List</td>
+<td>指定容器需要用到的端口列表</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].name</td>
+<td>String</td>
+<td>指定端口名称</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].containerPort</td>
+<td>String</td>
+<td>指定容器需要监听的端口号</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].hostPort</td>
+<td>String</td>
+<td>指定容器所在主机需要监听的端口号，默认跟上面 containerPort 相同，注意设置了 hostPort 同一台主机无法启动该容器的相同副本（因为主机的端口号不能相通，这样会冲突）</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].protocol</td>
+<td>String</td>
+<td>指定端口协议，支持 TCP 和 UDP，默认值为 TCP</td>
+</tr>
+<tr>
+<td>spec.containers[].env[]</td>
+<td>List</td>
+<td>指定容器运行前需设置的环境变量列表</td>
+</tr>
+<tr>
+<td>spec.containers[].env[].name</td>
+<td>String</td>
+<td>指定环境变量名称</td>
+</tr>
+<tr>
+<td>spec.containers[].env[].value</td>
+<td>String</td>
+<td>指定环境变量值</td>
+</tr>
+<tr>
+<td>spec.containers[].resources</td>
+<td>Object</td>
+<td>指定资源限制和资源请求的值（这里开始就是设置容器的资源上限）</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits</td>
+<td>Object</td>
+<td>指定设置容器运行时资源的运行上线</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits.cpu</td>
+<td>String</td>
+<td>指定 CPU 的限制，单位为 core 数，将用于 <code>docker run --cpu-shares</code> 参数</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits.memory</td>
+<td>String</td>
+<td>指定 MEM 内存的限制，单位为 MiB、GiB</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests</td>
+<td>Object</td>
+<td>指定容器启动和调度时的限制设置</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests.cpu</td>
+<td>String</td>
+<td>CPU 请求，单位为 core 数，容器启动时初始化可用数量</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests.memory</td>
+<td>String</td>
+<td>内存请求，单位为 MiB、GiB，容器启动的初始化可用数量</td>
+</tr>
+<tr>
+<td>spec.restartPolicy</td>
+<td>String</td>
+<td>定义 Pod 的重启策略，可选值为 <code>Always</code>、<code>OnFailure</code>、<code>Never</code>。（默认）<code>Always</code>：Pod 一旦终止运行，则无论容器数如何终止的，kubelet 服务都将重启它。<code>OnFailure</code>：只有 Pod 以非零退出码终止时，kubelet 才会重启该容器。如果容器正常结束（退出码为 0），则 kubelet 将不会重启它。<code>Never</code>：Pod 终止后，kubelet 将退出码报告给 Master，不会重启该 Pod</td>
+</tr>
+<tr>
+<td>spec.nodeSelector</td>
+<td>Object</td>
+<td>定义 Node 的Label 过滤标签，以 key:value 格式指定</td>
+</tr>
+<tr>
+<td>spec.imagePullSecrets</td>
+<td>Object</td>
+<td>定义 pull 镜像时使用 secret 名称，以 name:secretkey 格式指定</td>
+</tr>
+<tr>
+<td>spec.hostNetwork</td>
+<td>Boolean</td>
+<td>定义是否使用主机网络模式，默认值为 <code>false</code>。设置 <code>true</code> 时表示使用宿主机网络，不使用 docker 网桥，并且将无法在同一台宿主机上启动第二个副本。</td>
+</tr>
+</tbody></table>
+<h1 id="kubectl-命令行工具"><a href="#kubectl-命令行工具" class="headerlink" title="kubectl 命令行工具"></a>kubectl 命令行工具</h1><p>语法：<code>$ kubectl [command] [TYPE] [NAME] [flags]</code></p>
+<p>TODO…</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> Kubernetes 学习指北</li>
+        <li><strong>作者:</strong> Vaulka</li>
+        <li><strong>创建于:</strong> 2021-12-23 14:01:43</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-06-26 10:22:55
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://vaulka.com/kubernetes-study/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/Kubernetes/">#Kubernetes</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/docker-study/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Docker 入门指北</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/Kubernetes-fix-error/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Kubernetes 排坑指北</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">Kubernetes 学习指北</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-text">组件说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod-%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-text">Pod 控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ReplicationController-%E5%92%8C-ReplicaSet"><span class="nav-text">ReplicationController 和 ReplicaSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deployment"><span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StatefulSet"><span class="nav-text">StatefulSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DaemonSet"><span class="nav-text">DaemonSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Job"><span class="nav-text">Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cron-Job"><span class="nav-text">Cron Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Horizontal-Pod-Autoscaling"><span class="nav-text">Horizontal Pod Autoscaling</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95"><span class="nav-text">资源清单</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%B1%BB%E5%9E%8B"><span class="nav-text">资源类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yaml-%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5"><span class="nav-text">yaml 常用字段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kubectl-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="nav-text">kubectl 命令行工具</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Vaulka</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.1</a>
+        </div>
+        
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/utils.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/main.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/navbarShrink.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/scrollTopBottom.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/Typed.min.js"></script>
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/tocToggle.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/anime.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/toc.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

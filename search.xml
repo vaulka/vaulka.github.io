@@ -1,0 +1,1755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Kubernetes 排坑指北</title>
+    <url>/Kubernetes-fix-error/</url>
+    <content><![CDATA[<p>本文档旨在记录学习 Kubernetes 中，踩过的坑点记录在案，持续更新ing ✨</p>
+<h1 id="删除-Terminating-状态的命名空间"><a href="#删除-Terminating-状态的命名空间" class="headerlink" title="删除 Terminating 状态的命名空间"></a>删除 Terminating 状态的命名空间</h1><h2 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h2><p>使用 <code>kubectl delete -f xxx.yaml</code> ，再次执行 <code>kubectl apply -f xxx.yaml</code><br>时提示 <code> unable to create new content in namespace kuboard because it is being terminated</code>。</p>
+<p>查看命名空间</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">$ kubectl get namespace</span><br><span class="line"></span><br><span class="line">NAME              STATUS        AGE</span><br><span class="line">default           Active        16h</span><br><span class="line">kube-node-lease   Active        16h</span><br><span class="line">kube-public       Active        16h</span><br><span class="line">kube-system       Active        16h</span><br><span class="line">kuboard           Terminating   16h</span><br></pre></td></tr></table></figure></div>
+
+<p>发现 <code>kuboard</code> 命名空间一直处于 <code>Terminating</code> 状态，无法进行删除。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>查看 <code>kuboard</code> 的命名空间描述。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">$ kubectl get ns kuboard  -o json &gt; kuboard.json</span><br></pre></td></tr></table></figure></div>
+
+<p>编辑 json 文件</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">$ vi kuboard.json</span><br></pre></td></tr></table></figure></div>
+
+<p>将</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;spec&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;finalizers&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;kubernetes&quot;</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></div>
+
+<p>更改为，保存并退出。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;spec&quot;</span>: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></div>
+
+<p>新开一个窗口运行 <code>kubectl proxy</code> 跑一个 API 代理在本地的 <code>8081</code> 端口。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">$ kubectl proxy --port=8081</span><br><span class="line">Starting to serve on 127.0.0.1:8081</span><br></pre></td></tr></table></figure></div>
+
+<p>最后运行 <code>curl</code>命令进行删除。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">curl -k -H <span class="string">&quot;Content-Type:application/json&quot;</span> -X PUT --data-binary @kuboard.json http://127.0.0.1:8081/api/v1/namespaces/kuboard/finalize</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>注意：命令中的 <code>kuboard</code> 就是命名空间。</p>
+</blockquote>
+<p>再次查看命名空间</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">$ kubectl get namespace</span><br><span class="line"></span><br><span class="line">NAME              STATUS        AGE</span><br><span class="line">default           Active        16h</span><br><span class="line">kube-node-lease   Active        16h</span><br><span class="line">kube-public       Active        16h</span><br><span class="line">kube-system       Active        16h</span><br></pre></td></tr></table></figure></div>
+
+<p>发现 <code>kuboard</code> 命名空间已经消失了。</p>
+<p>最后再次执行 <code>kubectl apply -f xxx.yaml</code> ，就正常了。</p>
+<blockquote>
+<p>参考资料</p>
+<p><a class="link"   href="https://www.cnblogs.com/cheyunhua/p/15419350.html" >删除 Terminating 状态的命名空间 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>海外 App Store 初购记录（Shadowrocket APP）</title>
+    <url>/app-store-shop-shadowrocket/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>本文章记录海外 App Store 的步骤，以便需要购买并不懂如何购买的小伙伴参考～</p>
+</blockquote>
+<h1 id="购买三部曲"><a href="#购买三部曲" class="headerlink" title="购买三部曲"></a>购买三部曲</h1><h2 id="海外-Apple-ID"><a href="#海外-Apple-ID" class="headerlink" title="海外 Apple ID"></a>海外 Apple ID</h2><blockquote>
+<p>本文用的 Apple ID 为美区</p>
+</blockquote>
+<p>首先准备一个海外 Apple ID 账号。本文章暂未提供申请海外 Apple<br>ID账号，可点击 <a class="link"   href="https://www.google.com/search?q=%E5%A6%82%E4%BD%95%E7%94%B3%E8%AF%B7%E6%B5%B7%E5%A4%96+Apple+ID&oq=%E5%A6%82%E4%BD%95%E7%94%B3%E8%AF%B7%E6%B5%B7%E5%A4%96+Apple+ID&aqs=chrome..69i57j0i12j69i60j69i65l3j69i60j69i61.7633j0j1&sourceid=chrome&ie=UTF-8" >Google <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>查阅下相关申请流程。</p>
+<blockquote>
+<p>根据某宝店家描述，新账号容易限购（限制下载付费APP，需下载多个免费APP增加信用度。限购放几天后也可以正常消费）</p>
+</blockquote>
+<h2 id="购买礼品卡并兑换"><a href="#购买礼品卡并兑换" class="headerlink" title="购买礼品卡并兑换"></a>购买礼品卡并兑换</h2><blockquote>
+<p>本文用的礼品卡来源是某宝购买</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Wechat-2021-05-20.2-78c395957b5e4082bd184c1212fa907e.jpg"
+                      alt="Wechat-2021-05-20.2"
+                ></p>
+<blockquote>
+<p>切记，美区购买商品，需要手续费，店家说是8%，我实测购买是9.x%，可能有其他因素，充值时请确保足够 <code>商品金额 * 1.1</code> 💲。<br>举个例子：<br>Shadowrocket 需要 2.99💲，根据手续费换算，需要 <code>2.99 * 1.1 = 3.289 </code>💲，由于礼品卡只支持2、3、5💲开始充值，所以直接购买5💲礼品卡即可。（本文也是初购记录，所以当时购买了3💲去购买APP，提示余额不足，再重新购买了2💲才够）</p>
+</blockquote>
+<p>购买后，店家会发送 CDK，然后 copy CDK 去 App Store 进行兑换。兑换流程如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Wechat-2021-05-20.3-256241173784486297cd381b08b74e11.jpg"
+                      alt="Wechat-2021-05-20.3"
+                ></p>
+<h2 id="购买商品（Shadowrocket-APP）"><a href="#购买商品（Shadowrocket-APP）" class="headerlink" title="购买商品（Shadowrocket APP）"></a>购买商品（Shadowrocket APP）</h2><p>可直接搜索 Shadowrocket 后进行购买，购买完成后就能打开啦</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Wechat-2021-05-20.1-d8e6e802f3e84728b6f0cc9eeacdea43.jpg"
+                      alt="Wechat-2021-05-20.1"
+                ></p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+        <tag>Shadowrocket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>代码规范</title>
+    <url>/code-specification/</url>
+    <content><![CDATA[<h1 id="代码控制规范"><a href="#代码控制规范" class="headerlink" title="代码控制规范"></a>代码控制规范</h1><h2 id="拉取原则"><a href="#拉取原则" class="headerlink" title="拉取原则"></a>拉取原则</h2><p><strong>强制</strong><br>每日开始工作拉取</p>
+<p><strong>约定</strong><br>提交之前拉取</p>
+<h2 id="提交原则"><a href="#提交原则" class="headerlink" title="提交原则"></a>提交原则</h2><p><strong>强制</strong><br>提交代码必须构建成功（比如：编译，打包成共） 提交代码必须完整（比如：少提文件） 提交代码必须忽略到本地临时文件（比如：target, logs, .idea, *.iml,dist 等）</p>
+<p><strong>约定</strong><br>完成一个功能提交 修改一个Bug修改提交 解决冲突提交 每日结束工作提交</p>
+<h2 id="提交注释"><a href="#提交注释" class="headerlink" title="提交注释"></a>提交注释</h2><p><strong>强制</strong><br>中文填写注释 注释反映本次提交变更情况 commit 信息参照 Git Commit Template 规范</p>
+<h1 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h1><ul>
+<li>类，接口，枚举顶层注释</li>
+<li>接口方法注释</li>
+<li>静态方法注释</li>
+<li>公开方法注释</li>
+<li>类的属性字段注释</li>
+<li>常量注释</li>
+<li>不限于以上</li>
+</ul>
+<h1 id="接口定义"><a href="#接口定义" class="headerlink" title="接口定义"></a>接口定义</h1><h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><p>接口地址定义表明用意 接口地址定义清晰，简洁，无歧义 同一个服务组件的接口定义具有一致性</p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>控制类的顶层地址格式:&#x2F;{顶层分类名}，例如：&#x2F;devices 设备相关接口的顶层地址 接口定义使用Swagger的API注解说明 标注开发人，完整的请求信息，请求方法，请求地址，参数可选性，接口描述</p>
+<h2 id="请求方式"><a href="#请求方式" class="headerlink" title="请求方式"></a>请求方式</h2><p>GET URL-Params PUT Form-Data POST RequestBody(JSON格式)<br>POST Form-Data POST RequestBody(JSON格式)<br>POST Mulitpart DELETE URL-Params</p>
+<h2 id="响应方式"><a href="#响应方式" class="headerlink" title="响应方式"></a>响应方式</h2><p>ResponseBody(JSON格式)<br>统一的响应模型</p>
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><h2 id="运行时异常"><a href="#运行时异常" class="headerlink" title="运行时异常"></a><strong>运行时异常</strong></h2><p>通过参数检查等方式避免或抛出运行时异常，日志记录</p>
+<h2 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h2><p>检查异常需要捕获，处理，日志记录</p>
+<h1 id="日志记录"><a href="#日志记录" class="headerlink" title="日志记录"></a>日志记录</h1><p>统一使用SLF4j接口</p>
+<h1 id="规范整理系统代码目录结构"><a href="#规范整理系统代码目录结构" class="headerlink" title="规范整理系统代码目录结构"></a>规范整理系统代码目录结构</h1><h2 id="模块命名"><a href="#模块命名" class="headerlink" title="模块命名"></a>模块命名</h2><p>模块名称：{项目名称}-{模块名称} 模块名称简洁体现职责 模块名字作为模块组件的名称</p>
+<h2 id="源码目录"><a href="#源码目录" class="headerlink" title="源码目录"></a>源码目录</h2><p>源码目录指：{项目目录}&#x2F;src&#x2F;main&#x2F; 代码目录：src&#x2F;main&#x2F;java 资源目录：src&#x2F;main&#x2F;resources &#x2F;db：数据库脚本归档 &#x2F;data：内部依赖数据归档 文档目录：src&#x2F;main&#x2F;docs<br>脚本目录：src&#x2F;main&#x2F;bin run-manage.sh 运行管理脚本（通过参数start, stop, status, help info控制程序运行） sh：服务组件启动脚本 sh：服务组件停止脚本</p>
+<h2 id="包规范要求"><a href="#包规范要求" class="headerlink" title="包规范要求"></a>包规范要求</h2><p>项目基本包：com.company.{项目英文名（较长时适当简化）}.{模块名（可选）} config：配置类。包含各种系统配置、springBoot加载配置、Web配置等 startup：与服务启动相关的类<br>client：提供客户端实现的相关类。包含EmailSender、JMS和对接的其他服务接口的HttpClient等 common：公共类，定义常量类，工具组件 exception: 系统自定义异常类<br>schedule：调度和任务类，定时任务周期任务等 entity: 数据库相关的实体类 model: 数据模型类(参数或值模型VO，数据传输模型DTO等） controller:<br>控制层接口。可包含filter目录、intercepter目录及其Web相关类目录 service: 服务层。包含相关业务接口 dao：数据库访问层，数据访问repository、DAO类</p>
+<h1 id="Java开发手册"><a href="#Java开发手册" class="headerlink" title="Java开发手册"></a>Java开发手册</h1><p><a class="link"   href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/java-code-specification.pdf" >Java开发手册（嵩山版） <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>家庭煮夫的菜谱大全</title>
+    <url>/cook/</url>
+    <content><![CDATA[<p>近期搬家已有一段时间，新环境具备做饭的条件，故开始自行学习一些菜，此贴记录做的还(bu)可(nan)以(chi)的菜单，并持续更新~</p>
+<h1 id="素菜"><a href="#素菜" class="headerlink" title="素菜"></a>素菜</h1><h2 id="炒上海青苗"><a href="#炒上海青苗" class="headerlink" title="炒上海青苗"></a>炒上海青苗</h2><p>备菜：<strong>上海青苗、小米椒、蒜、姜</strong></p>
+<p>瓶瓶罐罐：<strong>生抽、盐、油</strong></p>
+<ol>
+<li>上海青苗洗净，切好蒜末、姜丝、小米椒备用。</li>
+<li>热锅冷油，放蒜末姜丝小米椒爆香。</li>
+<li>开中火，放上海青苗进行翻炒（锅有点干放少许水），放少许盐调味。</li>
+<li>关火后，淋些生抽进行翻炒再起锅。</li>
+</ol>
+<h1 id="荤菜"><a href="#荤菜" class="headerlink" title="荤菜"></a>荤菜</h1><h2 id="油焖大虾"><a href="#油焖大虾" class="headerlink" title="油焖大虾"></a>油焖大虾</h2><p>备菜：<strong>虾、葱、蒜、姜</strong></p>
+<p>瓶瓶罐罐：<strong>生抽、老抽、蚝油、料酒、醋</strong></p>
+<ol>
+<li>虾洗净去除虾须，切好葱花、姜丝、蒜末备用。</li>
+<li>调制调制，生抽两勺、老抽半勺、蚝油半勺、料酒一勺、醋半勺，进行搅拌。</li>
+<li>热锅冷油，放入姜丝、蒜末爆香。</li>
+<li>再加入虾进行炒饭变色，加入调制好的酱汁翻炒一分钟。</li>
+<li>加盖小火焖两分钟（可加入三勺热水），然后大火翻炒收汁。</li>
+<li>起锅前加入葱段翻炒，起锅后放些许葱花点缀。</li>
+</ol>
+<blockquote>
+<p>出处：<a class="link"   href="https://www.xiachufang.com/recipe/105882661/" >🔗 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="红烧彩虹鲷"><a href="#红烧彩虹鲷" class="headerlink" title="红烧彩虹鲷"></a>红烧彩虹鲷</h2><p>备菜：<strong>彩虹鲷、小米椒、蒜、姜、葱</strong></p>
+<p>瓶瓶罐罐：<strong>料酒、生抽、醋、油</strong></p>
+<ol>
+<li>鱼去鳞洗净，双面划几刀，放些盐在划刀口处进行腌制。</li>
+<li>切好小米椒、蒜末、姜丝、葱花，进行备用。</li>
+<li>热锅冷油，放鱼下去煎，切勿翻动，火不要太旺，煎好一面再翻另一面煎。</li>
+<li>两面煎好后，下姜丝、蒜、料酒、生抽、醋、小米椒进行调味。</li>
+<li>加水没过鱼肚，盖大火煮五分钟。</li>
+<li>开盖后用汤汁均匀浇在鱼身上，进行收汁。</li>
+<li>起锅前，撒点葱花进行点缀，浇点鱼汁进行着色。</li>
+</ol>
+<video src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/hong_shao_cai_hong_diao.mp4" controls="controls" style="width:100%">
+红烧彩虹鲷</video>
+
+<blockquote>
+<p>出处：<a class="link"   href="https://v.douyin.com/esE8NcV/" >🔗 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="青椒肉丝"><a href="#青椒肉丝" class="headerlink" title="青椒肉丝"></a>青椒肉丝</h2><p>备菜：<strong>里脊肉、薄皮椒、葱、姜、蒜</strong></p>
+<p>瓶瓶罐罐：<strong>生抽、老抽、淀粉、盐、蚝油、鸡精、油</strong></p>
+<ol>
+<li>薄皮椒、里脊肉切丝，切好葱花、姜丝、蒜末进行备用。</li>
+<li>放生抽、老抽、盐、少许油、淀粉进行腌制。</li>
+<li>调制酱汁，盐、鸡精、生抽、蚝油、淀粉、半碗水进行搅拌。</li>
+<li>热锅冷油，放肉丝进行翻炒，后续起锅。</li>
+<li>放葱姜蒜末爆香。</li>
+<li>加入青椒丝进行翻炒，放少许盐，加入前面炒的肉丝进行翻炒。</li>
+<li>淋上调制好的酱汁进行翻炒收汁，起锅。</li>
+</ol>
+<video src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/qing_jiao_rou_si.mp4" controls="controls" style="width:100%">
+青椒肉丝</video>
+
+<blockquote>
+<p>出处：<a class="link"   href="https://v.douyin.com/esEuRWL/" >🔗 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="TODO-五花肉炒茭白"><a href="#TODO-五花肉炒茭白" class="headerlink" title="TODO 五花肉炒茭白"></a>TODO 五花肉炒茭白</h2><h1 id="汤类"><a href="#汤类" class="headerlink" title="汤类"></a>汤类</h1><h2 id="TODO-虾仁豆腐西兰花汤"><a href="#TODO-虾仁豆腐西兰花汤" class="headerlink" title="TODO 虾仁豆腐西兰花汤"></a>TODO 虾仁豆腐西兰花汤</h2><h2 id="TODO-猪心汤"><a href="#TODO-猪心汤" class="headerlink" title="TODO 猪心汤"></a>TODO 猪心汤</h2><h2 id="TODO-玉米排骨汤"><a href="#TODO-玉米排骨汤" class="headerlink" title="TODO 玉米排骨汤"></a>TODO 玉米排骨汤</h2>]]></content>
+      <categories>
+        <category>生活向</category>
+      </categories>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory</title>
+    <url>/could-not-resolve-bean-reference-against-beanfactory/</url>
+    <content><![CDATA[<h1 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h1><p>由于服务器资源紧张，想部署一台 <code>ElasticSearch</code> 给所有环境（开发环境、测试环境、生产环境…）使用。</p>
+<p>因 <code>ElasticSearch</code> 中的索引概念对标 <code>MySQL</code> 中的数据库概念，所以想通过动态索引，进行区分不同环境之间的数据。比如文章，开发环境使用 <code>local-article</code>，测试环境使用 <code>beta-article</code><br>等等…</p>
+<p>然后在使用 <code>@Document</code> 结合 <code>SpEL</code> 表达式动态创建索引时，报找不到 <code>bean</code> 👇</p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="code"><pre><span class="line">Could not resolve bean reference against BeanFactory</span><br><span class="line"></span><br><span class="line">Consider defining a bean named &#x27;xxx&#x27; in your configuration.</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="场景复现"><a href="#场景复现" class="headerlink" title="场景复现"></a>场景复现</h1><h2 id="使用动态索引"><a href="#使用动态索引" class="headerlink" title="使用动态索引"></a>使用动态索引</h2><p>在实体类标记 <code>@Document</code> 注解，需要指定 <code>indexName</code> 参数，该参数可通过 SpEL 表达式进行编写。以及 <code>createIndex</code><br>参数默认会自动创建索引。我在这里使用 <code>#&#123;@baseConfig.active&#125;-article</code> 进行编写。</p>
+<blockquote>
+<p>INFO</p>
+<p><code>SpEL</code> 表达式中，通过 <code>#&#123;@xxx&#125;</code> or <code>#&#123;@&#39;xxx&#39;&#125;</code> 来引用 <code>bean</code>，后续如果需要引用属性，可在通过 <code>.字段</code> 的方式实现。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646358270091.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646359585829.png"
+                      alt="image.png"
+                ></p>
+<p>在项目启动后，看到索引确实有动态创建。</p>
+<h2 id="启动报错"><a href="#启动报错" class="headerlink" title="启动报错"></a>启动报错</h2><p>后续笔者想到，<code>BaseConfig</code> 可以删除掉，因为之前自己写了一个外部依赖，也可以获取环境变量，故将 <code>SpEL</code> 表达式中的 <code>@baseConfig</code> 改成 <code>@systemConfig</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646360697539.png"
+                      alt="image.png"
+                ></p>
+<p>两个类差异如下：</p>
+<table>
+<thead>
+<tr>
+<th>SystemConfig</th>
+<th>BaseConfig</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外部 <code>spring.factories</code> 文件 <code>EnableAutoConfiguration</code> 自动装配的 <code>bean</code></td>
+<td>本工程下 <code>ComponentScan</code> 自动扫描包装配的 <code>bean</code></td>
+</tr>
+<tr>
+<td><code>bean</code> 名为 <code>systeonConfig</code></td>
+<td><code>bean</code> 名为 <code>baseConfig</code></td>
+</tr>
+</tbody></table>
+<p>后续执行启动，结果报错 👇</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361093221.png"
+                      alt="image.png"
+                ></p>
+<h2 id="排查错误"><a href="#排查错误" class="headerlink" title="排查错误"></a>排查错误</h2><p>笔者通过排除法进行排查错误，先从最基础的排错顺序依次排查。</p>
+<h3 id="是否没有装配该-bean-？"><a href="#是否没有装配该-bean-？" class="headerlink" title="是否没有装配该 bean ？"></a>是否没有装配该 bean ？</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361364003.png"
+                      alt="image.png"
+                ></p>
+<p>通过构造器注入 <code>bean</code>，调用接口 debug 排查时，确实有注入该 <code>bean</code>。 也就意味着该 <code>bean</code> 是有自动装配上的。</p>
+<h3 id="是否类名是关键词-x2F-敏感词，导致错误？"><a href="#是否类名是关键词-x2F-敏感词，导致错误？" class="headerlink" title="是否类名是关键词&#x2F;敏感词，导致错误？"></a>是否类名是关键词&#x2F;敏感词，导致错误？</h3><p>通过修改成其他类名，也一样是报错的情况，该步骤就不细讲。</p>
+<h3 id="排查-bean-创建过程"><a href="#排查-bean-创建过程" class="headerlink" title="排查 bean 创建过程"></a>排查 bean 创建过程</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361913607.png"
+                      alt="image.png"
+                ></p>
+<p>通过错误日志得知，在创建最上层 <code>ConsoleArticleController</code> <code>bean</code> 时，就报错了，那么就追踪该 <code>bean</code> 的创建过程。</p>
+<ol>
+<li><code>Spring</code> 会调用 <code>org.springframework.beans.factory.support.AbstractBeanFactory#getBean(java.lang.Strin</code> 方法，进行创建 <code>bean</code>。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362026592.png"
+                      alt="image.png"
+                ></p>
+<ol start="2">
+<li>往内部接着 <code>debug</code>，会进入 <code>org.springframework.beans.factory.support.AbstractBeanFactory#markBeanAsCreated</code> 方法，<code>bean</code><br>如果没有创建的话，会进行创建。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362218540.png"
+                      alt="image.png"
+                ></p>
+<ol start="3">
+<li>在这里注意到 <code>org.springframework.beans.factory.support.AbstractBeanFactory#mergedBeanDefinitions</code> 字段，该 <code>Map</code> 记录着 <code>bean</code><br>名到具体 <code>bean</code> 类。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363263800.png"
+                      alt="image.png"
+                ></p>
+<p>通过窥探得知：</p>
+<ul>
+<li><code>key</code> 是 <code>bean</code> 的名称，<code>value</code> 是具体的类。</li>
+<li>引用 <code>bean</code> 的话，是通过 <code>key</code> 获取的。</li>
+<li><code>key</code> 的由来，如果是 <code>ComponentScan</code> 扫描注册的 <code>bean</code>，那么只有一个类名，如果是通过 <code>EnableAutoConfiguration</code> 自动装配的 <code>bean</code> 那么就是全限定类名。</li>
+</ul>
+<p>结合之前的情况，<code>baseConfig</code> 获取的到 <code>bean</code>，<code>systemConfig</code> 获取不到 <code>bean</code>，会不会是这个 <code>key</code> 的问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363556287.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363581063.png"
+                      alt="image.png"
+                ></p>
+<p>故就是 <code>SpEL</code> 表达式引用 <code>bean</code> 时，写的是类名，而不是全限定类名，导致找不到该 <code>bean</code>。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363869904.png"
+                      alt="image.png"
+                ></p>
+<p>将该 <code>bean</code> 的类名改为全限定类名，后续启动验证，没有报错，并且成功创建动态索引。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363928524.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363905859.png"
+                      alt="image.png"
+                ></p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>初期遇到该问题时困扰了一下午，一直在反复排查该 <code>bean</code> 是否有成功装配。后续通过深入 <code>bean</code> 创建过程以及结合 <code>SpEL</code> 表达式引用才定位到该问题的解决方案，收获颇丰。😊</p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>SpEL</tag>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>开发工具合集</title>
+    <url>/development-tool/</url>
+    <content><![CDATA[<h1 id="Mac-端"><a href="#Mac-端" class="headerlink" title="Mac 端"></a>Mac 端</h1><h2 id="微信开发者工具"><a href="#微信开发者工具" class="headerlink" title="微信开发者工具"></a>微信开发者工具</h2><blockquote>
+<p>调试微信小程序，方便看小程序调用到的后端接口</p>
+</blockquote>
+<p><a class="link"   href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html" >微信开发者工具 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Visual-Studio-Code"><a href="#Visual-Studio-Code" class="headerlink" title="Visual Studio Code"></a>Visual Studio Code</h2><blockquote>
+<p>文本编辑器</p>
+</blockquote>
+<p><a class="link"   href="https://code.visualstudio.com/Download" >Visual Studio Code 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Postman"><a href="#Postman" class="headerlink" title="Postman"></a>Postman</h2><blockquote>
+<p>测试接口工具</p>
+</blockquote>
+<p><a class="link"   href="https://www.postman.com/downloads/" >Postman 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="IDEA（自行破解）"><a href="#IDEA（自行破解）" class="headerlink" title="IDEA（自行破解）"></a>IDEA（自行破解）</h2><blockquote>
+<p>Java 开发工具</p>
+</blockquote>
+<p><a class="link"   href="https://www.jetbrains.com/idea/download/#section=mac" >IDEA 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Navicat-Premium（破解版）"><a href="#Navicat-Premium（破解版）" class="headerlink" title="Navicat Premium（破解版）"></a>Navicat Premium（破解版）</h2><blockquote>
+<p>连接 MySQL、Oracle、SQL Server、SQLite、PostgreSQL、MariaDB、MongoDB 数据库可视化工具</p>
+</blockquote>
+<p><a class="link"   href="https://macwk.com/soft/navicat-premium" >Navicat Premium 中文破解版 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="AnotherRedisDesktopManager"><a href="#AnotherRedisDesktopManager" class="headerlink" title="AnotherRedisDesktopManager"></a>AnotherRedisDesktopManager</h2><blockquote>
+<p>连接 Redis 数据库可视化工具</p>
+</blockquote>
+<p><a class="link"   href="https://github.com/qishibo/AnotherRedisDesktopManager/" >AnotherRedisDesktopManager GitHub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><blockquote>
+<p>应用容器服务</p>
+</blockquote>
+<p><a class="link"   href="https://www.docker.com/get-started" >Docker 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><blockquote>
+<p>MySQL 关系型数据库</p>
+</blockquote>
+<p><a class="link"   href="https://hub.docker.com/_/mysql" >MySQL Docker Hub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># MySQL版本 5.7.25、端口 3306、root 用户密码 123456</span></span><br><span class="line">docker run --name mysql -d --restart=always -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:5.7.25</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><blockquote>
+<p>Redis 非关系型Key-Value数据库</p>
+</blockquote>
+<p><a class="link"   href="https://hub.docker.com/_/redis/" >Redis Docker Hub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># Redis版本 6.0、端口 6379、密码 123456</span></span><br><span class="line">docker run --name redis -d --restart=always -p 6379:6379 redis:6.0 --requirepass <span class="string">&quot;123456&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><blockquote>
+<p>MongoDB 非关系型文档数据库</p>
+</blockquote>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># MongoDB版本 4.4、端口 27017、用户名 root、密码 123456、鉴权数据库 admin</span></span><br><span class="line">docker run --name mongo -d  --restart=always  -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=123456 -p 27017:27017 mongo:4.4 --auth</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">一键安装命令</span></span><br><span class="line">/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Window-端"><a href="#Window-端" class="headerlink" title="Window 端"></a>Window 端</h1><h2 id="微信开发者工具-1"><a href="#微信开发者工具-1" class="headerlink" title="微信开发者工具"></a>微信开发者工具</h2><blockquote>
+<p>调试微信小程序，方便看小程序调用到的后端接口</p>
+</blockquote>
+<p><a class="link"   href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html" >微信开发者工具 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Visual-Studio-Code-1"><a href="#Visual-Studio-Code-1" class="headerlink" title="Visual Studio Code"></a>Visual Studio Code</h2><blockquote>
+<p>文本编辑器</p>
+</blockquote>
+<p><a class="link"   href="https://code.visualstudio.com/Download" >Visual Studio Code 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Postman-1"><a href="#Postman-1" class="headerlink" title="Postman"></a>Postman</h2><blockquote>
+<p>测试接口工具</p>
+</blockquote>
+<p><a class="link"   href="https://www.postman.com/downloads/" >Postman 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="IDEA（自行破解）-1"><a href="#IDEA（自行破解）-1" class="headerlink" title="IDEA（自行破解）"></a>IDEA（自行破解）</h2><blockquote>
+<p>Java 开发工具</p>
+</blockquote>
+<p><a class="link"   href="https://www.jetbrains.com/idea/download/#section=windows" >IDEA 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Navicat-Premium（破解版）-1"><a href="#Navicat-Premium（破解版）-1" class="headerlink" title="Navicat Premium（破解版）"></a>Navicat Premium（破解版）</h2><blockquote>
+<p>连接 MySQL、Oracle、SQL Server、SQLite、PostgreSQL、MariaDB、MongoDB 数据库可视化工具</p>
+</blockquote>
+<p><a class="link"   href="https://sitoi.cn/posts/40411.html" >博客安装、破解教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="AnotherRedisDesktopManager-1"><a href="#AnotherRedisDesktopManager-1" class="headerlink" title="AnotherRedisDesktopManager"></a>AnotherRedisDesktopManager</h2><blockquote>
+<p>连接 Redis 数据库可视化工具</p>
+</blockquote>
+<p><a class="link"   href="https://github.com/qishibo/AnotherRedisDesktopManager/" >AnotherRedisDesktopManager GitHub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Docker-1"><a href="#Docker-1" class="headerlink" title="Docker"></a>Docker</h2><blockquote>
+<p>应用容器服务</p>
+</blockquote>
+<p><a class="link"   href="https://www.docker.com/get-started" >Docker 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>Window系统需要开启 <a class="link"   href="https://jingyan.baidu.com/article/e75aca852a9d93142edac6a8.html" >Hyper-V <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="MySQL-1"><a href="#MySQL-1" class="headerlink" title="MySQL"></a>MySQL</h2><blockquote>
+<p>MySQL 关系型数据库</p>
+</blockquote>
+<p><a class="link"   href="https://hub.docker.com/_/mysql" >MySQL Docker Hub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># MySQL版本 5.7.25、端口 3306、root 用户密码 123456</span></span><br><span class="line">docker run --name mysql -d --restart=always -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:5.7.25</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Redis-1"><a href="#Redis-1" class="headerlink" title="Redis"></a>Redis</h2><blockquote>
+<p>Redis 非关系型Key-Value数据库</p>
+</blockquote>
+<p><a class="link"   href="https://hub.docker.com/_/redis/" >Redis Docker Hub 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># Redis版本 6.0、端口 6379、密码 123456</span></span><br><span class="line">docker run --name redis -d --restart=always -p 6379:6379 redis:6.0 --requirepass <span class="string">&quot;123456&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="MongoDB-1"><a href="#MongoDB-1" class="headerlink" title="MongoDB"></a>MongoDB</h2><blockquote>
+<p>MongoDB 非关系型文档数据库</p>
+</blockquote>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 随 Docker 自启动</span></span><br><span class="line"><span class="comment"># MongoDB版本 4.4、端口 27017、用户名 root、密码 123456、鉴权数据库 admin</span></span><br><span class="line">docker run --name mongo -d  --restart=always  -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=123456 -p 27017:27017 mongo:4.4 --auth</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git Flow 开发流程</title>
+    <url>/git-flow/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Git-Flow-92faa7c7af874e91ac6049d022ceb2c8.png"
+                      alt="Git-Flow"
+                ></p>
+<p><code>git-flow</code> 是最早发布的 <code>git</code> 工作流，其思路简洁清晰，通过 <code>5</code> 种分支类型即可管理整个工程</p>
+<ul>
+<li><code>master</code>：主分支。保存后续生产环节的代码</li>
+<li><code>develop（dev）</code>：开发分支。当实现功能足以反映下一版本的状态时，发布给 <code>release</code> 分支</li>
+<li><code>feature</code>：特征分支。从 <code>develop</code> 分支 <code>fork</code> ，开发某个新特性，完成后合并回 <code>develop</code></li>
+<li><code>release</code>：发布分支（或称为版本分支）。从 <code>develop</code> 分支 <code>fork</code>，执行发布前的准备，包括小错误修复、版本元数据更新，最后合并到 <code>master</code> 和 <code>develop</code>  分支</li>
+<li><code>hotfix</code>：热修复分支。从 <code>master</code> 分支 <code>fork</code> ，修复实时生产环节中出现的错误，完成后合并回<code>master</code> 和 <code>develop</code> 分支</li>
+</ul>
+<p>其中前两种分支属于主分支，长期存在于中间仓库中，后 <code>3</code> 种分支属于支持分支，完成所需要的目的后即可销毁</p>
+<blockquote>
+<p>合并代码统一使用 git rebase 命令进行合并以及解决代码冲突。<br>推送 master 分支时，打上版本 tag 进行推送。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 阿里云效、Github 部署 Hexo 安装以及使用教程</title>
+    <url>/hexo-flow-github-ci/</url>
+    <content><![CDATA[<h1 id="Hexo-搭建"><a href="#Hexo-搭建" class="headerlink" title="Hexo 搭建"></a>Hexo 搭建</h1><h2 id="初始化-Hexo"><a href="#初始化-Hexo" class="headerlink" title="初始化 Hexo"></a>初始化 Hexo</h2><p>根据 <a class="link"   href="https://hexo.io/zh-cn/" >hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 官方命令，即可拥有一个雏形的博客。后续可通过主题、插件、代码去美化网站。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="推送代码"><a href="#推送代码" class="headerlink" title="推送代码"></a>推送代码</h2><p>将代码推送到远程仓库，可选择 Github、Gitee、Codeup（阿里系）…等代码仓库平台，前提是云效能支持。</p>
+<h1 id="Github-配置"><a href="#Github-配置" class="headerlink" title="Github 配置"></a>Github 配置</h1><h2 id="注册-Github"><a href="#注册-Github" class="headerlink" title="注册 Github"></a>注册 Github</h2><p>首先你需要拥有一个 Github 账号，其次博客网站是通过 Github 的用户名<a href="https://{username}.github.io，譬如：[https://atlas.github.io](https://atlas.github.io)">^1</a>访问的，所以用户名尽量不要随便取，不然会让自己以及他人难以记得。</p>
+<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/github-io-repository.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>仓库名称固定格式为 <code>用户名.github.io</code>。</li>
+<li>仓库访问权限设为 <code>public</code>。</li>
+<li>添加一个 <code>README.md</code> 文件，会自动创建 <code>main</code> 分支。</li>
+</ol>
+<h2 id="获取-token"><a href="#获取-token" class="headerlink" title="获取 token"></a>获取 token</h2><p>由于持续集成的需要，阿里云效需要拥有推送代码的 token 才能完成闭环。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/github-token-1.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>点击右上角头像，依次选择 <code>Settings</code> -&gt; <code>Developer settings</code> -&gt; <code>Personal access tokens</code> -&gt; <code>Tokens (classic)</code>。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/github-token-2.png"
+                      alt="github-io-repository"
+                ></p>
+<ol start="2">
+<li>创建 Token，Token 过期时间设为永不过期，必须分配仓库权限的能力。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/github-token-3.png"
+                      alt="github-io-repository"
+                ></p>
+<ol start="3">
+<li>复制创建好的 Token，后续将用到，注意保密。</li>
+</ol>
+<h1 id="阿里云效"><a href="#阿里云效" class="headerlink" title="阿里云效"></a>阿里云效</h1><h2 id="创建流水线"><a href="#创建流水线" class="headerlink" title="创建流水线"></a>创建流水线</h2><h3 id="配置流水线源"><a href="#配置流水线源" class="headerlink" title="配置流水线源"></a>配置流水线源</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/flow-1.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>选择 Hexo 源码代码源，博主存放于 Codeup，故选择 Codeup。</li>
+<li>选择 Hexo 源码仓库。</li>
+<li>选择要部署的分支。</li>
+<li>开启代码源触发，代码提交即触发。</li>
+<li>配置工作目录，这里的工作目录是流水线的工作目录。</li>
+</ol>
+<h2 id="博客部署"><a href="#博客部署" class="headerlink" title="博客部署"></a>博客部署</h2><h3 id="Node-js-构建"><a href="#Node-js-构建" class="headerlink" title="Node.js 构建"></a>Node.js 构建</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/flow-2.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>Node 版本选择 <code>18.12</code>。</li>
+<li>构建命令直接 <code>cv</code>。</li>
+</ol>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br><span class="line"></span><br><span class="line">cnpm install</span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="构建物上传"><a href="#构建物上传" class="headerlink" title="构建物上传"></a>构建物上传</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/flow-3.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>配置打包路径，这里为 <code>/root/workspace/blog/public</code>。<ol>
+<li><code>/root/workspace</code> 为阿里云效固定路径前缀。</li>
+<li><code>/blog</code> 为流水线源配置的工作目录，如果为其他的，则这里也配称其他的。</li>
+<li><code>/public</code> 为 Hexo 生成的静态网页目录。</li>
+</ol>
+</li>
+</ol>
+<h3 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/flow-4.png"
+                      alt="github-io-repository"
+                ></p>
+<ol>
+<li>将 Hexo 生成的静态文件部署至 Github。</li>
+</ol>
+<div class="note-large yellow"><div class="notel-title"><p>注意</p>
+</div><div class="notel-content"><ol>
+<li>需要将 user.name、user.email、github 仓库地址自行替换。</li>
+<li>github 仓库地址固定格式为 https:&#x2F;&#x2F;<code>token</code>@github.com&#x2F;<code>username</code>&#x2F;<code>username</code>.github.io。</li>
+</ol>
+</div></div>
+
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd public</span><br><span class="line">git init </span><br><span class="line">git config user.name &quot;Vaulka&quot;</span><br><span class="line">git config user.email &quot;vaulka7@gmail.com&quot; </span><br><span class="line">git add . </span><br><span class="line">git commit -m &quot;commit by Vaulka&quot;</span><br><span class="line">git branch -m master main</span><br><span class="line">git push --force --quiet &quot;https://$&#123;token&#125;@github.com/vaulka/vaulka.github.io&quot; main:main</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="测试持续集成"><a href="#测试持续集成" class="headerlink" title="测试持续集成"></a>测试持续集成</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/flow-6.png"
+                      alt="github-io-repository"
+                ></p>
+<p>将代码提交后，流水线构建完毕后，Github 源码将自动更新，即可访问网站进行查看。</p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>云效</tag>
+        <tag>Github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IDEA 规范</title>
+    <url>/idea-specification/</url>
+    <content><![CDATA[<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><ul>
+<li><p>Alibaba Java Coding Guidelines（阿里巴巴代码规范检测）</p>
+</li>
+<li><p>CodeGlance（代码预览）</p>
+</li>
+<li><p>GenerateAllSetter（快速生成Get和Set方法）</p>
+</li>
+<li><p>Lombok（注解简化代码）</p>
+</li>
+<li><p><del>Statistic（代码统计）</del></p>
+</li>
+<li><p>Rainbow Brackets（括号美化）</p>
+</li>
+<li><p>Maven Helper（Maven 助手）</p>
+</li>
+<li><p>MyBatisX（MyBatis 助手）</p>
+</li>
+<li><p>MyBatis Sql Query Log Binder（MyBatis Sql 格式化）</p>
+</li>
+<li><p>SequenceDiagram（时序图）</p>
+</li>
+<li><p><del>any-rule（正则表达式常用大全）</del></p>
+</li>
+<li><p><del>1.12、Key Promoter X（智能快捷键）</del></p>
+</li>
+<li><p>Git Commit Template（Git 提交信息模版）</p>
+</li>
+<li><p>Nyan Progress Bar（彩虹进度条）</p>
+</li>
+</ul>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="文件编码"><a href="#文件编码" class="headerlink" title="文件编码"></a>文件编码</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.1-e7cec0aa84844b83bb054615f003e019.png"
+                      alt="b7kpcw0SZEpC"
+                ></p>
+<h2 id="文件模版"><a href="#文件模版" class="headerlink" title="文件模版"></a>文件模版</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.4-b9812d405f3a4c05be50818d19164ebb.png"
+                      alt="KKYpvPOzfQ3Y"
+                ></p>
+<blockquote>
+<p>&#x2F;**</p>
+<ul>
+<li>@author pengsenhao</li>
+<li>@description</li>
+<li>@create ${YEAR}-${MONTH}-${DAY}<br> *&#x2F;</li>
+</ul>
+</blockquote>
+<h2 id="导包"><a href="#导包" class="headerlink" title="导包"></a>导包</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.7-a359cab572074461b79658e5078a4a9d.png"
+                      alt="QRITFnJPU6kD"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.5-3ee140c739994df08c1b6db5079757fb.png"
+                      alt="MIOcr6YFqXTL"
+                ></p>
+<h2 id="大小写敏感"><a href="#大小写敏感" class="headerlink" title="大小写敏感"></a>大小写敏感</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.3-67349c6e57a04b97ac9a115acafe4ed0.png"
+                      alt="eqLlvM0m6CFx"
+                ></p>
+<h2 id="修改文件对应的父文件夹高亮"><a href="#修改文件对应的父文件夹高亮" class="headerlink" title="修改文件对应的父文件夹高亮"></a>修改文件对应的父文件夹高亮</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.2-7c05e9a0bd354e0397d54ea74bba795e.png"
+                      alt="BBmUyVrnVYgG"
+                ></p>
+<h2 id="配置-Maven"><a href="#配置-Maven" class="headerlink" title="配置 Maven"></a>配置 Maven</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/WeChat-2020-12-14.6-45be831a24744b7eb9d369546dc8afa6.png"
+                      alt="Q6ZkJfwN3kGT"
+                ></p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes 学习指北</title>
+    <url>/kubernetes-study/</url>
+    <content><![CDATA[<h1 id="组件说明"><a href="#组件说明" class="headerlink" title="组件说明"></a>组件说明</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/20201229153412392.png"
+                      alt="组件架构图"
+                ></p>
+<ul>
+<li>API Server：所有服务访问的统一入口</li>
+<li>Crontroller-Manager：维持副本期望数目控制器</li>
+<li>Scheduler：负责任务调度，选择合适的节点进行分配任务</li>
+<li>Etcd：键值对数据库，存储 Kubernetes 集群所有重要信息（持久化）</li>
+<li>Kubelet：直接跟容器引擎交互，实现容器的生命周期管理</li>
+<li>Kube-Proxy：负责写入规则至 IPTABLES、IPVS 实现服务映射访问</li>
+<li>Pod：容器组</li>
+</ul>
+<h2 id="Pod-控制器"><a href="#Pod-控制器" class="headerlink" title="Pod 控制器"></a>Pod 控制器</h2><h3 id="ReplicationController-和-ReplicaSet"><a href="#ReplicationController-和-ReplicaSet" class="headerlink" title="ReplicationController 和 ReplicaSet"></a>ReplicationController 和 ReplicaSet</h3><p>ReplicationController（RC）用来确保容器应用的副本始终保持在用户定义的副本数。即如果有容器异常退出，会自动创建新的 Pod 来替代；而如果异常多出来的容器也会自动回收。</p>
+<blockquote>
+<p>在新版本 Kuberntes 中建议使用 ReplicaSet 来取代 ReplicationController。</p>
+</blockquote>
+<p>ReplicaSet 跟 ReplicationController 没有本质的不同，只是名称不一样，并且 ReplicaSet 支持集合式的 selector。</p>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><p>Deployment 为 Pod 和 ReplicaSet 提供了一个声明式定义（declarative）方法，用来替代以前的 ReplicationController 来方便的管理应用。典型的应用场景包括：</p>
+<ul>
+<li>定义 Deployment 来创建 Pod 和 ReplicaSet</li>
+<li>滚动升级和回滚应用</li>
+<li>扩容和缩容</li>
+<li>暂停和继续 Deployment</li>
+</ul>
+<h3 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h3><p>StatefulSet 作为 Controller 为 Pod 提供唯一的标识。它可以保证部署和 scale 的顺序。 StatefulSet 是为了解决有状态服务的问题（对应 Deployments 和 ReplicaSets<br>是为无状态服务而设计），其应用场景包括：</p>
+<ul>
+<li>稳定的持久化存储：Pod 重新调度后，还是能访问到相同的持久化数据，基于 PVC 来实现</li>
+<li>稳定的网络标志：Pod 重新调度后，其 PodName 和 HostName 不变，基于 Headless Service（即没有 Cluster IP 的 Service）来实现</li>
+<li>有序部署、有序扩展：Pod 是有顺序的，在部署或者扩展的时候要依据定义的顺序依次一次进行（从 0 到 N-1，在下一个 Pod 运行之前，之前的所有 Pod 必须都是 Running 和 Ready 状态），基于 init<br>containers 来实现</li>
+<li>有序收缩、有序删除（从 N-1 到 0）</li>
+</ul>
+<h3 id="DaemonSet"><a href="#DaemonSet" class="headerlink" title="DaemonSet"></a>DaemonSet</h3><p>DaemonSet 确保全部（或者一些）Node 上运行一个 Pod 的副本。当有 Node 加入集群时，也会为他们心中一个 Pod。当有 Node 从集群移除时，这些 Pod 也会被回收。删除 DaemonSet 将会删除它创建的所有<br>Pod。典型的应用场景包括：</p>
+<ul>
+<li>运行集群存储 daemon，例如在每个 Node 上运行 <code>glusterd</code>、<code>ceph</code></li>
+<li>在每个 Node 上运行日志收集 daemon，例如 <code>fluentd</code>、<code>logstash</code></li>
+<li>在每个 Node 上运行监控 daemon，例如 <code>Prometheus Node Exporter</code>、<code>collectd</code></li>
+</ul>
+<h3 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h3><p>负责批处理任务，即仅执行一次的任务，它保证批处理任务的一个或多个 Pod 成功结束。</p>
+<h3 id="Cron-Job"><a href="#Cron-Job" class="headerlink" title="Cron Job"></a>Cron Job</h3><p>Cron Job 管理基于时间的 Job，即：</p>
+<ul>
+<li>在给定时间点只运行一次</li>
+<li>周期性地在给定时间点运行</li>
+</ul>
+<p>典型的应用场景包括：</p>
+<ul>
+<li>在给定的时间点调度 Job 运行</li>
+<li>创建周期性运行的 Job，例如：数据库备份、发送邮件</li>
+</ul>
+<h3 id="Horizontal-Pod-Autoscaling"><a href="#Horizontal-Pod-Autoscaling" class="headerlink" title="Horizontal Pod Autoscaling"></a>Horizontal Pod Autoscaling</h3><p>使 Pod 水平自动缩放，典型的应用场景包括：</p>
+<ul>
+<li>应用资源使用率高峰&#x2F;低谷的时候，削峰填谷时，自动调整</li>
+</ul>
+<h1 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h1><h2 id="资源类型"><a href="#资源类型" class="headerlink" title="资源类型"></a>资源类型</h2><ul>
+<li><p>工作负载型资源（workload）</p>
+<p>Pod、replicaSet、Deployment、StatefulSet、DaemonSet、Job、Cron Job（Replication Controller 在 v1.11 版本被废弃）</p>
+</li>
+<li><p>服务发现及负载均衡资源（Service Discovery LoadBalance）</p>
+<p>Service、Ingress、…</p>
+</li>
+<li><p>配置与存储型资源</p>
+<p>Volume（存储卷）、CSI（容器存储接口，可以扩展各种各样的第三方存储卷）</p>
+</li>
+<li><p>特殊类型的存储卷</p>
+<p>ConfigMap（当配置中心来使用的资源类型）、Secret（保存敏感数据）、DownwardAPI（把外部环境中的信息输出给容器）</p>
+</li>
+<li><p>集群级资源</p>
+<p>Namespace、Node、Role、ClusterRole、RoleBinding、ClusterRoleBinding</p>
+</li>
+<li><p>元数据型类型</p>
+<p>HPA、PodTemplate、LimitRange</p>
+</li>
+</ul>
+<h2 id="yaml-常用字段"><a href="#yaml-常用字段" class="headerlink" title="yaml 常用字段"></a>yaml 常用字段</h2><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>字段类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>version</td>
+<td>String</td>
+<td>这里指的是 Kubernetes API 的版本，目前基本上是 <code>v1</code> ，可以使用 <code>kubectl api-versions</code> 命令进行查询</td>
+</tr>
+<tr>
+<td>kind</td>
+<td>String</td>
+<td>这里指的是 yaml 文件定义的资源类型和角色，譬如 <code>Pod</code></td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>Object</td>
+<td>元数据对象，固定值就写 <code>metadata</code></td>
+</tr>
+<tr>
+<td>metadata.name</td>
+<td>String</td>
+<td>元数据对象的名称，这里由我们编写，比如命名 Pod 的名字</td>
+</tr>
+<tr>
+<td>metadata.namespace</td>
+<td>String</td>
+<td>元数据的命名空间，由我们自身定义</td>
+</tr>
+<tr>
+<td>spec</td>
+<td>Object</td>
+<td>详细定义对象，固定值就写 <code>Spec</code></td>
+</tr>
+<tr>
+<td>spec.containers[]</td>
+<td>List</td>
+<td>这里是 spec 对象的容器列表定义，是个列表</td>
+</tr>
+<tr>
+<td>spec.containers[].name</td>
+<td>String</td>
+<td>这里定义容器的名字</td>
+</tr>
+<tr>
+<td>spec.containers[].image</td>
+<td>String</td>
+<td>这里定义要用到的镜像名称</td>
+</tr>
+<tr>
+<td>spec.containers[].magePullPolicy</td>
+<td>String</td>
+<td>定义镜像拉取策略，有 <code>Always</code>、<code>Never</code>、<code>IfNotPresent</code> 三个值可选。（默认）<code>Always</code>：每次都尝试重新拉取镜像。<code>Never</code>：仅使用本地镜像。<code>IfNotPresent</code>：如果本地有镜像就使用本地镜像，没有就拉取在线镜像。</td>
+</tr>
+<tr>
+<td>spec.containers[].command[]</td>
+<td>List</td>
+<td>指定容器启动命令，因为是数组可以指定多个，不指定则使用镜像打包时使用的启动命令。</td>
+</tr>
+<tr>
+<td>spec.containers[].args[]</td>
+<td>List</td>
+<td>指定容器启动命令参数，因为是数组可以指定多个。</td>
+</tr>
+<tr>
+<td>spec.containers[].workingDir</td>
+<td>String</td>
+<td>指定容器的工作目录</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[]</td>
+<td>List</td>
+<td>指定容器内部的存储卷配置</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].name</td>
+<td>String</td>
+<td>指定可以被容器挂载的存储卷鹅名称</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].mountPath</td>
+<td>String</td>
+<td>指定可以被容器挂载的存储卷的路径</td>
+</tr>
+<tr>
+<td>spec.containers[].volumeMounts[].readOnly</td>
+<td>String</td>
+<td>设置存储卷路径的读写模式，true 或者 false，默认为读写模式</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[]</td>
+<td>List</td>
+<td>指定容器需要用到的端口列表</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].name</td>
+<td>String</td>
+<td>指定端口名称</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].containerPort</td>
+<td>String</td>
+<td>指定容器需要监听的端口号</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].hostPort</td>
+<td>String</td>
+<td>指定容器所在主机需要监听的端口号，默认跟上面 containerPort 相同，注意设置了 hostPort 同一台主机无法启动该容器的相同副本（因为主机的端口号不能相通，这样会冲突）</td>
+</tr>
+<tr>
+<td>spec.containers[].ports[].protocol</td>
+<td>String</td>
+<td>指定端口协议，支持 TCP 和 UDP，默认值为 TCP</td>
+</tr>
+<tr>
+<td>spec.containers[].env[]</td>
+<td>List</td>
+<td>指定容器运行前需设置的环境变量列表</td>
+</tr>
+<tr>
+<td>spec.containers[].env[].name</td>
+<td>String</td>
+<td>指定环境变量名称</td>
+</tr>
+<tr>
+<td>spec.containers[].env[].value</td>
+<td>String</td>
+<td>指定环境变量值</td>
+</tr>
+<tr>
+<td>spec.containers[].resources</td>
+<td>Object</td>
+<td>指定资源限制和资源请求的值（这里开始就是设置容器的资源上限）</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits</td>
+<td>Object</td>
+<td>指定设置容器运行时资源的运行上线</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits.cpu</td>
+<td>String</td>
+<td>指定 CPU 的限制，单位为 core 数，将用于 <code>docker run --cpu-shares</code> 参数</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.limits.memory</td>
+<td>String</td>
+<td>指定 MEM 内存的限制，单位为 MiB、GiB</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests</td>
+<td>Object</td>
+<td>指定容器启动和调度时的限制设置</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests.cpu</td>
+<td>String</td>
+<td>CPU 请求，单位为 core 数，容器启动时初始化可用数量</td>
+</tr>
+<tr>
+<td>spec.containers[].resources.requests.memory</td>
+<td>String</td>
+<td>内存请求，单位为 MiB、GiB，容器启动的初始化可用数量</td>
+</tr>
+<tr>
+<td>spec.restartPolicy</td>
+<td>String</td>
+<td>定义 Pod 的重启策略，可选值为 <code>Always</code>、<code>OnFailure</code>、<code>Never</code>。（默认）<code>Always</code>：Pod 一旦终止运行，则无论容器数如何终止的，kubelet 服务都将重启它。<code>OnFailure</code>：只有 Pod 以非零退出码终止时，kubelet 才会重启该容器。如果容器正常结束（退出码为 0），则 kubelet 将不会重启它。<code>Never</code>：Pod 终止后，kubelet 将退出码报告给 Master，不会重启该 Pod</td>
+</tr>
+<tr>
+<td>spec.nodeSelector</td>
+<td>Object</td>
+<td>定义 Node 的Label 过滤标签，以 key:value 格式指定</td>
+</tr>
+<tr>
+<td>spec.imagePullSecrets</td>
+<td>Object</td>
+<td>定义 pull 镜像时使用 secret 名称，以 name:secretkey 格式指定</td>
+</tr>
+<tr>
+<td>spec.hostNetwork</td>
+<td>Boolean</td>
+<td>定义是否使用主机网络模式，默认值为 <code>false</code>。设置 <code>true</code> 时表示使用宿主机网络，不使用 docker 网桥，并且将无法在同一台宿主机上启动第二个副本。</td>
+</tr>
+</tbody></table>
+<h1 id="kubectl-命令行工具"><a href="#kubectl-命令行工具" class="headerlink" title="kubectl 命令行工具"></a>kubectl 命令行工具</h1><p>语法：<code>$ kubectl [command] [TYPE] [NAME] [flags]</code></p>
+<p>TODO…</p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 入门指北</title>
+    <url>/docker-study/</url>
+    <content><![CDATA[<h1 id="为什么用-Docker"><a href="#为什么用-Docker" class="headerlink" title="为什么用 Docker"></a>为什么用 Docker</h1><p>首先让我们来回顾一下过往至今的服务部署方案。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/%E9%83%A8%E7%BD%B2%E6%97%B6%E4%BB%A3.svg"
+                      alt="部署时代"
+                ></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动</td>
+<td>秒级</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>硬盘使用</td>
+<td>一般为 MB</td>
+<td>一般为 GB</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>接近原生</td>
+<td>弱于</td>
+</tr>
+<tr>
+<td>系统支持量</td>
+<td>单机支持上千个容器</td>
+<td>一般几十个</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><strong>传统部署时代：</strong></p>
+<p>早期，各个组织机构在物理服务器上运行应用程序。无法为物理服务器中的应用程序定义资源边界，这会导致资源分配问题。 例如，如果在物理服务器上运行多个应用程序，则可能会出现一个应用程序占用大部分资源的情况，<br>结果可能导致其他应用程序的性能下降。 一种解决方案是在不同的物理服务器上运行每个应用程序，但是由于资源利用不足而无法扩展， 并且维护许多物理服务器的成本很高。有如下缺点：</p>
+<ul>
+<li>环境配置麻烦，不同操作系统或者版本不同导致安装方式不同。</li>
+<li>资源分配不均匀，一个程序占用大部分资源的情况，可能导致其他应用程序性能下降。</li>
+</ul>
+</li>
+<li><p><strong>虚拟化部署时代：</strong></p>
+<p>作为解决方案，引入了虚拟化。虚拟化技术允许你在单个物理服务器的 CPU 上运行多个虚拟机（VM）。 虚拟化允许应用程序在 VM 之间隔离，并提供一定程度的安全，因为一个应用程序的信息 不能被另一应用程序随意访问。</p>
+<p>虚拟化技术能够更好地利用物理服务器上的资源，并且因为可轻松地添加或更新应用程序 而可以实现更好的可伸缩性，降低硬件成本等等。</p>
+<p>每个 VM 是一台完整的计算机，在虚拟化硬件之上运行所有组件，包括其自己的操作系统。现还有如下缺点：</p>
+<ul>
+<li>资源占用多，虚拟机会独占一部分内存和硬盘空间。它运行的时候，其他程序就不能使用这些资源了。哪怕虚拟机里面的应用程序，真正使用的内存只有 1MB，虚拟机依然需要几百 MB 的内存才能运行。</li>
+<li>冗余步骤多，虚拟机是完整的操作系统，一些系统级别的操作步骤，往往无法跳过，比如用户登录。</li>
+<li>启动慢，启动操作系统需要多久，启动虚拟机就需要多久。可能要等几分钟，应用程序才能真正运行。</li>
+</ul>
+</li>
+<li><p><strong>容器部署时代：</strong></p>
+<p>作为解决方案，引入了容器。容器类似于 VM，但是它们具有被放宽的隔离属性，可以在应用程序之间共享操作系统（OS）。 因此，容器被认为是轻量级的。容器与 VM 类似，具有自己的文件系统、CPU、内存、进程空间等。<br>由于它们与基础架构分离，因此可以跨云和 OS 发行版本进行移植。</p>
+<p>容器因具有许多优势而变得流行起来。下面列出的是容器的一些好处：</p>
+<ul>
+<li>敏捷应用程序的创建和部署：与使用 VM 镜像相比，提高了容器镜像创建的简便性和效率。</li>
+<li>持续开发、集成和部署：通过快速简单的回滚（由于镜像不可变性），支持可靠且频繁的 容器镜像构建和部署。</li>
+<li>关注开发与运维的分离：在构建&#x2F;发布时而不是在部署时创建应用程序容器镜像， 从而将应用程序与基础架构分离。</li>
+<li>可观察性：不仅可以显示操作系统级别的信息和指标，还可以显示应用程序的运行状况和其他指标信号。</li>
+<li>跨开发、测试和生产的环境一致性：在便携式计算机上与在云中相同地运行。</li>
+<li>跨云和操作系统发行版本的可移植性：可在 Ubuntu、RHEL、CoreOS、本地、 Google Kubernetes Engine 和其他任何地方运行。</li>
+<li>以应用程序为中心的管理：提高抽象级别，从在虚拟硬件上运行 OS 到使用逻辑资源在 OS 上运行应用程序。</li>
+<li>松散耦合、分布式、弹性、解放的微服务：应用程序被分解成较小的独立部分， 并且可以动态部署和管理 - 而不是在一台大型单机上整体运行。</li>
+<li>资源隔离：可预测的应用程序性能。</li>
+<li>资源利用：高效率和高密度。</li>
+</ul>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Docker%20%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E6%8C%87%E6%95%B0.png"
+                      alt="Docker 百度搜索指数"
+                ></p>
+<p>自从 2013 年 Docker 问世以来，凭借其容器化运行时的特点，风靡世界，搜索指数一路高升。各个大厂现已经将生产环境用于容器部署，该技术已成为未来的大势所趋。</p>
+<h1 id="Docker-安装"><a href="#Docker-安装" class="headerlink" title="Docker 安装"></a>Docker 安装</h1><ul>
+<li><p>Window 操作系统</p>
+<blockquote>
+<p><a class="link"   href="https://docs.docker.com/desktop/windows/install/" >Install Docker Desktop on Windows <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+</li>
+<li><p>Mac OS 操作系统</p>
+<blockquote>
+<p><a class="link"   href="https://docs.docker.com/desktop/mac/install/" >Install Docker Desktop on Mac <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+</li>
+<li><p>CentOS 操作系统</p>
+<blockquote>
+<p><a class="link"   href="https://docs.docker.com/engine/install/centos/" >Install Docker Engine on CentOS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+</li>
+</ul>
+<p>安装完成后，可执行 <code>docker version</code> 命令，验证是否安装成功。</p>
+<h1 id="Docker-概念"><a href="#Docker-概念" class="headerlink" title="Docker 概念"></a>Docker 概念</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Docker%20Architecture.png"
+                      alt="Docker Architecture"
+                ></p>
+<h2 id="Docker-镜像仓库（Repository）-集中存放镜像文件的地方"><a href="#Docker-镜像仓库（Repository）-集中存放镜像文件的地方" class="headerlink" title="Docker 镜像仓库（Repository） 集中存放镜像文件的地方"></a>Docker 镜像仓库（Repository） 集中存放镜像文件的地方</h2><p>镜像构建完成后，可以很容易的在当前宿主上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。</p>
+<p>一个 Docker Registry 中可以包含多个仓库（Repository）；每个仓库可以包含多个标签（Tag）；每个标签对应一个镜像。所以说：镜像仓库是Docker用来集中存放镜像文件的地方类似于我们之前常用的代码仓库。</p>
+<p>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本 。我们可以通过 &lt;仓库名&gt;:&lt;标签&gt; 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</p>
+<p>这里补充一下 Docker Registry 公开服务和私有 Docker Registry 的概念：</p>
+<p>Docker Registry 公开服务是开放给用户使用、允许用户管理镜像的 Registry 服务。一般这类公开服务允许用户免费上传、下载公开的镜像，并可能提供收费服务供用户管理私有镜像。</p>
+<p>最常使用的 Registry 公开服务是官方的 Docker Hub ，这也是默认的 Registry，并拥有大量的高质量的官方镜像，网址为：hub.docker.com&#x2F; 。在国内访问 Docker Hub<br>可能会比较慢国内也有一些云服务商提供类似于 Docker Hub 的公开服务。</p>
+<p>除了使用公开服务外，用户还可以在本地搭建私有 Docker Registry。Docker 官方提供了 Docker Registry 镜像，可以直接使用做为私有 Registry 服务。开源的 Docker Registry 镜像只提供了<br>Docker Registry API 的服务端实现，足以支持 Docker 命令，不影响使用。但不包含图形界面，以及镜像维护、用户管理、访问控制等高级功能。</p>
+<h2 id="Docker-镜像（Image）一个特殊的文件系统"><a href="#Docker-镜像（Image）一个特殊的文件系统" class="headerlink" title="Docker 镜像（Image）一个特殊的文件系统"></a>Docker 镜像（Image）一个特殊的文件系统</h2><p>操作系统分为内核和用户空间。对于 Linux 而言，内核启动后，会挂载 root 文件系统为其提供用户空间支持。而 Docker 镜像（Image），就相当于是一个 root 文件系统。</p>
+<p>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。 镜像不包含任何动态数据，其内容在构建之后也不会被改变。</p>
+<p>Docker 设计时，就充分利用 Union FS 的技术，将其设计为分层存储的架构。 镜像实际是由多层文件系统联合组成。</p>
+<p>镜像构建时，会一层层构建，前一层是后一层的基础。每一层构建完就不会再发生改变，后一层上的任何改变只发生在自己这一层。比如，删除前一层文件的操作，实际不是真的删除前一层的文件，而是仅在当前层标记为该文件已删除。在最终容器运行的时候，虽然不会看到这个文件，但是实际上该文件会一直跟随镜像。因此，在构建镜像的时候，需要额外小心，每一层尽量只包含该层需要添加的东西，任何额外的东西应该在该层构建结束前清理掉。</p>
+<p>分层存储的特征还使得镜像的复用、定制变的更为容易。甚至可以用之前构建好的镜像作为基础层，然后进一步添加新的层，以定制自己所需的内容，构建新的镜像。</p>
+<h2 id="Docker-容器（Container）镜像运行时的实体"><a href="#Docker-容器（Container）镜像运行时的实体" class="headerlink" title="Docker 容器（Container）镜像运行时的实体"></a>Docker 容器（Container）镜像运行时的实体</h2><p>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的类和实例一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</p>
+<p>容器的实质是进程，但与直接在宿主执行的进程不同，容器进程运行于属于自己的独立的命名空间。前面讲过镜像使用的是分层存储，容器也是如此。</p>
+<p>容器存储层的生存周期和容器一样，容器消亡时，容器存储层也随之消亡。因此，任何保存于容器存储层的信息都会随容器删除而丢失。</p>
+<p>按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据<br>，容器存储层要保持无状态化。所有的文件写入操作，都应该使用数据卷（Volume）、或者绑定宿主目录，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，<br>使用数据卷后，容器可以随意删除、重新 run，数据却不会丢失。</p>
+<h1 id="Docker-指令（Command）"><a href="#Docker-指令（Command）" class="headerlink" title="Docker 指令（Command）"></a>Docker 指令（Command）</h1><p><a class="link"   href="https://docs.docker.com/engine/reference/run/" >官方 Docker CLI 参考资料 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Docker%20Commands%20Diagram.png"
+                      alt="Docker Commands Diagram"
+                ></p>
+<p>让我们执行下 <code>docker --help</code> 查看一共有哪些命令，先混个眼熟：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker --<span class="built_in">help</span></span></span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --config string      Location of client config files (default</span><br><span class="line">                           &quot;C:\\Users\\AATROX\\.docker&quot;)</span><br><span class="line">  -c, --context string     Name of the context to use to connect to the</span><br><span class="line">                           daemon (overrides DOCKER_HOST env var and</span><br><span class="line">                           default context set with &quot;docker context use&quot;)</span><br><span class="line">  -D, --debug              Enable debug mode</span><br><span class="line">  -H, --host list          Daemon socket(s) to connect to</span><br><span class="line">  -l, --log-level string   Set the logging level</span><br><span class="line">                           (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;)</span><br><span class="line">                           (default &quot;info&quot;)</span><br><span class="line">      --tls                Use TLS; implied by --tlsverify</span><br><span class="line">      --tlscacert string   Trust certs signed only by this CA (default</span><br><span class="line">                           &quot;C:\\Users\\AATROX\\.docker\\ca.pem&quot;)</span><br><span class="line">      --tlscert string     Path to TLS certificate file (default</span><br><span class="line">                           &quot;C:\\Users\\AATROX\\.docker\\cert.pem&quot;)</span><br><span class="line">      --tlskey string      Path to TLS key file (default</span><br><span class="line">                           &quot;C:\\Users\\AATROX\\.docker\\key.pem&quot;)</span><br><span class="line">      --tlsverify          Use TLS and verify the remote</span><br><span class="line">  -v, --version            Print version information and quit</span><br><span class="line"></span><br><span class="line">Management Commands:</span><br><span class="line">  builder     Manage builds</span><br><span class="line">  buildx*     Docker Buildx (Docker Inc., v0.7.1)</span><br><span class="line">  compose*    Docker Compose (Docker Inc., v2.2.1)</span><br><span class="line">  config      Manage Docker configs</span><br><span class="line">  container   Manage containers</span><br><span class="line">  context     Manage contexts</span><br><span class="line">  image       Manage images</span><br><span class="line">  manifest    Manage Docker image manifests and manifest lists</span><br><span class="line">  network     Manage networks</span><br><span class="line">  node        Manage Swarm nodes</span><br><span class="line">  plugin      Manage plugins</span><br><span class="line">  scan*       Docker Scan (Docker Inc., v0.14.0)</span><br><span class="line">  secret      Manage Docker secrets</span><br><span class="line">  service     Manage services</span><br><span class="line">  stack       Manage Docker stacks</span><br><span class="line">  swarm       Manage Swarm</span><br><span class="line">  system      Manage Docker</span><br><span class="line">  trust       Manage trust on Docker images</span><br><span class="line">  volume      Manage volumes</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  attach      Attach local standard input, output, and error streams to a running container</span><br><span class="line">  build       Build an image from a Dockerfile</span><br><span class="line">  commit      Create a new image from a container&#x27;s changes</span><br><span class="line">  cp          Copy files/folders between a container and the local filesystem</span><br><span class="line">  create      Create a new container</span><br><span class="line">  diff        Inspect changes to files or directories on a container&#x27;s filesystem</span><br><span class="line">  events      Get real time events from the server</span><br><span class="line">  exec        Run a command in a running container</span><br><span class="line">  export      Export a container&#x27;s filesystem as a tar archive</span><br><span class="line">  history     Show the history of an image</span><br><span class="line">  images      List images</span><br><span class="line">  import      Import the contents from a tarball to create a filesystem image</span><br><span class="line">  info        Display system-wide information</span><br><span class="line">  inspect     Return low-level information on Docker objects</span><br><span class="line">  kill        Kill one or more running containers</span><br><span class="line">  load        Load an image from a tar archive or STDIN</span><br><span class="line">  login       Log in to a Docker registry</span><br><span class="line">  logout      Log out from a Docker registry</span><br><span class="line">  logs        Fetch the logs of a container</span><br><span class="line">  pause       Pause all processes within one or more containers</span><br><span class="line">  port        List port mappings or a specific mapping for the container</span><br><span class="line">  ps          List containers</span><br><span class="line">  pull        Pull an image or a repository from a registry</span><br><span class="line">  push        Push an image or a repository to a registry</span><br><span class="line">  rename      Rename a container</span><br><span class="line">  restart     Restart one or more containers</span><br><span class="line">  rm          Remove one or more containers</span><br><span class="line">  rmi         Remove one or more images</span><br><span class="line">  run         Run a command in a new container</span><br><span class="line">  save        Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="line">  start       Start one or more stopped containers</span><br><span class="line">  stats       Display a live stream of container(s) resource usage statistics</span><br><span class="line">  stop        Stop one or more running containers</span><br><span class="line">  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE</span><br><span class="line">  top         Display the running processes of a container</span><br><span class="line">  unpause     Unpause all processes within one or more containers</span><br><span class="line">  update      Update configuration of one or more containers</span><br><span class="line">  version     Show the Docker version information</span><br><span class="line">  wait        Block until one or more containers stop, then print their exit codes</span><br></pre></td></tr></table></figure></div>
+
+<p>相信大家看到一堆指令就麻了，我在这里先列举出常用场景，依次指令挨个说明：</p>
+<h2 id="docker-info"><a href="#docker-info" class="headerlink" title="docker info"></a>docker info</h2><p>显示系统信息。</p>
+<p>示例：<code>docker info</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker info</span></span><br><span class="line"></span><br><span class="line">Client:</span><br><span class="line"> Context:    default</span><br><span class="line"> Debug Mode: false</span><br><span class="line"> Plugins:</span><br><span class="line">  buildx: Docker Buildx (Docker Inc., v0.7.1)</span><br><span class="line">  compose: Docker Compose (Docker Inc., v2.2.1)</span><br><span class="line">  scan: Docker Scan (Docker Inc., v0.14.0)</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Containers: 1</span><br><span class="line">  Running: 1</span><br><span class="line">  Paused: 0</span><br><span class="line">  Stopped: 0</span><br><span class="line"> Images: 1</span><br><span class="line"> Server Version: 20.10.11</span><br><span class="line"> Storage Driver: overlay2</span><br><span class="line">  Backing Filesystem: extfs</span><br><span class="line">  Supports d_type: true</span><br><span class="line">  Native Overlay Diff: true</span><br><span class="line">  userxattr: false</span><br><span class="line"> Logging Driver: json-file</span><br><span class="line"> Cgroup Driver: cgroupfs</span><br><span class="line"> Cgroup Version: 1</span><br><span class="line"> Plugins:</span><br><span class="line">  Volume: local</span><br><span class="line">  Network: bridge host ipvlan macvlan null overlay</span><br><span class="line">  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog</span><br><span class="line"> Swarm: inactive</span><br><span class="line"> Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux runc</span><br><span class="line"> Default Runtime: runc</span><br><span class="line"> Init Binary: docker-init</span><br><span class="line"> containerd version: 7b11cfaabd73bb80907dd23182b9347b4245eb5d</span><br><span class="line"> runc version: v1.0.2-0-g52b36a2</span><br><span class="line"> init version: de40ad0</span><br><span class="line"> Security Options:</span><br><span class="line">  seccomp</span><br><span class="line">   Profile: default</span><br><span class="line"> Kernel Version: 5.10.16.3-microsoft-standard-WSL2</span><br><span class="line"> Operating System: Docker Desktop</span><br><span class="line"> OSType: linux</span><br><span class="line"> Architecture: x86_64</span><br><span class="line"> CPUs: 8</span><br><span class="line"> Total Memory: 19.44GiB</span><br><span class="line"> Name: docker-desktop</span><br><span class="line"> ID: OJZN:FRCZ:TF6M:Z7VD:SVIP:SH6Q:6BAO:FK3A:HPCG:27C5:LA5G:DJ5M</span><br><span class="line"> Docker Root Dir: /var/lib/docker</span><br><span class="line"> Debug Mode: false</span><br><span class="line"> Registry: https://index.docker.io/v1/</span><br><span class="line"> Labels:</span><br><span class="line"> Experimental: false</span><br><span class="line"> Insecure Registries:</span><br><span class="line">  127.0.0.0/8</span><br><span class="line"> Registry Mirrors:</span><br><span class="line">  https://7g4zdb7j.mirror.aliyuncs.com/</span><br><span class="line"> Live Restore Enabled: false</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-version"><a href="#docker-version" class="headerlink" title="docker version"></a>docker version</h2><p>查看 Docker 以及相关组件版本信息。</p>
+<p>示例：<code>docker version</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker version</span></span><br><span class="line"></span><br><span class="line">Client:</span><br><span class="line"> Cloud integration: v1.0.22</span><br><span class="line"> Version:           20.10.11</span><br><span class="line"> API version:       1.41</span><br><span class="line"> Go version:        go1.16.10</span><br><span class="line"> Git commit:        dea9396</span><br><span class="line"> Built:             Thu Nov 18 00:42:51 2021</span><br><span class="line"> OS/Arch:           windows/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"> Experimental:      true</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          20.10.11</span><br><span class="line">  API version:      1.41 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.16.9</span><br><span class="line">  Git commit:       847da18</span><br><span class="line">  Built:            Thu Nov 18 00:35:39 2021</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     false</span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.4.12</span><br><span class="line">  GitCommit:        7b11cfaabd73bb80907dd23182b9347b4245eb5d</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.0.2</span><br><span class="line">  GitCommit:        v1.0.2-0-g52b36a2</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-login"><a href="#docker-login" class="headerlink" title="docker login"></a>docker login</h2><p>登录远程镜像仓库。</p>
+<blockquote>
+<p>WARN</p>
+<p>如果同学没有远程仓库，则可先忽略此命令</p>
+</blockquote>
+<p>示例：<code>docker login --username=****@qq.com registry.cn-shanghai.aliyuncs.com</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker login --username=*****@qq.com registry.cn-shanghai.aliyuncs.com</span></span><br><span class="line"></span><br><span class="line">Password:</span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-logout"><a href="#docker-logout" class="headerlink" title="docker logout"></a>docker logout</h2><p>退出远程仓库已登录账号信息。</p>
+<blockquote>
+<p>WARN</p>
+<p>如果同学没有远程仓库，则可先忽略此命令</p>
+</blockquote>
+<p>示例：<code>docker logout registry.cn-shanghai.aliyuncs.com</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">logout</span> registry.cn-shanghai.aliyuncs.com</span></span><br><span class="line"></span><br><span class="line">Removing login credentials for registry.cn-shanghai.aliyuncs.com</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-search"><a href="#docker-search" class="headerlink" title="docker search"></a>docker search</h2><p>从 <code>Docker Hub</code> 查找镜像。</p>
+<p>示例：<code>docker search nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker search nginx</span></span><br><span class="line"></span><br><span class="line">NAME                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">nginx                             Official build of Nginx.                        16043     [OK]</span><br><span class="line">jwilder/nginx-proxy               Automated Nginx reverse proxy for docker con…   2104                 [OK]</span><br><span class="line">richarvey/nginx-php-fpm           Container running Nginx + PHP-FPM capable of…   819                  [OK]</span><br><span class="line">jc21/nginx-proxy-manager          Docker container for managing Nginx proxy ho…   301</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-pull【高频率】"><a href="#docker-pull【高频率】" class="headerlink" title="docker pull【高频率】"></a>docker pull【高频率】</h2><p>从远程仓库拉取镜像。</p>
+<h3 id="命令格式："><a href="#命令格式：" class="headerlink" title="命令格式："></a>命令格式：</h3><p><code> docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
+<h3 id="命令说明"><a href="#命令说明" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-a</code>：下载镜像仓库中该镜像名称的所有标签镜像。与 <code>TAG</code> 参数互斥，只能填一个。</li>
+</ul>
+</li>
+<li><code>NAME</code>：镜像名称，如果没指定远程仓库地址的话，默认去 <code>Docker Hub</code> 获取镜像。</li>
+<li><code>TAG</code>：标签，如果没指定的话，默认 TAG 为 <code>latest</code>。</li>
+<li><code>@DIGEST</code>：镜像唯一ID。</li>
+</ul>
+<p>示例：<code>docker pull nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker pull nginx</span></span><br><span class="line"></span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library/nginx</span><br><span class="line">a2abf6c4d29d: Pull complete</span><br><span class="line">a9edb18cadd1: Pull complete</span><br><span class="line">589b7251471a: Pull complete</span><br><span class="line">186b1aaa4aa6: Pull complete</span><br><span class="line">b4df32aa5a72: Pull complete</span><br><span class="line">a0bcbecc962e: Pull complete</span><br><span class="line">Digest: sha256:0d17b565c37bcbd895e9d92315a05c1c3c9a29f762b011a10c54a66cd53c9b31</span><br><span class="line">Status: Downloaded newer image for nginx:latest</span><br><span class="line">docker.io/library/nginx:latest</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="命令执行分析"><a href="#命令执行分析" class="headerlink" title="命令执行分析"></a>命令执行分析</h3><ol>
+<li>命令补全，判断用户是否输入 <code>TAG</code> 参数等等，没输入的话按照默认参数进行补全。</li>
+<li>识别 <code>OPTIONS</code> 参数是否填写，填写的话，则增加该参数的操作。</li>
+<li>首先 <code>docker</code> 会根据 <code>name:tag@digest</code> 寻找远程仓库是否有该镜像。</li>
+</ol>
+<ul>
+<li>如果没有该镜像，则报错。</li>
+</ul>
+<ol start="4">
+<li>如果有该镜像，则通过 <code>name:tag@digest</code> 判断本地是否已存在该镜像。</li>
+</ol>
+<ul>
+<li>先比对本地仓库是否有相同 <code>name:tag</code> 参数的镜像，如果有的话，则再比对 <code>@digest</code> 参数，如果镜像 <code>sha256</code> 一致的话，则不从远程仓库下载镜像，复用本地镜像。</li>
+</ul>
+<ol start="5">
+<li>如果没有该镜像，则从远程仓库获取镜像。</li>
+</ol>
+<ul>
+<li>如果是第三方镜像仓库，则会先判断是否需要登录，需要登录的话，会从本地已验证账号列表里面寻找与之匹配的账号密码，如果登录失败则拉取镜像失败。</li>
+</ul>
+<h2 id="docker-images【高频率】"><a href="#docker-images【高频率】" class="headerlink" title="docker images【高频率】"></a>docker images【高频率】</h2><p>查看镜像列表。</p>
+<h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
+<h3 id="命令说明-1"><a href="#命令说明-1" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-a</code>：列出本地所有的镜像（含中间映像层，默认情况下，过滤掉中间映像层）。</li>
+<li><code>--digests</code>：显示镜像的摘要信息。</li>
+<li><code>-f</code>：添加过滤条件，使用 <code>key=value</code> 方式进行过滤，<code>key</code> 如下：<ul>
+<li><code>dangling</code>：显示标记为空的镜像，值只有 <code>true</code> 和 <code>false</code>。</li>
+<li>label：这个是根据标签进行过滤，其中 <code>lable </code>的值，是 <code>docker </code>在编译的时候配置的或者在 <code>Dockerfile</code> 中配置的。</li>
+<li><code>before</code>：这个是根据时间来进行过滤，其中 <code>before</code> 的<code>value </code>表示某个镜像构建时间之前的镜像列表。</li>
+<li><code>since</code>：跟 <code>before</code> 正好相反，表示的是在某个镜像构建之后构建的镜像。</li>
+<li><code>reference</code>：这个是添加正则进行匹配。</li>
+</ul>
+</li>
+<li><code>-q</code>：仅显示 <code>IMAGE ID</code>。</li>
+</ul>
+</li>
+<li><code>REPOSITORY</code>：镜像名称，如果指定的话，则会只显示该 <code>REPOSITORY</code> 相关的镜像信息。</li>
+<li><code>TAG</code>：标签，如果指定的话，则会只显示该 <code>REPOSITORY</code> 以及该 <code>TAG</code> 相关的镜像信息。</li>
+</ul>
+<p>示例：<code>docker images</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker images</span></span><br><span class="line"></span><br><span class="line">REPOSITORY   TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">nginx        latest    605c77e624dd   13 hours ago   141MB</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="命令执行分析-1"><a href="#命令执行分析-1" class="headerlink" title="命令执行分析"></a>命令执行分析</h3><ol>
+<li>识别 <code>OPTIONS</code> 参数是否填写，填写的话，则增加该参数的操作。</li>
+<li>显示相关镜像信息。</li>
+</ol>
+<h2 id="docker-tag【高频率】"><a href="#docker-tag【高频率】" class="headerlink" title="docker tag【高频率】"></a>docker tag【高频率】</h2><p>创建一个新 <code>tag</code> 镜像。</p>
+<h3 id="命令格式-1"><a href="#命令格式-1" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]</code></p>
+<h3 id="命令说明-2"><a href="#命令说明-2" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>SOURCE_IMAGE</code>：源镜像名称。</li>
+<li><code>TARGET_IMAGE</code>：目标镜像名称。</li>
+<li><code>TAG</code>：标签，如果没指定的话，默认 TAG 为 <code>latest</code>。</li>
+</ul>
+<p>示例：<code>docker tag nginx:latest nginx:my-tag-latest</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker tag nginx:latest nginx:my-tag-latest</span></span><br></pre></td></tr></table></figure></div>
+
+<p>指令运行完毕后输入 <code>docker images</code> 即可看到一个 nginx 有一个新 <code>tag</code> <code>my-tag-latest</code> 的镜像。</p>
+<h3 id="命令执行分析-2"><a href="#命令执行分析-2" class="headerlink" title="命令执行分析"></a>命令执行分析</h3><ol>
+<li>命令补全，判断用户是否输入 <code>TAG</code> 参数等等，没输入的话按照默认参数进行补全。</li>
+<li>根据源镜像信息拷贝一份到目标镜像信息。</li>
+</ol>
+<h2 id="docker-history"><a href="#docker-history" class="headerlink" title="docker history"></a>docker history</h2><p>显示镜像的历史。</p>
+<p>一般用于查看镜像构建步骤，分析后可进行镜像瘦身、镜像改造等等。</p>
+<h3 id="命令格式-2"><a href="#命令格式-2" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker history [OPTIONS] IMAGE[:TAG]</code></p>
+<h3 id="命令说明-3"><a href="#命令说明-3" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-H</code>：以可读的格式打印镜像大小和日期，默认为 <code>true</code>。</li>
+<li><code>--no-trunc</code>：显示完整的提交记录。</li>
+<li><code>-q</code>：仅列出提交记录ID。</li>
+</ul>
+</li>
+<li><code>TAG</code>：标签，如果指定的话，则会只显示该 <code>REPOSITORY</code> 以及该 <code>TAG</code> 相关的镜像信息。</li>
+</ul>
+<p>示例：<code>docker history nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">history</span> nginx</span></span><br><span class="line"></span><br><span class="line">605c77e624dd   13 hours ago   /bin/sh -c #(nop)  CMD [&quot;nginx&quot; &quot;-g&quot; &quot;daemon…   0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  STOPSIGNAL SIGQUIT           0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  EXPOSE 80                    0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  ENTRYPOINT [&quot;/docker-entr…   0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop) COPY file:09a214a3e07c919a…   4.61kB</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop) COPY file:0fd5fca330dcd6a7…   1.04kB</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop) COPY file:0b866ff3fc1ef5b0…   1.96kB</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop) COPY file:65504f71f5855ca0…   1.2kB</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c set -x     &amp;&amp; addgroup --system -…   61.1MB</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  ENV PKG_RELEASE=1~bullseye   0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  ENV NJS_VERSION=0.7.1        0B</span><br><span class="line">&lt;missing&gt;      13 hours ago   /bin/sh -c #(nop)  ENV NGINX_VERSION=1.21.5     0B</span><br><span class="line">&lt;missing&gt;      9 days ago     /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B</span><br><span class="line">&lt;missing&gt;      9 days ago     /bin/sh -c #(nop)  CMD [&quot;bash&quot;]                 0B</span><br><span class="line">&lt;missing&gt;      9 days ago     /bin/sh -c #(nop) ADD file:09675d11695f65c55…   80.4MB</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>INFO</p>
+<p>一个镜像由多个可读的镜像层组成，显示镜像历史的时候，会将最新的镜像层从上自下显示。</p>
+</blockquote>
+<h2 id="docker-push【高频率】"><a href="#docker-push【高频率】" class="headerlink" title="docker push【高频率】"></a>docker push【高频率】</h2><p>推送镜像至镜像仓库。</p>
+<h3 id="命令格式-3"><a href="#命令格式-3" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker push [OPTIONS] NAME[:TAG]</code></p>
+<h3 id="命令说明-4"><a href="#命令说明-4" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>NAME</code>：镜像名称。</li>
+<li><code>TAG</code>：标签，如果指定的话，则会只显示该 <code>REPOSITORY</code> 以及该 <code>TAG</code> 相关的镜像信息。</li>
+</ul>
+<p>示例：<code>docker push nginx:vaulka-1.0.0</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker push nginx:vaulka-1.0.0</span></span><br><span class="line"></span><br><span class="line">The push refers to repository [docker.io/library/nginx]</span><br><span class="line">bc23383c378c: Preparing</span><br><span class="line">d874fd2bc83b: Preparing</span><br><span class="line">32ce5f6a5106: Preparing</span><br><span class="line">f1db227348d0: Preparing</span><br><span class="line">b8d6e692a25e: Preparing</span><br><span class="line">e379e8aedd4d: Waiting</span><br><span class="line">2edcec3590a4: Waiting</span><br><span class="line">denied: requested access to the resource is denied</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-rmi【高频率】"><a href="#docker-rmi【高频率】" class="headerlink" title="docker rmi【高频率】"></a>docker rmi【高频率】</h2><p>删除本地一个或多个镜像。</p>
+<h3 id="命令格式-4"><a href="#命令格式-4" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
+<h3 id="命令说明-5"><a href="#命令说明-5" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-f</code>：强制删除。</li>
+<li><code>--no-prune</code>：不移除该镜像的过程镜像，默认移除。</li>
+</ul>
+</li>
+<li><code>IMAGE</code>：<code>IMAGE ID</code> 或者 <code>NAME:TAG</code>。</li>
+</ul>
+<p>示例：<code>docker rmi -f nginx:latest</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker rmi -f nginx:latest</span></span><br><span class="line"></span><br><span class="line">Untagged: nginx:latest</span><br><span class="line">Untagged: nginx@sha256:0d17b565c37bcbd895e9d92315a05c1c3c9a29f762b011a10c54a66cd53c9b31</span><br><span class="line">Deleted: sha256:605c77e624ddb75e6110f997c58876baa13f8754486b461117934b24a9dc3a85</span><br><span class="line">Deleted: sha256:b625d8e29573fa369e799ca7c5df8b7a902126d2b7cbeb390af59e4b9e1210c5</span><br><span class="line">Deleted: sha256:7850d382fb05e393e211067c5ca0aada2111fcbe550a90fed04d1c634bd31a14</span><br><span class="line">Deleted: sha256:02b80ac2055edd757a996c3d554e6a8906fd3521e14d1227440afd5163a5f1c4</span><br><span class="line">Deleted: sha256:b92aa5824592ecb46e6d169f8e694a99150ccef01a2aabea7b9c02356cdabe7c</span><br><span class="line">Deleted: sha256:780238f18c540007376dd5e904f583896a69fe620876cabc06977a3af4ba4fb5</span><br><span class="line">Deleted: sha256:2edcec3590a4ec7f40cf0743c15d78fb39d8326bc029073b41ef9727da6c851f</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-run【高频率】"><a href="#docker-run【高频率】" class="headerlink" title="docker run【高频率】"></a>docker run【高频率】</h2><p>创建一个新的容器并运行一个命令。</p>
+<h3 id="命令格式-5"><a href="#命令格式-5" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</code></p>
+<h3 id="命令说明-6"><a href="#命令说明-6" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-d</code>：后台运行容器，并返回容器ID。</li>
+<li><code>-i</code>：以交互模式运行容器，通常与 <code>-t</code> 同时使用。</li>
+<li><code>-p</code>：指定端口映射，格式为 <code>宿主机端口:容器端口/[tcp/udp]</code>，不填写默认 <code>tcp</code>。</li>
+<li><code>-t</code>：为容器重新分配一个伪输入终端，通常与 <code>-i</code> 同时使用。</li>
+<li><code>--name</code>：为容器指定一个名称。</li>
+<li><code>-h</code>：指定容器的 <code>hostname</code>。</li>
+<li><code>-e</code>：设置环境变量。</li>
+<li><code>--network</code>：连接进一个网络。</li>
+<li><code>--link</code>：添加链接到另一个容器。</li>
+<li><code>--entrypoint</code>：覆盖默认的 <code>entrypoint</code>。</li>
+<li><code>-v</code>：绑定一个数据卷，格式为 <code>宿主机路径:容器路径</code>。</li>
+</ul>
+</li>
+<li><code>IMAGE</code>：<code>IMAGE ID</code> 或者 <code>NAME:TAG</code>。</li>
+<li><code>COMMAND</code>：指令信息。</li>
+<li><code>ARG...</code>：指令参数列表。</li>
+</ul>
+<p>示例：<code>docker run -d --name nginx -p 80:80/tcp -v C:/Users/AATROX/Downloads/index.html:/usr/share/nginx/html/index.html nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -d --name nginx -p 80:80/tcp  -v C:/Users/AATROX/Downloads/index.html:/usr/share/nginx/html/index.html nginx</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="命令执行分析-3"><a href="#命令执行分析-3" class="headerlink" title="命令执行分析"></a>命令执行分析</h3><ol>
+<li>命令补全，判断用户是否输入缺省属性 <code>-p [tcp/udp]</code> 参数等等，没输入的话按照默认参数进行补全。</li>
+<li>首先 <code>docker</code> 会根据 <code>IMAGE</code> 寻找本地是否有该镜像，如果有的话则默认使用本地镜像，默认没有的话，则去远程仓库获取镜像。</li>
+</ol>
+<ul>
+<li>如果没有该镜像，则报错。</li>
+</ul>
+<ol start="3">
+<li>根据 <code>OPTIONS</code> 参数创建容器后并启动，然后执行容器 <code>COMMAND ARG...</code> 指令。</li>
+</ol>
+<ul>
+<li>如果容器没有交互指令也并没有分配伪终端的话，则容器会进入暂停状态。</li>
+</ul>
+<h2 id="docker-ps【高频率】"><a href="#docker-ps【高频率】" class="headerlink" title="docker ps【高频率】"></a>docker ps【高频率】</h2><p>列出容器。</p>
+<h3 id="命令格式-6"><a href="#命令格式-6" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker ps [OPTIONS]</code></p>
+<h3 id="命令说明-7"><a href="#命令说明-7" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-a</code>：显示所有的容器，包括未运行的（默认只显示运行中的容器）。</li>
+<li><code>-f</code>：根据条件过滤显示的内容。</li>
+<li><code>-l</code>：显示最近创建的容器。</li>
+<li><code>-n</code>：列出最近创建的 <code>n</code> 个容器。</li>
+<li><code>-q</code>：只显示容器编号。</li>
+<li><code>-s</code>：显示总的文件大小。</li>
+</ul>
+</li>
+</ul>
+<p>示例：<code>docker ps -a</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker ps -a</span></span><br><span class="line"></span><br><span class="line">CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS     NAMES</span><br><span class="line">6c13d872ee5d   nginx:vaulka-1.0.0   &quot;/docker-entrypoint.…&quot;   21 minutes ago   Up 21 minutes   80/tcp    vaulka</span><br><span class="line">d34742ff4e87   nginx                 &quot;/docker-entrypoint.…&quot;   3 days ago       Up 3 days       80/tcp    nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-exec【高频率】"><a href="#docker-exec【高频率】" class="headerlink" title="docker exec【高频率】"></a>docker exec【高频率】</h2><p>在运行的容器中执行命令。</p>
+<p>一般用于启动容器后进入执行初始化信息或者排查容器信息。</p>
+<h3 id="命令格式-7"><a href="#命令格式-7" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</code></p>
+<h3 id="命令说明-8"><a href="#命令说明-8" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-e</code>：设置环境变量。</li>
+<li><code>-i</code>：保持 <code>STDIN</code> 打开，即使没有连接。</li>
+<li><code>-t</code>：分配一个伪 <code>TTY</code>。</li>
+<li><code>-u</code>：用户名或 <code>UID</code>。</li>
+<li><code>-w</code>：容器内的工作目录。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>ARG...</code>：<code>command</code> 指令参数列表。</li>
+</ul>
+<p>示例：<code>docker exec -it nginx /bin/bash</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">exec</span> -it nginx /bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-stop"><a href="#docker-stop" class="headerlink" title="docker stop"></a>docker stop</h2><p>停止一个或多个正在运行中的容器。</p>
+<h3 id="命令格式-8"><a href="#命令格式-8" class="headerlink" title="命令格式"></a>命令格式</h3><p><code> docker stop [OPTIONS] CONTAINER [CONTAINER...]</code></p>
+<h3 id="命令说明-9"><a href="#命令说明-9" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-t</code>：在杀死它之前等待停止的秒数（默认 10）。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>CONTAINER...</code>：容器列表，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code> 列表。</li>
+</ul>
+<p>示例：<code>docker stop nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker stop nginx</span></span><br><span class="line"></span><br><span class="line">nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-start"><a href="#docker-start" class="headerlink" title="docker start"></a>docker start</h2><p>启动一个或多个已停止的容器。</p>
+<h3 id="命令格式-9"><a href="#命令格式-9" class="headerlink" title="命令格式"></a>命令格式</h3><p><code> docker start[OPTIONS] CONTAINER [CONTAINER...]</code></p>
+<h3 id="命令说明-10"><a href="#命令说明-10" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>CONTAINER...</code>：容器列表，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code> 列表。</li>
+</ul>
+<p>示例：<code>docker start nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker start nginx</span></span><br><span class="line"></span><br><span class="line">nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-restart"><a href="#docker-restart" class="headerlink" title="docker restart"></a>docker restart</h2><p>重启一个或多个容器。</p>
+<h3 id="命令格式-10"><a href="#命令格式-10" class="headerlink" title="命令格式"></a>命令格式</h3><p><code> docker restart [OPTIONS] CONTAINER [CONTAINER...]</code></p>
+<h3 id="命令说明-11"><a href="#命令说明-11" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-t</code>：在杀死它之前等待停止的秒数（默认 10）。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>CONTAINER...</code>：容器列表，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code> 列表。</li>
+</ul>
+<p>示例：<code>docker restart nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker restart nginx</span></span><br><span class="line"></span><br><span class="line">nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-logs【高频率】"><a href="#docker-logs【高频率】" class="headerlink" title="docker logs【高频率】"></a>docker logs【高频率】</h2><p>获取容器的日志。</p>
+<h3 id="命令格式-11"><a href="#命令格式-11" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker logs [OPTIONS] CONTAINER</code></p>
+<h3 id="命令说明-12"><a href="#命令说明-12" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-f</code>：跟踪日志输出。</li>
+<li><code>-t</code>：显示时间戳。</li>
+<li><code>--tail</code>：仅列出最新 <code>n</code> 条容器日志。</li>
+<li><code>--since</code>：显示某个开始时间的所有日志。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+</ul>
+<p>示例：<code> docker logs -f -t --tail 10 nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"> docker logs -f -t --<span class="built_in">tail</span> 10 nginx</span></span><br><span class="line"></span><br><span class="line">2022-01-04T01:48:35.491607254Z 2022/01/04 01:48:35 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576</span><br><span class="line">2022-01-04T01:48:35.491790545Z 2022/01/04 01:48:35 [notice] 1#1: start worker processes</span><br><span class="line">2022-01-04T01:48:35.492379907Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 24</span><br><span class="line">2022-01-04T01:48:35.492497245Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 25</span><br><span class="line">2022-01-04T01:48:35.492694700Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 26</span><br><span class="line">2022-01-04T01:48:35.492861997Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 27</span><br><span class="line">2022-01-04T01:48:35.494038216Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 28</span><br><span class="line">2022-01-04T01:48:35.494775667Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 29</span><br><span class="line">2022-01-04T01:48:35.495491899Z 2022/01/04 01:48:35 [notice] 1#1: start worker process 30</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-commit"><a href="#docker-commit" class="headerlink" title="docker commit"></a>docker commit</h2><p>从容器创建一个新的镜像。</p>
+<h3 id="命令格式-12"><a href="#命令格式-12" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]</code></p>
+<h3 id="命令说明-13"><a href="#命令说明-13" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-a</code>：提交的镜像作者。</li>
+<li><code>-m</code>：提交时的说明文字。</li>
+<li><code>-p</code>：在 <code>commit</code> 时，将容器暂停。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>REPOSITORY</code>：镜像名称，如果指定的话，则会只显示该 <code>REPOSITORY</code> 相关的镜像信息。</li>
+<li><code>TAG</code>：标签，如果指定的话，则会只显示该 <code>REPOSITORY</code> 以及该 <code>TAG</code> 相关的镜像信息。</li>
+</ul>
+<p>示例：<code>docker commit -a &quot;Vaulka&quot; -m &quot;测试 commit&quot; nginx nginx:vaulka-1.0.0</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;Vaulka&quot;</span> -m <span class="string">&quot;测试 commit&quot;</span> nginx nginx:vaulka-1.0.0</span></span><br><span class="line"></span><br><span class="line">sha256:fe752a22bc4032c7c317661e39b8cc2e70112c3edd70dc4cbd314cf9102fb989</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-diff"><a href="#docker-diff" class="headerlink" title="docker diff"></a>docker diff</h2><p>检查容器里文件结构的更改。</p>
+<h3 id="命令格式-13"><a href="#命令格式-13" class="headerlink" title="命令格式"></a>命令格式</h3><p><code> docker diff CONTAINER</code></p>
+<h3 id="命令说明-14"><a href="#命令说明-14" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+</ul>
+<p>示例：<code>docker diff nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker diff nginx</span></span><br><span class="line"></span><br><span class="line">A /vaulka</span><br><span class="line">C /root</span><br><span class="line">A /root/.bash_history</span><br><span class="line">C /run</span><br><span class="line">A /run/nginx.pid</span><br><span class="line">A /commit</span><br><span class="line">C /var</span><br><span class="line">C /var/cache</span><br><span class="line">C /var/cache/nginx</span><br><span class="line">A /var/cache/nginx/client_temp</span><br><span class="line">A /var/cache/nginx/fastcgi_temp</span><br><span class="line">A /var/cache/nginx/proxy_temp</span><br><span class="line">A /var/cache/nginx/scgi_temp</span><br><span class="line">A /var/cache/nginx/uwsgi_temp</span><br><span class="line">C /etc</span><br><span class="line">C /etc/nginx</span><br><span class="line">C /etc/nginx/conf.d</span><br><span class="line">C /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-cp"><a href="#docker-cp" class="headerlink" title="docker cp"></a>docker cp</h2><p>用于容器与主机之间的数据拷贝。</p>
+<h3 id="命令格式-14"><a href="#命令格式-14" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-</code><br><code>docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH</code></p>
+<h3 id="命令说明-15"><a href="#命令说明-15" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+</ul>
+<p>将容器数据拷贝至本地 示例：<code>docker cp nginx:/etc/nginx D:\nginx</code></p>
+<p>将本地数据拷贝至容器 示例：<code>docker cp D:\nginx nginx:/vaulka</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">docker cp nginx:/etc/nginx D:\nginx</span><br><span class="line"></span><br><span class="line">docker cp D:\nginx nginx:/vaulka</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-rm【高频率】"><a href="#docker-rm【高频率】" class="headerlink" title="docker rm【高频率】"></a>docker rm【高频率】</h2><p>删除一个或多个容器。</p>
+<h3 id="命令格式-15"><a href="#命令格式-15" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker rm [OPTIONS] CONTAINER [CONTAINER...]</code></p>
+<h3 id="命令说明-16"><a href="#命令说明-16" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-f</code>：强制删除正在运行的容器。</li>
+</ul>
+</li>
+<li><code>CONTAINER</code>：容器，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code>。</li>
+<li><code>CONTAINER...</code>：容器列表，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code> 列表。</li>
+</ul>
+<p>示例：<code>docker rm -f nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">rm</span> -f nginx</span></span><br><span class="line"></span><br><span class="line">nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-events"><a href="#docker-events" class="headerlink" title="docker events"></a>docker events</h2><p>从服务器获取实时事件。</p>
+<h3 id="命令格式-16"><a href="#命令格式-16" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker events [OPTIONS]</code></p>
+<h3 id="命令说明-17"><a href="#命令说明-17" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-f</code>：根据条件过滤事件。</li>
+<li><code>--since</code>：从指定的时间戳后显示所有事件。</li>
+</ul>
+</li>
+</ul>
+<p>示例：<code>docker events</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker events</span></span><br><span class="line"></span><br><span class="line">2022-01-04T10:08:15.221847318+08:00 container kill d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb (image=nginx, maintainer=NGINX Docker Maintainers &lt;docker-maint@nginx.com&gt;, name=nginx, signal=3)</span><br><span class="line">2022-01-04T10:08:15.410436756+08:00 container die d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb (exitCode=0, image=nginx, maintainer=NGINX Docker Maintainers &lt;docker-maint@nginx.com&gt;, name=nginx)</span><br><span class="line">2022-01-04T10:08:15.716204013+08:00 network disconnect f4645324feaef4dd22a2e8e1deafd7b4f68c7ab89862e1e6f13679fda4ff1ea0 (container=d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb, name=bridge, type=bridge)</span><br><span class="line">2022-01-04T10:08:15.745159367+08:00 container stop d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb (image=nginx, maintainer=NGINX Docker Maintainers &lt;docker-maint@nginx.com&gt;, name=nginx)</span><br><span class="line">2022-01-04T10:08:38.813402562+08:00 network connect f4645324feaef4dd22a2e8e1deafd7b4f68c7ab89862e1e6f13679fda4ff1ea0 (container=d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb, name=bridge, type=bridge)</span><br><span class="line">2022-01-04T10:08:39.207083007+08:00 container start d34742ff4e87e18e89c4886311a8e5de8f94657171c93582e83bd90347e761bb (image=nginx, maintainer=NGINX Docker Maintainers &lt;docker-maint@nginx.com&gt;, name=nginx)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-stats"><a href="#docker-stats" class="headerlink" title="docker stats"></a>docker stats</h2><p>显示容器资源使用统计。</p>
+<h3 id="命令格式-17"><a href="#命令格式-17" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker stats [OPTIONS] [CONTAINER...]</code></p>
+<h3 id="命令说明-18"><a href="#命令说明-18" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-a</code>：显示所有容器（默认只显示正在运行状态的容器）。</li>
+<li><code>--no-stream</code>：禁用实时流统计并只提取第一个结果。</li>
+</ul>
+</li>
+<li><code>CONTAINER...</code>：容器列表，<code>CONTAINER ID</code> 或者 <code>CONTAINER NAME</code> 列表。</li>
+</ul>
+<p>示例：<code>docker stats nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker stats nginx</span></span><br><span class="line"></span><br><span class="line">CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT    MEM %     NET I/O      BLOCK I/O   PIDS</span><br><span class="line">d34742ff4e87   nginx     0.00%     6.82MiB / 19.44GiB   0.03%     1.4kB / 0B   0B / 0B     9</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h2><p>获取容器&#x2F;镜像的元数据。</p>
+<h3 id="命令格式-18"><a href="#命令格式-18" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker inspect [OPTIONS] NAME|ID [NAME|ID...]</code></p>
+<h3 id="命令说明-19"><a href="#命令说明-19" class="headerlink" title="命令说明"></a>命令说明</h3><p>示例：<code>docker inspect nginx</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker inspect nginx</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2022-01-04T02:12:17.816585871Z&quot;,</span><br><span class="line">        &quot;Path&quot;: &quot;/docker-entrypoint.sh&quot;,</span><br><span class="line">        &quot;Args&quot;: [</span><br><span class="line">            &quot;nginx&quot;,</span><br><span class="line">            &quot;-g&quot;,</span><br><span class="line">            &quot;daemon off;&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;State&quot;: &#123;</span><br><span class="line">            &quot;Status&quot;: &quot;running&quot;,</span><br><span class="line">            &quot;Running&quot;: true,</span><br><span class="line">            &quot;Paused&quot;: false,</span><br><span class="line">            &quot;Restarting&quot;: false,</span><br><span class="line">            &quot;OOMKilled&quot;: false,</span><br><span class="line">            &quot;Dead&quot;: false,</span><br><span class="line">            &quot;Pid&quot;: 3737,</span><br><span class="line">            &quot;ExitCode&quot;: 0,</span><br><span class="line">            &quot;Error&quot;: &quot;&quot;,</span><br><span class="line">            &quot;StartedAt&quot;: &quot;2022-01-04T02:12:18.432727092Z&quot;,</span><br><span class="line">            &quot;FinishedAt&quot;: &quot;0001-01-01T00:00:00Z&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Image&quot;: &quot;sha256:605c77e624ddb75e6110f997c58876baa13f8754486b461117934b24a9dc3a85&quot;,</span><br><span class="line">        &quot;ResolvConfPath&quot;: &quot;/var/lib/docker/containers/2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e/resolv.conf&quot;,</span><br><span class="line">        &quot;HostnamePath&quot;: &quot;/var/lib/docker/containers/2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e/hostname&quot;,</span><br><span class="line">        &quot;HostsPath&quot;: &quot;/var/lib/docker/containers/2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e/hosts&quot;,</span><br><span class="line">        &quot;LogPath&quot;: &quot;/var/lib/docker/containers/2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e/2f704ed68d4df4858a8b3e6d021232023147289dda0f678d9e2ceb8ec05b288e-json.log&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;/nginx&quot;,</span><br><span class="line">        &quot;RestartCount&quot;: 0,</span><br><span class="line">        &quot;Driver&quot;: &quot;overlay2&quot;,</span><br><span class="line">        &quot;Platform&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;MountLabel&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ProcessLabel&quot;: &quot;&quot;,</span><br><span class="line">        &quot;AppArmorProfile&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ExecIDs&quot;: [</span><br><span class="line">            &quot;c637bb6940f69036fef36e6770264339ba24ab58e7ef1da8958930aed26aa803&quot;,</span><br><span class="line">            &quot;e9e4b4c4736406c477a8cba9368c56583eb9e28b83833c4c9a6b0f866ba3d946&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;HostConfig&quot;: &#123;</span><br><span class="line">            &quot;Binds&quot;: null,</span><br><span class="line">            &quot;ContainerIDFile&quot;: &quot;&quot;,</span><br><span class="line">            &quot;LogConfig&quot;: &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;json-file&quot;,</span><br><span class="line">                &quot;Config&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;NetworkMode&quot;: &quot;default&quot;,</span><br><span class="line">            &quot;PortBindings&quot;: &#123;</span><br><span class="line">                &quot;80/tcp&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;HostIp&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;HostPort&quot;: &quot;80&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;RestartPolicy&quot;: &#123;</span><br><span class="line">                &quot;Name&quot;: &quot;no&quot;,</span><br><span class="line">                &quot;MaximumRetryCount&quot;: 0</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;AutoRemove&quot;: false,</span><br><span class="line">            &quot;VolumeDriver&quot;: &quot;&quot;,</span><br><span class="line">            &quot;VolumesFrom&quot;: null,</span><br><span class="line">            &quot;CapAdd&quot;: null,</span><br><span class="line">            &quot;CapDrop&quot;: null,</span><br><span class="line">            &quot;CgroupnsMode&quot;: &quot;host&quot;,</span><br><span class="line">            &quot;Dns&quot;: [],</span><br><span class="line">            &quot;DnsOptions&quot;: [],</span><br><span class="line">            &quot;DnsSearch&quot;: [],</span><br><span class="line">            &quot;ExtraHosts&quot;: null,</span><br><span class="line">            &quot;GroupAdd&quot;: null,</span><br><span class="line">            &quot;IpcMode&quot;: &quot;private&quot;,</span><br><span class="line">            &quot;Cgroup&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Links&quot;: null,</span><br><span class="line">            &quot;OomScoreAdj&quot;: 0,</span><br><span class="line">            &quot;PidMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Privileged&quot;: false,</span><br><span class="line">            &quot;PublishAllPorts&quot;: false,</span><br><span class="line">            &quot;ReadonlyRootfs&quot;: false,</span><br><span class="line">            &quot;SecurityOpt&quot;: null,</span><br><span class="line">            &quot;UTSMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;UsernsMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;ShmSize&quot;: 67108864,</span><br><span class="line">            &quot;Runtime&quot;: &quot;runc&quot;,</span><br><span class="line">            &quot;ConsoleSize&quot;: [</span><br><span class="line">                28,</span><br><span class="line">                120</span><br><span class="line">            ],</span><br><span class="line">            &quot;Isolation&quot;: &quot;&quot;,</span><br><span class="line">            &quot;CpuShares&quot;: 0,</span><br><span class="line">            &quot;Memory&quot;: 0,</span><br><span class="line">            &quot;NanoCpus&quot;: 0,</span><br><span class="line">            &quot;CgroupParent&quot;: &quot;&quot;,</span><br><span class="line">            &quot;BlkioWeight&quot;: 0,</span><br><span class="line">            &quot;BlkioWeightDevice&quot;: [],</span><br><span class="line">            &quot;BlkioDeviceReadBps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceWriteBps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceReadIOps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceWriteIOps&quot;: null,</span><br><span class="line">            &quot;CpuPeriod&quot;: 0,</span><br><span class="line">            &quot;CpuQuota&quot;: 0,</span><br><span class="line">            &quot;CpuRealtimePeriod&quot;: 0,</span><br><span class="line">            &quot;CpuRealtimeRuntime&quot;: 0,</span><br><span class="line">            &quot;CpusetCpus&quot;: &quot;&quot;,</span><br><span class="line">            &quot;CpusetMems&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Devices&quot;: [],</span><br><span class="line">            &quot;DeviceCgroupRules&quot;: null,</span><br><span class="line">            &quot;DeviceRequests&quot;: null,</span><br><span class="line">            &quot;KernelMemory&quot;: 0,</span><br><span class="line">            &quot;KernelMemoryTCP&quot;: 0,</span><br><span class="line">            &quot;MemoryReservation&quot;: 0,</span><br><span class="line">            &quot;MemorySwap&quot;: 0,</span><br><span class="line">            &quot;MemorySwappiness&quot;: null,</span><br><span class="line">            &quot;OomKillDisable&quot;: false,</span><br><span class="line">            &quot;PidsLimit&quot;: null,</span><br><span class="line">            &quot;Ulimits&quot;: null,</span><br><span class="line">            &quot;CpuCount&quot;: 0,</span><br><span class="line">            &quot;CpuPercent&quot;: 0,</span><br><span class="line">            &quot;IOMaximumIOps&quot;: 0,</span><br><span class="line">            &quot;IOMaximumBandwidth&quot;: 0,</span><br><span class="line">            &quot;MaskedPaths&quot;: [</span><br><span class="line">                &quot;/proc/asound&quot;,</span><br><span class="line">                &quot;/proc/acpi&quot;,</span><br><span class="line">                &quot;/proc/kcore&quot;,</span><br><span class="line">                &quot;/proc/keys&quot;,</span><br><span class="line">                &quot;/proc/latency_stats&quot;,</span><br><span class="line">                &quot;/proc/timer_list&quot;,</span><br><span class="line">                &quot;/proc/timer_stats&quot;,</span><br><span class="line">                &quot;/proc/sched_debug&quot;,</span><br><span class="line">                &quot;/proc/scsi&quot;,</span><br><span class="line">                &quot;/sys/firmware&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ReadonlyPaths&quot;: [</span><br><span class="line">                &quot;/proc/bus&quot;,</span><br><span class="line">                &quot;/proc/fs&quot;,</span><br><span class="line">                &quot;/proc/irq&quot;,</span><br><span class="line">                &quot;/proc/sys&quot;,</span><br><span class="line">                &quot;/proc/sysrq-trigger&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: &#123;</span><br><span class="line">                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/2bb3bc38ae00aca6bc1bc7d26f4da56750f77f0b6a81a89ba937bd17b78be950-init/diff:/var/lib/docker/overlay2/c3a2a8b2fedc7ffd8c432f4d3ac2a92329f7e3a1d3e726b772a986b2a4f31d89/diff:/var/lib/docker/overlay2/492236c88cfafc679b68d2571e89ceeef4b97587c898cd5f99d49de663eb4493/diff:/var/lib/docker/overlay2/ad4e499eba0be3d0ba80cf49305dd9e02b61e777788a55d4d0dd31b31da49f32/diff:/var/lib/docker/overlay2/c6f5403a8f442a482427508e250e074ca311d63664d114fcdbc15c8bed1bf2ba/diff:/var/lib/docker/overlay2/6c12a4051d37d441dc976c18f695bd1f1c7ae172d87e8f01f11c9bc2ddce5f57/diff:/var/lib/docker/overlay2/2c36a20eafffe17aae7ecf6688645319c64fbb4fb135626d889845522e1adb1f/diff&quot;,</span><br><span class="line">                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/2bb3bc38ae00aca6bc1bc7d26f4da56750f77f0b6a81a89ba937bd17b78be950/merged&quot;,</span><br><span class="line">                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/2bb3bc38ae00aca6bc1bc7d26f4da56750f77f0b6a81a89ba937bd17b78be950/diff&quot;,</span><br><span class="line">                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/2bb3bc38ae00aca6bc1bc7d26f4da56750f77f0b6a81a89ba937bd17b78be950/work&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Name&quot;: &quot;overlay2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Mounts&quot;: [],</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;2f704ed68d4d&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;80/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;NGINX_VERSION=1.21.5&quot;,</span><br><span class="line">                &quot;NJS_VERSION=0.7.1&quot;,</span><br><span class="line">                &quot;PKG_RELEASE=1~bullseye&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;nginx&quot;,</span><br><span class="line">                &quot;-g&quot;,</span><br><span class="line">                &quot;daemon off;&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Image&quot;: &quot;nginx&quot;,</span><br><span class="line">            &quot;Volumes&quot;: null,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: [</span><br><span class="line">                &quot;/docker-entrypoint.sh&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;OnBuild&quot;: null,</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;maintainer&quot;: &quot;NGINX Docker Maintainers \u003cdocker-maint@nginx.com\u003e&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;StopSignal&quot;: &quot;SIGQUIT&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;NetworkSettings&quot;: &#123;</span><br><span class="line">            &quot;Bridge&quot;: &quot;&quot;,</span><br><span class="line">            &quot;SandboxID&quot;: &quot;7bf243ecad4eaf68d1f3c0ddde5bdc103e7855862419409e1becda93a0d3312f&quot;,</span><br><span class="line">            &quot;HairpinMode&quot;: false,</span><br><span class="line">            &quot;LinkLocalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">            &quot;LinkLocalIPv6PrefixLen&quot;: 0,</span><br><span class="line">            &quot;Ports&quot;: &#123;</span><br><span class="line">                &quot;80/tcp&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;HostIp&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">                        &quot;HostPort&quot;: &quot;80&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;SandboxKey&quot;: &quot;/var/run/docker/netns/7bf243ecad4e&quot;,</span><br><span class="line">            &quot;SecondaryIPAddresses&quot;: null,</span><br><span class="line">            &quot;SecondaryIPv6Addresses&quot;: null,</span><br><span class="line">            &quot;EndpointID&quot;: &quot;43bce532347d5b7cb2c2b38ab83b4bc332fe19be26dbc273a1a049c1924c6c21&quot;,</span><br><span class="line">            &quot;Gateway&quot;: &quot;172.17.0.1&quot;,</span><br><span class="line">            &quot;GlobalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">            &quot;GlobalIPv6PrefixLen&quot;: 0,</span><br><span class="line">            &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,</span><br><span class="line">            &quot;IPPrefixLen&quot;: 16,</span><br><span class="line">            &quot;IPv6Gateway&quot;: &quot;&quot;,</span><br><span class="line">            &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot;,</span><br><span class="line">            &quot;Networks&quot;: &#123;</span><br><span class="line">                &quot;bridge&quot;: &#123;</span><br><span class="line">                    &quot;IPAMConfig&quot;: null,</span><br><span class="line">                    &quot;Links&quot;: null,</span><br><span class="line">                    &quot;Aliases&quot;: null,</span><br><span class="line">                    &quot;NetworkID&quot;: &quot;f4645324feaef4dd22a2e8e1deafd7b4f68c7ab89862e1e6f13679fda4ff1ea0&quot;,</span><br><span class="line">                    &quot;EndpointID&quot;: &quot;43bce532347d5b7cb2c2b38ab83b4bc332fe19be26dbc273a1a049c1924c6c21&quot;,</span><br><span class="line">                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,</span><br><span class="line">                    &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,</span><br><span class="line">                    &quot;IPPrefixLen&quot;: 16,</span><br><span class="line">                    &quot;IPv6Gateway&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6PrefixLen&quot;: 0,</span><br><span class="line">                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot;,</span><br><span class="line">                    &quot;DriverOpts&quot;: null</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="docker-build【高频率】"><a href="#docker-build【高频率】" class="headerlink" title="docker build【高频率】"></a>docker build【高频率】</h2><h3 id="命令格式-19"><a href="#命令格式-19" class="headerlink" title="命令格式"></a>命令格式</h3><p><code>docker build [OPTIONS] PATH | URL | -</code></p>
+<h3 id="命令说明-20"><a href="#命令说明-20" class="headerlink" title="命令说明"></a>命令说明</h3><ul>
+<li><code>OPTIONS</code>：<ul>
+<li><code>-f</code>：指定要使用的 <a href="#Dockerfile">Dockerfile</a> 路径。</li>
+<li><code>--force-rm</code>：设置镜像过程中删除中间容器。</li>
+<li><code>--rm</code>：整个构建过程成功后删除中间环节的容器。</li>
+<li><code>-t</code>：设置镜像的名字及标签。</li>
+</ul>
+</li>
+</ul>
+<p>示例：<code>docker build -f docker.Dockerfile . -t registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:1.0.0</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -f docker.Dockerfile . -t registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:1.0.0</span></span><br><span class="line"></span><br><span class="line">[+] Building 6.6s (5/8)</span><br><span class="line">[+] Building 10.8s (9/9) FINISHED</span><br><span class="line"> =&gt; [internal] load build definition from docker.Dockerfile                                                                                                                                                                        0.1s</span><br><span class="line"> =&gt; =&gt; transferring dockerfile: 1.65kB                                                                                                                                                                                             0.0s</span><br><span class="line"> =&gt; [internal] load .dockerignore                                                                                                                                                                                                  0.1s</span><br><span class="line"> =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                    0.0s</span><br><span class="line"> =&gt; [internal] load metadata for registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:2.0.5                                                                                                                                     2.4s</span><br><span class="line"> =&gt; [auth] vaulka/genshinhelper:pull token for registry.cn-shanghai.aliyuncs.com                                                                                                                                                  0.0s</span><br><span class="line"> =&gt; [1/3] FROM registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:2.0.5@sha256:51b64505eed8c2ab3d93ad4d6d82e9fadedd0a533bcf85ce1b626dc1883b573a                                                                               7.8s</span><br><span class="line"> =&gt; =&gt; resolve registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:2.0.5@sha256:51b64505eed8c2ab3d93ad4d6d82e9fadedd0a533bcf85ce1b626dc1883b573a                                                                               0.0s</span><br><span class="line"> =&gt; =&gt; sha256:51b64505eed8c2ab3d93ad4d6d82e9fadedd0a533bcf85ce1b626dc1883b573a 2.20kB / 2.20kB                                                                                                                                     0.0s</span><br><span class="line"> =&gt; =&gt; sha256:05af8b2dccc64ec62088f487fde96d72eba1cad8f3305b473a328562b933d21c 7.29kB / 7.29kB                                                                                                                                     0.0s</span><br><span class="line"> =&gt; =&gt; sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 2.82MB / 2.82MB                                                                                                                                     1.2s</span><br><span class="line"> =&gt; =&gt; sha256:d8c681bc2183ac2de0b5e117ed74647ee5dfbdbf8a3730ac81c54f3b3db989f7 11.69MB / 11.69MB                                                                                                                                   4.1s</span><br><span class="line"> =&gt; =&gt; sha256:07a400e93df3fcc09e5f874878c049b15515236f55fbf76013c0779a7cc4a301 678.30kB / 678.30kB                                                                                                                                 0.5s</span><br><span class="line"> =&gt; =&gt; sha256:c7f1ca1171d975af881f16ba8005f599918648448f8d9b0be5436dd8ba3bf1f0 231B / 231B                                                                                                                                         0.8s</span><br><span class="line"> =&gt; =&gt; sha256:dc9256fcea2e541f17f0ed7d4dae23c03fb27a5ab8e7611e34f5a5e4d96d6678 2.35MB / 2.35MB                                                                                                                                     2.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3                                                                                                                                          0.7s</span><br><span class="line"> =&gt; =&gt; sha256:b30f4df9527b7a4e63e7ba55184dd0e2d6b3060326d5686465169864f141e014 99B / 99B                                                                                                                                           1.7s</span><br><span class="line"> =&gt; =&gt; sha256:cf7bc792610be9a3ab6a74d487203a66cd6115eb40469cc6b44a38ff67383577 180B / 180B                                                                                                                                         2.1s</span><br><span class="line"> =&gt; =&gt; extracting sha256:07a400e93df3fcc09e5f874878c049b15515236f55fbf76013c0779a7cc4a301                                                                                                                                          0.6s</span><br><span class="line"> =&gt; =&gt; sha256:63f470fc1d34a37ea09d36f72e4d575ad49412e0d74143bd9fcbaf0d9e554a3d 6.00kB / 6.00kB                                                                                                                                     2.4s</span><br><span class="line"> =&gt; =&gt; sha256:4891bd3d558454877bdeda559053c38c4eb0914be411e8153d04869e12a7e57f 3.53MB / 3.53MB                                                                                                                                     5.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:d8c681bc2183ac2de0b5e117ed74647ee5dfbdbf8a3730ac81c54f3b3db989f7                                                                                                                                          1.7s</span><br><span class="line"> =&gt; =&gt; extracting sha256:c7f1ca1171d975af881f16ba8005f599918648448f8d9b0be5436dd8ba3bf1f0                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:dc9256fcea2e541f17f0ed7d4dae23c03fb27a5ab8e7611e34f5a5e4d96d6678                                                                                                                                          0.5s</span><br><span class="line"> =&gt; =&gt; extracting sha256:b30f4df9527b7a4e63e7ba55184dd0e2d6b3060326d5686465169864f141e014                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:cf7bc792610be9a3ab6a74d487203a66cd6115eb40469cc6b44a38ff67383577                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:63f470fc1d34a37ea09d36f72e4d575ad49412e0d74143bd9fcbaf0d9e554a3d                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:4891bd3d558454877bdeda559053c38c4eb0914be411e8153d04869e12a7e57f                                                                                                                                          0.5s</span><br><span class="line"> =&gt; [internal] load build context                                                                                                                                                                                                  0.0s</span><br><span class="line"> =&gt; =&gt; transferring context: 3.52kB                                                                                                                                                                                                0.0s</span><br><span class="line"> =&gt; [2/3] COPY config.json /app/genshincheckinhelper/config/config.example.json                                                                                                                                                    0.2s</span><br><span class="line"> =&gt; [3/3] COPY custom.py /usr/local/lib/python3.10/site-packages/onepush/providers/custom.py                                                                                                                                       0.0s</span><br><span class="line"> =&gt; exporting to image                                                                                                                                                                                                             0.1s</span><br><span class="line"> =&gt; =&gt; exporting layers                                                                                                                                                                                                            0.0s</span><br><span class="line"> =&gt; =&gt; writing image sha256:d0c4ec4578025fb0a490beb567b760f8b1728c1a6545e4b35d8d18e581c71bbe                                                                                                                                       0.0s</span><br><span class="line"> =&gt; =&gt; naming to registry.cn-shanghai.aliyuncs.com/vaulka/genshinhelper:2.0.5_2021-12-29                                                                                                                                          0.0s</span><br><span class="line"></span><br><span class="line">Use &#x27;docker scan&#x27; to run Snyk tests against images to find vulnerabilities and learn how to fix them</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="容器生命周期"><a href="#容器生命周期" class="headerlink" title="容器生命周期"></a>容器生命周期</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641265787846.png"
+                      alt="docker容器生命周期"
+                ></p>
+<h1 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a><a name="Dockerfile">Dockerfile</a></h1><p><a class="link"   href="https://docs.docker.com/engine/reference/builder/" >官方 Dockerfile 参考资料 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h1 id="Docker-Swarm-实战"><a href="#Docker-Swarm-实战" class="headerlink" title="Docker Swarm 实战"></a>Docker Swarm 实战</h1><h2 id="初始化-Docker-Swarm-集群"><a href="#初始化-Docker-Swarm-集群" class="headerlink" title="初始化 Docker Swarm 集群"></a>初始化 Docker Swarm 集群</h2><blockquote>
+<p>WARN</p>
+<p>主节点执行 <code>docker swarm init</code> 命令。</p>
+<blockquote>
+<p>主节点执行完命令后，控制台会打印 <code>docker swarm join --token xxx</code> 命令。从节点拷贝过去执行。（这里做演示，只采用单节点）</p>
+</blockquote>
+<p>从节点执行 <code>docker swarm join --token xxx</code> 命令。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker swarm init</span></span><br><span class="line"></span><br><span class="line">Swarm initialized: current node (4pjwzxpn29q2bq26b15pp1kp6) is now a manager.</span><br><span class="line"></span><br><span class="line">To add a worker to this swarm, run the following command:</span><br><span class="line"></span><br><span class="line">    docker swarm join --token SWMTKN-1-2v7325r8rvpmop0dvm42s8ac9gtt7bbpns6cadtr9836o0q5d0-5pnd2cy6m9ug102kolahyatcm 192.168.65.3:2377</span><br><span class="line"></span><br><span class="line">To add a manager to this swarm, run &#x27;docker swarm join-token manager&#x27; and follow the instructions.</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="创建-Swarm-网络"><a href="#创建-Swarm-网络" class="headerlink" title="创建 Swarm 网络"></a>创建 Swarm 网络</h2><p>在 Docker Swarm 部署中，如不指定网络，则每个服务默认会创建一个默认网络，如果有不同的服务需要互通，则会互通失败。所以创建一个 Swarm 网络，后续将服务加入进去。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641633942857.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker network create -d overlay --attachable global</span></span><br><span class="line"></span><br><span class="line">34p2q5z8oup6mzdqzjcno10aq</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="构建前端工程"><a href="#构建前端工程" class="headerlink" title="构建前端工程"></a>构建前端工程</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641634424562.png"
+                      alt="image.png"
+                ></p>
+<p>文件目录层级</p>
+<ul>
+<li>nginx<ul>
+<li>conf<ul>
+<li>springboot.conf</li>
+</ul>
+</li>
+<li>docker.Dockerfile</li>
+<li>build.sh</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh build.sh</span></span><br><span class="line"></span><br><span class="line">[+] Building 8.6s (7/7) FINISHED                                                                                                                                                                                                                        </span><br><span class="line"> =&gt; [internal] load build definition from docker.Dockerfile                                                                                                                                                                                        0.0s</span><br><span class="line"> =&gt; =&gt; transferring dockerfile: 102B                                                                                                                                                                                                               0.0s</span><br><span class="line"> =&gt; [internal] load .dockerignore                                                                                                                                                                                                                  0.0s</span><br><span class="line"> =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                                    0.0s</span><br><span class="line"> =&gt; [internal] load metadata for docker.io/library/nginx:1.21.5-alpine                                                                                                                                                                             4.8s</span><br><span class="line"> =&gt; [internal] load build context                                                                                                                                                                                                                  0.0s</span><br><span class="line"> =&gt; =&gt; transferring context: 460B                                                                                                                                                                                                                  0.0s</span><br><span class="line"> =&gt; [1/2] FROM docker.io/library/nginx:1.21.5-alpine@sha256:eb05700fe7baa6890b74278e39b66b2ed1326831f9ec3ed4bdc6361a4ac2f333                                                                                                                       3.7s</span><br><span class="line"> =&gt; =&gt; resolve docker.io/library/nginx:1.21.5-alpine@sha256:eb05700fe7baa6890b74278e39b66b2ed1326831f9ec3ed4bdc6361a4ac2f333                                                                                                                       0.0s</span><br><span class="line"> =&gt; =&gt; sha256:eb05700fe7baa6890b74278e39b66b2ed1326831f9ec3ed4bdc6361a4ac2f333 1.65kB / 1.65kB                                                                                                                                                     0.0s</span><br><span class="line"> =&gt; =&gt; sha256:544ba2bfe312bf2b13278495347bb9381ec342e630bcc8929af124f1291784bb 1.57kB / 1.57kB                                                                                                                                                     0.0s</span><br><span class="line"> =&gt; =&gt; sha256:f3322597df46099a66ed5773c10a9d1cb587faca7be14ceba985e3d1fbfdbc36 7.35MB / 7.35MB                                                                                                                                                     3.0s</span><br><span class="line"> =&gt; =&gt; sha256:d09cf91cabdcf5f64672598b8e4da9b0b7d8546e83ec49633bdd92abb994ba61 602B / 602B                                                                                                                                                         1.5s</span><br><span class="line"> =&gt; =&gt; sha256:cc44224bfe208a46fbc45471e8f9416f66b75d6307573e29634e7f42e27a9268 8.89kB / 8.89kB                                                                                                                                                     0.0s</span><br><span class="line"> =&gt; =&gt; sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 2.82MB / 2.82MB                                                                                                                                                     1.5s</span><br><span class="line"> =&gt; =&gt; extracting sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3                                                                                                                                                          0.1s</span><br><span class="line"> =&gt; =&gt; sha256:3a97535ac2efcf94ab3e5f93a6ec4d934469de66909f17ba1229f86ee660970a 895B / 895B                                                                                                                                                         1.9s</span><br><span class="line"> =&gt; =&gt; sha256:919ade35f869e23d663ea51fdf2e99aa183239a73b4b4780e052c8b248ed5b7e 668B / 668B                                                                                                                                                         2.0s</span><br><span class="line"> =&gt; =&gt; sha256:40e5d2fe5bcd566dbde3e961f33ced0f1503fc6ee320a427b185a07afe2f96ae 1.40kB / 1.40kB                                                                                                                                                     2.4s</span><br><span class="line"> =&gt; =&gt; extracting sha256:f3322597df46099a66ed5773c10a9d1cb587faca7be14ceba985e3d1fbfdbc36                                                                                                                                                          0.3s</span><br><span class="line"> =&gt; =&gt; extracting sha256:d09cf91cabdcf5f64672598b8e4da9b0b7d8546e83ec49633bdd92abb994ba61                                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:3a97535ac2efcf94ab3e5f93a6ec4d934469de66909f17ba1229f86ee660970a                                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:919ade35f869e23d663ea51fdf2e99aa183239a73b4b4780e052c8b248ed5b7e                                                                                                                                                          0.0s</span><br><span class="line"> =&gt; =&gt; extracting sha256:40e5d2fe5bcd566dbde3e961f33ced0f1503fc6ee320a427b185a07afe2f96ae                                                                                                                                                          0.0s</span><br><span class="line"> =&gt; [2/2] COPY /conf etc/nginx/conf.d                                                                                                                                                                                                              0.0s</span><br><span class="line"> =&gt; exporting to image                                                                                                                                                                                                                             0.0s</span><br><span class="line"> =&gt; =&gt; exporting layers                                                                                                                                                                                                                            0.0s</span><br><span class="line"> =&gt; =&gt; writing image sha256:c0ad17b109cd4dc69539d0c10ded7c28a8971c0f7c9f10d0cb35b92b4609d3e7                                                                                                                                                       0.0s</span><br><span class="line"> =&gt; =&gt; naming to docker.io/library/ireadyit-nginx:prod-1.0.0                                                                                                                                                                                       0.0s</span><br><span class="line"></span><br><span class="line">Use &#x27;docker scan&#x27; to run Snyk tests against images to find vulnerabilities and learn how to fix them</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="构建后端工程"><a href="#构建后端工程" class="headerlink" title="构建后端工程"></a>构建后端工程</h2><blockquote>
+<p>springBoot 项目可借助 Google Jib 插件构建镜像</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641635082632.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./gradlew jibDockerBuild</span> </span><br><span class="line"></span><br><span class="line">Welcome to Gradle 7.3.2!</span><br><span class="line"></span><br><span class="line">Here are the highlights of this release:</span><br><span class="line"> - Easily declare new test suites in Java projects</span><br><span class="line"> - Support for Java 17</span><br><span class="line"> - Support for Scala 3</span><br><span class="line"></span><br><span class="line">For more details see https://docs.gradle.org/7.3.2/release-notes.html</span><br><span class="line"></span><br><span class="line">Starting a Gradle Daemon, 1 incompatible Daemon could not be reused, use --status for details</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Task :jibDockerBuild</span></span><br><span class="line"></span><br><span class="line">Containerizing application to Docker daemon as ireadyit-springboot, ireadyit-springboot:prod-1.1.0...</span><br><span class="line">Base image &#x27;registry.cn-shanghai.aliyuncs.com/vaulka/openjdk11-openj9:jre&#x27; does not use a specific image digest - build may not be reproducible</span><br><span class="line">The base image requires auth. Trying again for registry.cn-shanghai.aliyuncs.com/vaulka/openjdk11-openj9:jre...</span><br><span class="line">The credential helper (docker-credential-desktop) has nothing for server URL: registry.cn-shanghai.aliyuncs.com</span><br><span class="line"></span><br><span class="line">Got output:</span><br><span class="line"></span><br><span class="line">credentials not found in native keychain</span><br><span class="line"></span><br><span class="line">Using base image with digest: sha256:fc6a99645bf7371e8027b89fa9bd7562d52b30e1640a2313562d18bb02b38cb3</span><br><span class="line"></span><br><span class="line">Container entrypoint set to [java, -Xms330M, -Xmx512M, -Xmn100M, -XX:MetaspaceSize=100M, -XX:MaxDirectMemorySize=64M, -Dspring.profiles.active=prod, -Xshareclasses, -Xquickstart, -Duser.timezone=GMT+08, -Djava.security.egd=file:/dev/./urandom, -cp, @/app/jib-classpath-file, com.ireadyit.docker.Application]</span><br><span class="line"></span><br><span class="line">Built image to Docker daemon as ireadyit-springboot, ireadyit-springboot:prod-1.1.0</span><br><span class="line">Executing tasks:</span><br><span class="line">[==============================] 100.0% complete</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 11s</span><br><span class="line">3 actionable tasks: 2 executed, 1 up-to-date</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="部署-MySQL"><a href="#部署-MySQL" class="headerlink" title="部署 MySQL"></a>部署 MySQL</h2><h3 id="创建数据挂载文件夹"><a href="#创建数据挂载文件夹" class="headerlink" title="创建数据挂载文件夹"></a>创建数据挂载文件夹</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641635526147.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh init.sh</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641635585080.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh pull.sh</span></span><br><span class="line"></span><br><span class="line">Error: No such image: mysql:8.0</span><br><span class="line">8.0: Pulling from library/mysql</span><br><span class="line">72a69066d2fe: Pull complete </span><br><span class="line">93619dbc5b36: Pull complete </span><br><span class="line">99da31dd6142: Pull complete </span><br><span class="line">626033c43d70: Pull complete </span><br><span class="line">37d5d7efb64e: Pull complete </span><br><span class="line">ac563158d721: Pull complete </span><br><span class="line">d2ba16033dad: Pull complete </span><br><span class="line">688ba7d5c01a: Pull complete </span><br><span class="line">00e060b6d11d: Pull complete </span><br><span class="line">1c04857f594f: Pull complete </span><br><span class="line">4d7cfa90e6ea: Pull complete </span><br><span class="line">e0431212d27d: Pull complete </span><br><span class="line">Digest: sha256:e9027fe4d91c0153429607251656806cc784e914937271037f7738bd5b8e7709</span><br><span class="line">Status: Downloaded newer image for mysql:8.0</span><br><span class="line">docker.io/library/mysql:8.0</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="部署服务"><a href="#部署服务" class="headerlink" title="部署服务"></a>部署服务</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641635782084.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh start.sh</span></span><br><span class="line"></span><br><span class="line">Creating service mysql_mysql</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>服务名称组成：<code>stack指令定义的stack名称</code>_<code>yml定义服务名称</code></p>
+</blockquote>
+<h2 id="部署后端工程"><a href="#部署后端工程" class="headerlink" title="部署后端工程"></a>部署后端工程</h2><h3 id="部署服务-1"><a href="#部署服务-1" class="headerlink" title="部署服务"></a>部署服务</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641636413731.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh start.sh</span></span><br><span class="line"></span><br><span class="line">Creating service springboot_springboot</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="部署前端工程"><a href="#部署前端工程" class="headerlink" title="部署前端工程"></a>部署前端工程</h2><h3 id="部署服务-2"><a href="#部署服务-2" class="headerlink" title="部署服务"></a>部署服务</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641636650278.png"
+                      alt="image.png"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sh start.sh</span></span><br><span class="line"></span><br><span class="line">Creating service nginx_nginx</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="验证服务"><a href="#验证服务" class="headerlink" title="验证服务"></a>验证服务</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641636754676.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1641637064512.png"
+                      alt="image.png"
+                ></p>
+<p>通过请求验证出服务已连通并且可用。</p>
+<p>服务之间通过服务名称，即可互相访问，这是由于 Docker DNS server 将服务名称解析成容器内的 IP 实现的。</p>
+<h2 id="Docker-Swarm-集群服务拓扑图"><a href="#Docker-Swarm-集群服务拓扑图" class="headerlink" title="Docker Swarm 集群服务拓扑图"></a>Docker Swarm 集群服务拓扑图</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/Docker%20Architecture.png"
+                      alt="Docker Swarm 集群服务拓扑图"
+                ></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><blockquote>
+<p>参考资料</p>
+<p><a class="link"   href="https://docs.docker.com/" >Docker Documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="https://kubernetes.io/zh/docs/concepts/overview/what-is-kubernetes/" >Kubernetes 是什么？ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="https://blog.csdn.net/weixx3/article/details/102579685" >Docker 概念术语 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="https://www.runoob.com/docker/docker-command-manual.html" >Docker 命令大全 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Swarm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Markdown 写作技巧</title>
+    <url>/markdown-study/</url>
+    <content><![CDATA[<h1 id="什么是-Markdown"><a href="#什么是-Markdown" class="headerlink" title="什么是 Markdown"></a>什么是 Markdown</h1><p>Markdown 是一种轻量级的标记语言，由 John Gruber 创造。它通过易于理解的简单符号标记文本中的样式和格式。通过 Markdown 可以轻松地将纯文本转换为HTML、PDF等多种格式。Markdown 的文本格式化符号集中在几个核心特性上，包括：标题、段落、引用、列表、链接、图片、粗体、斜体、代码块等。</p>
+<h1 id="为什么学习-Markdown"><a href="#为什么学习-Markdown" class="headerlink" title="为什么学习 Markdown"></a>为什么学习 Markdown</h1><p>Markdown 具有简单易学、通用性强、可读性好、可移植性高的特点，因此它被广泛应用于各种场合。下面列举一些应用案例：</p>
+<ol>
+<li><strong>GitHub 管理项目文档：</strong> GitHub 是全球最大的开源社区之一，支持 Markdown 格式的 <a class="link"   href="http://readme.md/" >README.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 文件。开发者可以使用 Markdown 来撰写使用文档，介绍项目、安装、运行步骤等相关信息。</li>
+<li><strong>知识库和文档管理：</strong> 很多企业内部都会建立知识库或者文档管理系统，这些文档内容需要清晰明了，并且容易整理分类。使用 Markdown 进行编写，不仅方便快捷，还能够有效降低由于排版不良导致的阅读障碍。</li>
+<li><strong>博客和网页排版：</strong> 使用 Markdown 编辑器可以方便快捷地撰写博客，利用 Markdown 格式进行排版，文章排版清晰整洁。很多博客平台（如Hexo、Jekyll等）都支持 Markdown 格式的文章。</li>
+<li><strong>微信公众号排版：</strong> 微信公众号编辑器也支持 Markdown 语法，在使用工具编辑的时候，选择“Markdown 模式”，就可以使用 Markdown 编辑器写作，使文章排版更加美观。</li>
+<li><strong>邮件的撰写：</strong> 在使用邮件进行沟通的过程中，常常需要添加链接、图片、代码块等元素。此时，使用 Markdown 格式对这些元素进行标注，既方便快捷，也使得邮件更加整洁。</li>
+</ol>
+<h1 id="Markdown-使用姿势"><a href="#Markdown-使用姿势" class="headerlink" title="Markdown 使用姿势"></a>Markdown 使用姿势</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>在文本前面添加 # 号，数量表示标题的级别，如 # 表示一级标题，## 表示二级标题，以此类推。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="段落内换行"><a href="#段落内换行" class="headerlink" title="段落内换行"></a>段落内换行</h2><p>在一个段落中插入一个换行符，需要在行尾加上两个空格（或者使用 <code>&lt;br&gt;</code> 标签）。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">这是第一行。  </span><br><span class="line">这是第二行。</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>无序列表以 - 或 * 开头。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">- 无序列表1</span><br><span class="line">- 无序列表2</span><br><span class="line">- 无序列表3</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>有序列表以数字加 . 开头。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 有序列表1</span><br><span class="line">2. 有序列表2</span><br><span class="line">3. 有序列表3</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用使用 &gt; 符号。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; 这是引用的内容。</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="链接和图片"><a href="#链接和图片" class="headerlink" title="链接和图片"></a>链接和图片</h2><p>链接和图片需要使用 [] 和 () 包裹起来。</p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[链接文字](链接地址)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">![图片替代文字](图片链接地址)</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="粗体和斜体"><a href="#粗体和斜体" class="headerlink" title="粗体和斜体"></a>粗体和斜体</h2><p>使用 * 或 _ 表示不同的样式。</p>
+<h3 id="粗体"><a href="#粗体" class="headerlink" title="粗体"></a>粗体</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">**这是粗体**</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>在 Markdown 中添加代码块使用 &#96;&#96; 或 &#96;&#96;&#96; 进行包裹，并指定代码类型。</p>
+<h3 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">`print(&quot;Hello, world!&quot;)`</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="代码块-1"><a href="#代码块-1" class="headerlink" title="代码块"></a>代码块</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">```python</span><br><span class="line">import numpy as np</span><br><span class="line">a = np.array([1, 2, 3])</span><br><span class="line">print(a)</span><br><span class="line">```</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>可以使用三个或更多的 * 或 - 来创建分隔线。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">***</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>除了上述 Markdown 语法外，Markdown 还支持 HTML 代码的使用。</p>
+<p>例如，在 Markdown 文件中嵌入一张图片：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=&quot;https://example.com/image.jpg&quot; alt=&quot;图片描述&quot;&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>在 Markdown 文件中插入一个视频：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;video src=&quot;https://example.com/video.mp4&quot; controls&gt;&lt;/video&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>Markdown 支持表格的创建，其格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">| 表头1 | 表头2 | 表头3 |</span><br><span class="line">| ----- | ----- | ----- |</span><br><span class="line">| 内容1 | 内容2 | 内容3 |</span><br><span class="line">| 内容4 | 内容5 | 内容6 |</span><br></pre></td></tr></table></figure></div>
+
+<p>其中，使用 | 来分割列，使用 - 来分割表头和内容，冒号可以用来表示对齐方式。例如：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">| 左对齐   | 居中     | 右对齐   |</span><br><span class="line">| :----- | :----: | ----: |</span><br><span class="line">| 内容1    | 内容2   | 内容3 |</span><br><span class="line">| 内容4    | 内容5   | 内容6 |</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h2><p>Markdown 支持任务列表的创建，其格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">- [ ] 未完成任务</span><br><span class="line">- [x] 已完成任务</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>注释在 Markdown 中使用 HTML 标签的形式实现：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 这是注释 --&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>Markdown 会自动识别以 http 或 https 开头的网址，并且将它们转换为链接。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.google.com</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><p>脚注在 Markdown 中使用类似于参考文献的形式，其格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">这是一个脚注[^1]</span><br><span class="line"></span><br><span class="line">[^1]: 这是脚注的内容。</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>在 Markdown 中创建目录有两种方法，分别是使用 HTML 标签和使用 Markdown 扩展语法。</p>
+<p>使用 HTML 标签：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 目录开始 --&gt;</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">  &lt;li&gt;&lt;a href=&quot;#title1&quot;&gt;标题1&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;&lt;a href=&quot;#title2&quot;&gt;标题2&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br><span class="line">&lt;!-- 目录结束 --&gt;</span><br><span class="line"></span><br><span class="line"># 标题1</span><br><span class="line">这是内容。</span><br><span class="line"></span><br><span class="line"># 标题2</span><br><span class="line">这是内容。</span><br></pre></td></tr></table></figure></div>
+
+<p>使用 Markdown 扩展语法：</p>
+<p>安装支持该语法的编辑器或者扩展，然后在 Markdown 文件的开头添加如下内容：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[TOC]</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="LaTeX-公式"><a href="#LaTeX-公式" class="headerlink" title="LaTeX 公式"></a>LaTeX 公式</h2><p>Markdown 支持 LaTeX 公式的添加，使用 <code>$</code> 或 <code>$$</code> 包裹公式即可。</p>
+<p>例如：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$E=mc^2$</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">\frac&#123;1&#125;&#123;n^&#123;2&#125;&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>Markdown 支持使用 ~~ 表示删除线。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">~~这是删除线的内容~~</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p>Markdown 支持使用 Emoji 表情符号，通过添加冒号 : 来完成。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">:smile:</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>如果需要在 Markdown 中插入某些特殊字符（如 <code>*</code>、<code>_</code> 等），需要使用反斜杠 <code>\</code> 进行转义。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">\*这是星号\*</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h2><p>在 Markdown 中创建锚点有两种方法，分别是使用 HTML 标签和使用 Markdown 扩展语法。</p>
+<p>使用 HTML 标签：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a name=&quot;anchor&quot;&gt;xxx&lt;/a&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>使用 Markdown 扩展语法：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Title](#anchor)</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="自定义标题-ID"><a href="#自定义标题-ID" class="headerlink" title="自定义标题 ID"></a>自定义标题 ID</h2><p>Markdown 支持给标题自定义 ID，方便后续进行锚点链接。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">### 标题&#123;#custom-id&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="内容折叠"><a href="#内容折叠" class="headerlink" title="内容折叠"></a>内容折叠</h2><p>Markdown 支持使用 HTML 的 <code>&lt;details&gt;</code> 和 <code>&lt;summary&gt;</code> 标签来实现内容折叠。</p>
+<details>
+<summary>展开查看</summary>
+<pre><code>
+System.out.println("Hello to see U!");
+</code></pre>
+</details>
+
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+</search>

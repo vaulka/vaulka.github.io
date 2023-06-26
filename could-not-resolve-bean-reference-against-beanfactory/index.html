@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Vaulka">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+        
+            <link rel="preconnect" href="https://npm.elemecdn.com" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://www.vaulka.com/could-not-resolve-bean-reference-against-beanfactory/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="问题起因由于服务器资源紧张，想部署一台 ElasticSearch 给所有环境（开发环境、测试环境、生产环境…）使用。 因 ElasticSearch 中的索引概念对标 MySQL 中的数据库概念，所以想通过动态索引，进行区分不同环境之间的数据。比如文章，开发环境使用 local-article，测试环境使用 beta-article等等… 然后在使用 @Document 结合 SpEL 表达式动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory">
+<meta property="og:url" content="https://www.vaulka.com/could-not-resolve-bean-reference-against-beanfactory/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="问题起因由于服务器资源紧张，想部署一台 ElasticSearch 给所有环境（开发环境、测试环境、生产环境…）使用。 因 ElasticSearch 中的索引概念对标 MySQL 中的数据库概念，所以想通过动态索引，进行区分不同环境之间的数据。比如文章，开发环境使用 local-article，测试环境使用 beta-article等等… 然后在使用 @Document 结合 SpEL 表达式动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646358270091.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646359585829.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646360697539.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361093221.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361364003.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361913607.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362026592.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362218540.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363263800.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363556287.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363581063.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363869904.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363928524.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363905859.png">
+<meta property="article:published_time" content="2022-03-04T03:23:08.426Z">
+<meta property="article:modified_time" content="2023-06-26T02:22:55.303Z">
+<meta property="article:tag" content="ElasticSearch">
+<meta property="article:tag" content="SpEL">
+<meta property="article:tag" content="Spring Boot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646358270091.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory -
+        
+        Vaulka&#39;s blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/fonts.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/Satoshi/satoshi.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fonts/Chillax/chillax.css">
+    <!--- Font Part-->
+    
+        <link href="" rel="stylesheet">
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"www.vaulka.com","root":"/","language":"zh-CN","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"static","image":{"light":"https://cdn.jsdelivr.net/gh/vaulka/pic@main/wallpaper.4-253bbc0adef14eeeb5212b94f99ee5fb.webp","dark":"https://cdn.jsdelivr.net/gh/vaulka/pic@main/wallpaper.4-253bbc0adef14eeeb5212b94f99ee5fb.webp"},"title":"Hi,Friend","subtitle":{"text":["好久不見，今日營業中"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"4rem","subtitle_size":"1.5rem","line_height":0.8},"custom_font":{"enable":true,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"tags":{"path":"/tags/","icon":"fa-solid fa-tags"},"categories":{"path":"/categories/","icon":"fa-solid fa-folder"},"friends":{"icon":"fa-solid fa-link","path":"/links/"},"GitHub":{"icon":"fa-brands fa-github","path":"https://github.com/vaulka"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"YYYY-MM-DD","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/02/09 16:07:59"};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Vaulka&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/tags/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tags"></i>
+                                        
+                                        标签
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/categories/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-folder"></i>
+                                        
+                                        分类
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/links/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-link"></i>
+                                        
+                                        友情链接
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    target="_blank" rel="noopener" href="https://github.com/vaulka"  >
+                                    
+                                        
+                                            <i class="fa-brands fa-github"></i>
+                                        
+                                        GITHUB
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/tags/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tags"></i>
+                                
+                                标签
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/categories/"  >
+                             
+                                
+                                    <i class="fa-solid fa-folder"></i>
+                                
+                                分类
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/links/"  >
+                             
+                                
+                                    <i class="fa-solid fa-link"></i>
+                                
+                                友情链接
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        target="_blank" rel="noopener" href="https://github.com/vaulka"  >
+                             
+                                
+                                    <i class="fa-brands fa-github"></i>
+                                
+                                GITHUB
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/IMG_7805.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Vaulka</span>
+                            
+                                <span class="author-label">Lv2</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2022-03-04 11:23:08</span>
+        <span class="mobile">2022-03-04 11:23</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-06-26 10:22:55</span>
+            <span class="mobile">2023-06-26 10:22</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/ElasticSearch/">ElasticSearch</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/SpEL/">SpEL</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Spring-Boot/">Spring Boot</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>851 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h1><p>由于服务器资源紧张，想部署一台 <code>ElasticSearch</code> 给所有环境（开发环境、测试环境、生产环境…）使用。</p>
+<p>因 <code>ElasticSearch</code> 中的索引概念对标 <code>MySQL</code> 中的数据库概念，所以想通过动态索引，进行区分不同环境之间的数据。比如文章，开发环境使用 <code>local-article</code>，测试环境使用 <code>beta-article</code><br>等等…</p>
+<p>然后在使用 <code>@Document</code> 结合 <code>SpEL</code> 表达式动态创建索引时，报找不到 <code>bean</code> 👇</p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Could not resolve bean reference against BeanFactory</span><br><span class="line"></span><br><span class="line">Consider defining a bean named &#x27;xxx&#x27; in your configuration.</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="场景复现"><a href="#场景复现" class="headerlink" title="场景复现"></a>场景复现</h1><h2 id="使用动态索引"><a href="#使用动态索引" class="headerlink" title="使用动态索引"></a>使用动态索引</h2><p>在实体类标记 <code>@Document</code> 注解，需要指定 <code>indexName</code> 参数，该参数可通过 SpEL 表达式进行编写。以及 <code>createIndex</code><br>参数默认会自动创建索引。我在这里使用 <code>#&#123;@baseConfig.active&#125;-article</code> 进行编写。</p>
+<blockquote>
+<p>INFO</p>
+<p><code>SpEL</code> 表达式中，通过 <code>#&#123;@xxx&#125;</code> or <code>#&#123;@&#39;xxx&#39;&#125;</code> 来引用 <code>bean</code>，后续如果需要引用属性，可在通过 <code>.字段</code> 的方式实现。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646358270091.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646359585829.png"
+                      alt="image.png"
+                ></p>
+<p>在项目启动后，看到索引确实有动态创建。</p>
+<h2 id="启动报错"><a href="#启动报错" class="headerlink" title="启动报错"></a>启动报错</h2><p>后续笔者想到，<code>BaseConfig</code> 可以删除掉，因为之前自己写了一个外部依赖，也可以获取环境变量，故将 <code>SpEL</code> 表达式中的 <code>@baseConfig</code> 改成 <code>@systemConfig</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646360697539.png"
+                      alt="image.png"
+                ></p>
+<p>两个类差异如下：</p>
+<table>
+<thead>
+<tr>
+<th>SystemConfig</th>
+<th>BaseConfig</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外部 <code>spring.factories</code> 文件 <code>EnableAutoConfiguration</code> 自动装配的 <code>bean</code></td>
+<td>本工程下 <code>ComponentScan</code> 自动扫描包装配的 <code>bean</code></td>
+</tr>
+<tr>
+<td><code>bean</code> 名为 <code>systeonConfig</code></td>
+<td><code>bean</code> 名为 <code>baseConfig</code></td>
+</tr>
+</tbody></table>
+<p>后续执行启动，结果报错 👇</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361093221.png"
+                      alt="image.png"
+                ></p>
+<h2 id="排查错误"><a href="#排查错误" class="headerlink" title="排查错误"></a>排查错误</h2><p>笔者通过排除法进行排查错误，先从最基础的排错顺序依次排查。</p>
+<h3 id="是否没有装配该-bean-？"><a href="#是否没有装配该-bean-？" class="headerlink" title="是否没有装配该 bean ？"></a>是否没有装配该 bean ？</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361364003.png"
+                      alt="image.png"
+                ></p>
+<p>通过构造器注入 <code>bean</code>，调用接口 debug 排查时，确实有注入该 <code>bean</code>。 也就意味着该 <code>bean</code> 是有自动装配上的。</p>
+<h3 id="是否类名是关键词-x2F-敏感词，导致错误？"><a href="#是否类名是关键词-x2F-敏感词，导致错误？" class="headerlink" title="是否类名是关键词&#x2F;敏感词，导致错误？"></a>是否类名是关键词&#x2F;敏感词，导致错误？</h3><p>通过修改成其他类名，也一样是报错的情况，该步骤就不细讲。</p>
+<h3 id="排查-bean-创建过程"><a href="#排查-bean-创建过程" class="headerlink" title="排查 bean 创建过程"></a>排查 bean 创建过程</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646361913607.png"
+                      alt="image.png"
+                ></p>
+<p>通过错误日志得知，在创建最上层 <code>ConsoleArticleController</code> <code>bean</code> 时，就报错了，那么就追踪该 <code>bean</code> 的创建过程。</p>
+<ol>
+<li><code>Spring</code> 会调用 <code>org.springframework.beans.factory.support.AbstractBeanFactory#getBean(java.lang.Strin</code> 方法，进行创建 <code>bean</code>。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362026592.png"
+                      alt="image.png"
+                ></p>
+<ol start="2">
+<li>往内部接着 <code>debug</code>，会进入 <code>org.springframework.beans.factory.support.AbstractBeanFactory#markBeanAsCreated</code> 方法，<code>bean</code><br>如果没有创建的话，会进行创建。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646362218540.png"
+                      alt="image.png"
+                ></p>
+<ol start="3">
+<li>在这里注意到 <code>org.springframework.beans.factory.support.AbstractBeanFactory#mergedBeanDefinitions</code> 字段，该 <code>Map</code> 记录着 <code>bean</code><br>名到具体 <code>bean</code> 类。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363263800.png"
+                      alt="image.png"
+                ></p>
+<p>通过窥探得知：</p>
+<ul>
+<li><code>key</code> 是 <code>bean</code> 的名称，<code>value</code> 是具体的类。</li>
+<li>引用 <code>bean</code> 的话，是通过 <code>key</code> 获取的。</li>
+<li><code>key</code> 的由来，如果是 <code>ComponentScan</code> 扫描注册的 <code>bean</code>，那么只有一个类名，如果是通过 <code>EnableAutoConfiguration</code> 自动装配的 <code>bean</code> 那么就是全限定类名。</li>
+</ul>
+<p>结合之前的情况，<code>baseConfig</code> 获取的到 <code>bean</code>，<code>systemConfig</code> 获取不到 <code>bean</code>，会不会是这个 <code>key</code> 的问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363556287.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363581063.png"
+                      alt="image.png"
+                ></p>
+<p>故就是 <code>SpEL</code> 表达式引用 <code>bean</code> 时，写的是类名，而不是全限定类名，导致找不到该 <code>bean</code>。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363869904.png"
+                      alt="image.png"
+                ></p>
+<p>将该 <code>bean</code> 的类名改为全限定类名，后续启动验证，没有报错，并且成功创建动态索引。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363928524.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/vaulka/pic@main/image-1646363905859.png"
+                      alt="image.png"
+                ></p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>初期遇到该问题时困扰了一下午，一直在反复排查该 <code>bean</code> 是否有成功装配。后续通过深入 <code>bean</code> 创建过程以及结合 <code>SpEL</code> 表达式引用才定位到该问题的解决方案，收获颇丰。😊</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory</li>
+        <li><strong>作者:</strong> Vaulka</li>
+        <li><strong>创建于:</strong> 2022-03-04 11:23:08</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-06-26 10:22:55
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://vaulka.com/could-not-resolve-bean-reference-against-beanfactory/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/ElasticSearch/">#ElasticSearch</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/SpEL/">#SpEL</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/Spring-Boot/">#Spring Boot</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/hexo-flow-github-ci/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">使用 阿里云效、Github 部署 Hexo 安装以及使用教程</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/docker-study/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Docker 入门指北</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">ES 创建动态索引时，SpEL 表达式报错：Could not resolve bean reference against BeanFactory</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%B5%B7%E5%9B%A0"><span class="nav-text">问题起因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%A4%8D%E7%8E%B0"><span class="nav-text">场景复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E7%B4%A2%E5%BC%95"><span class="nav-text">使用动态索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99"><span class="nav-text">启动报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5%E9%94%99%E8%AF%AF"><span class="nav-text">排查错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E6%B2%A1%E6%9C%89%E8%A3%85%E9%85%8D%E8%AF%A5-bean-%EF%BC%9F"><span class="nav-text">是否没有装配该 bean ？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E7%B1%BB%E5%90%8D%E6%98%AF%E5%85%B3%E9%94%AE%E8%AF%8D-x2F-%E6%95%8F%E6%84%9F%E8%AF%8D%EF%BC%8C%E5%AF%BC%E8%87%B4%E9%94%99%E8%AF%AF%EF%BC%9F"><span class="nav-text">是否类名是关键词&#x2F;敏感词，导致错误？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5-bean-%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-text">排查 bean 创建过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-text">问题解决</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-text">结语</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Vaulka</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.1</a>
+        </div>
+        
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/utils.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/main.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/navbarShrink.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/scrollTopBottom.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/Typed.min.js"></script>
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/tools/tocToggle.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/anime.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/layouts/toc.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.2.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
