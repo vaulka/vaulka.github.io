@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0d2928">
 <meta name="description" content="12 周减脂与首个引体向上训练执行手册：周计划、饮食、采购、备餐与监测。">
-<title>减脂 · 引体执行手册 V13</title>
+<title>减脂 · 引体执行手册 V14</title>
 <style>
   :root{
     --page:#f2f1eb;
@@ -52,9 +52,20 @@
   .today-eyebrow{color:var(--swim);font:800 10px/1 var(--mono);letter-spacing:.16em}
   .today-title{margin:8px 0 4px;font-family:var(--serif);font-size:27px;line-height:1.25}
   .today-type{margin:0;color:var(--muted);font-size:13px}
-  .today-next{display:block;margin:17px 0 14px;padding:12px 13px;border-radius:13px;background:rgba(255,255,255,.8);font-size:13.5px}
-  .today-next span{color:var(--recover);font:800 10px/1 var(--mono);letter-spacing:.08em}
-  .today-next b{font-size:13.5px}
+  .today-next{display:block;margin:17px 0 11px;padding:15px;border:1px solid rgba(121,104,166,.16);border-radius:15px;background:rgba(255,255,255,.86);font-size:13.5px}
+  .next-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+  .next-meta span{color:var(--recover);font:800 10px/1 var(--mono);letter-spacing:.12em}
+  .next-meta em{color:var(--muted);font:650 10.5px/1 var(--mono);font-style:normal}
+  .next-main{display:flex;align-items:baseline;gap:11px;min-width:0}
+  .next-main b{flex:0 0 auto;color:var(--deep);font:800 12px/1.3 var(--mono)}
+  .next-main strong{min-width:0;font-size:15px;line-height:1.5}
+  .progress-track{height:5px;margin:13px 0 12px;overflow:hidden;border-radius:999px;background:#e8ece7}
+  .progress-track i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--swim),#67bda8);transition:width .25s ease}
+  .next-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .next-actions button{min-height:38px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font:700 12px var(--sans);cursor:pointer}
+  .next-actions .primary{border-color:var(--deep);background:var(--deep);color:#fff}
+  .next-actions button:disabled{cursor:default;opacity:.5}
+  .save-note{margin:0 0 13px;color:var(--muted);font-size:11.5px}
   .today-link{display:inline-flex;align-items:center;min-height:40px;padding:8px 13px;border-radius:11px;background:var(--deep);color:#fff;font-size:12.5px;font-weight:700;text-decoration:none}
   .today-link::after{content:"→";margin-left:8px}
 
@@ -148,6 +159,18 @@
   .tg.walk{background:var(--walk)} .tg.zz{background:var(--rest)} .tg.out{background:var(--free)} .tg.recover{background:var(--recover)}
   .ev .tx{padding-top:1px;font-size:14px;line-height:1.58}
   .ev .tx small{display:block;margin-top:2px;color:var(--muted);font-size:12px;line-height:1.5}
+  .day.is-today-plan{border-color:#b8d7cc;box-shadow:0 15px 38px rgba(13,129,120,.12)}
+  .tl.checkable::before{left:124px}
+  .tl.checkable .ev{grid-template-columns:30px 65px 40px minmax(0,1fr);transition:opacity .18s ease,background .18s ease,box-shadow .18s ease}
+  .done-toggle{position:relative;z-index:2;display:grid;place-items:center;width:27px;height:27px;margin-top:0;border:1.5px solid #a9b9b4;border-radius:9px;background:#fff;color:#fff;cursor:pointer;transition:background .16s ease,border-color .16s ease,transform .16s ease}
+  .done-toggle::before{content:"✓";font:800 14px/1 var(--sans);opacity:0;transform:scale(.6);transition:opacity .16s ease,transform .16s ease}
+  .done-toggle:hover{transform:translateY(-1px);border-color:var(--swim)}
+  .ev.completed{opacity:.5}
+  .ev.completed .done-toggle{border-color:var(--swim);background:var(--swim)}
+  .ev.completed .done-toggle::before{opacity:1;transform:scale(1)}
+  .ev.completed .tx{text-decoration:line-through;text-decoration-color:rgba(21,42,42,.55);text-decoration-thickness:1.5px}
+  .ev.is-next{margin-inline:-9px;padding-inline:9px;border-radius:12px;background:#edf6f2;box-shadow:inset 4px 0 0 var(--swim)}
+  .ev.is-next .done-toggle{border-color:var(--swim);box-shadow:0 0 0 4px rgba(13,129,120,.1)}
 
   .tbl-wrap{margin:8px 0 15px;overflow-x:auto;border:1px solid var(--line);border-radius:13px;background:#fff;overscroll-behavior-inline:contain}
   table{width:100%;min-width:610px;margin:0;border-collapse:collapse;font-size:13.5px}
@@ -247,6 +270,14 @@
     .ev .tg{border-width:3px;border-radius:8px;font-size:9px}
     .ev .tx{font-size:13.5px;line-height:1.55}
     .ev .tx small{font-size:11.5px}
+    .tl.checkable::before{left:96px}
+    .tl.checkable .ev{grid-template-columns:28px 46px 31px minmax(0,1fr);gap:7px}
+    .done-toggle{width:25px;height:25px;border-radius:8px}
+    .ev.is-next{margin-inline:-6px;padding-inline:6px}
+    .next-main{align-items:flex-start;flex-direction:column;gap:4px}
+    .next-main strong{font-size:14px}
+    .next-actions{display:grid;grid-template-columns:1fr 1fr}
+    .next-actions button{width:100%;padding-inline:8px}
     .tbl-wrap{overflow:visible;border:0;background:transparent}
     table{display:block;min-width:0;font-size:13px}
     table>tbody,table>tbody>tr,table>tr{display:block}
@@ -272,6 +303,8 @@
     .day .inner{padding-inline:11px}
     .ev{grid-template-columns:43px 29px minmax(0,1fr);gap:6px}
     .tl::before{left:57px}
+    .tl.checkable::before{left:91px}
+    .tl.checkable .ev{grid-template-columns:28px 43px 29px minmax(0,1fr);gap:6px}
   }
 
   @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
@@ -324,7 +357,13 @@
   <div class="today-panel">
     <div><span class="tag">TODAY</span><p class="today-eyebrow">今天先看这一张</p><h2 id="todayTitle" class="today-title">正在读取今天的计划</h2></div>
     <p id="todayType" class="today-type">训练与饮食会自动按星期显示</p>
-    <p id="todayNext" class="today-next">时间都按窗口执行，前后浮动一小时没有关系。</p>
+    <div id="todayNext" class="today-next" aria-live="polite">
+      <div class="next-meta"><span>下一步</span><em id="todayProgressText">正在读取今日进度</em></div>
+      <div class="next-main"><b id="nextTime">--:--</b><strong id="nextAction">正在读取下一件事</strong></div>
+      <div class="progress-track" aria-hidden="true"><i id="progressFill"></i></div>
+      <div class="next-actions"><button type="button" class="primary" id="completeNext">✓ 完成这个</button><button type="button" id="locateNext">定位到时间线</button></div>
+    </div>
+    <p class="save-note">完成状态按日期保存在当前浏览器；点已勾选的方框可以撤销。Mac 与 iPhone 暂不互相同步。</p>
     <a id="todayPlanLink" class="today-link" href="#overview">打开今天完整安排</a>
   </div>
 </section>
@@ -409,6 +448,7 @@
         <div class="ev"><div class="tm">8:18</div><div class="tg eat">煮</div><div class="tx">鸡蛋捞出泡凉水；冻西兰花 1 把同锅再烫 2 分钟</div></div>
         <div class="ev"><div class="tm">8:20</div><div class="tg zz">备</div><div class="tx">早餐：蛋 3 + 奶 2 盒 + 玉米 1；热的红薯和西兰花先单独装盒、开一条缝散热；昨晚冷藏鸡腿保持在另一个小盒<small>不要把热食立即密封在冷鸡腿上；出门前再盖好</small></div></div>
         <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">带玉米 1 + 奶 1 + 坚果 25g + 香蕉、水壶；到公司先把午餐盒和玉米放进冰箱<small>奶是常温奶、坚果不用冷藏；路上避免放暴晒的车厢或后备箱</small></div></div>
+        <div class="ev"><div class="tm">10:30</div><div class="tg zz">温</div><div class="tx">从公司冰箱取出午餐盒，保持盖好回温 20–30 分钟<small>只是去掉冰冷口感，不要提前两小时拿出来</small></div></div>
       </div>
       <p class="note">周六日在家：同样一锅煮小红薯、蛋和玉米，只是不需要装盒。</p>
     </div>
@@ -433,7 +473,7 @@
       <ul>
         <li>看明天生料：蛋 3、玉米、红薯、坚果 25g；周一到周四再带香蕉</li>
         <li>煮明天鸡腿：平时 2 根；周六晚为周日煮 5 根。煮完再把下一晚要煮的生腿包从冷冻移到冷藏解冻</li>
-        <li>提醒自己：到公司第一件事，把鸡腿午餐盒和熟玉米放进冰箱</li>
+        <li>提醒自己：到公司第一件事，把鸡腿午餐盒和熟玉米放进冰箱；设好 10:30 回温提醒</li>
         <li>健身包：泳裤泳镜泳帽毛巾（力量日＋举铁衣鞋、弹力带）；水壶灌好</li>
       </ul>
       <p class="note">存放规则：生红薯按包装建议放阴凉处；生玉米、生蛋进冷藏；虾仁、西兰花和分装生鸡腿进冷冻；生鸡腿只在冰箱里解冻，不放台面。没有保温袋时，把从出门到公司冰箱的时间控制在 2 小时内；天气高于 32°C 时按 1 小时内执行。</p>
@@ -450,6 +490,7 @@
       <div class="ev"><div class="tm">8:00</div><div class="tg zz">起</div><div class="tx">起床 · 水 300ml · <b>早晨做饭 20 分钟</b><small>小红薯、玉米、鸡蛋一锅，见「做饭」①</small></div></div>
       <div class="ev"><div class="tm">8:20</div><div class="tg eat">吃</div><div class="tx">早餐：蛋 3 + 奶 2 盒 + 玉米 1</div></div>
       <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">午餐盒 + 熟玉米 + 坚果 + 香蕉水壶 → 出门<small>到公司第一件事：午餐盒和玉米进冰箱</small></div></div>
+      <div class="ev"><div class="tm">10:30</div><div class="tg zz">温</div><div class="tx">从公司冰箱取出午餐盒，保持盖好回温 20–30 分钟<small>11:00 直接吃；不需要加热，也不再放回冰箱</small></div></div>
       <div class="ev"><div class="tm">11:00</div><div class="tg eat">吃</div><div class="tx">午餐：红薯 + 昨晚鸡腿 2 + 西兰花</div></div>
       <div class="ev"><div class="tm">12:00</div><div class="tg walk">走</div><div class="tx">下楼走 30–40 分钟<small>走阴凉处，微汗即止，别汗透影响午睡</small></div></div>
       <div class="ev"><div class="tm">12:50</div><div class="tg zz">休</div><div class="tx">午休到 13:45</div></div>
@@ -477,12 +518,22 @@
 <section class="day" id="d24">
   <header><span class="plate">周二 · 周四</span><span class="badge swim">纯游 90分</span><span class="kcal">≈1700–1750千卡</span></header>
   <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3</b><b>坚果 25g</b><b>奶 ×4盒</b><b>玉米 ×3</b><b>红薯 ×1</b><b>鸡腿 ×2</b><b>虾仁 ×13</b><b>西兰花 ×2把</b><b>香蕉 ×1</b><i>白天作息、三餐和「一·三」完全一样，只有训练不同</i></div>
+    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3</b><b>坚果 25g</b><b>奶 ×4盒</b><b>玉米 ×3</b><b>红薯 ×1</b><b>鸡腿 ×2</b><b>虾仁 ×13</b><b>西兰花 ×2把</b><b>香蕉 ×1</b><i>白天与「一·三」相同；这里完整写出，方便当天逐项勾选</i></div>
     <div class="tl">
+      <div class="ev"><div class="tm">8:00</div><div class="tg zz">起</div><div class="tx">起床 · 水 300ml · 早晨一锅做饭 20 分钟</div></div>
+      <div class="ev"><div class="tm">8:20</div><div class="tg eat">吃</div><div class="tx">早餐：蛋 3 + 奶 2 盒 + 玉米 1</div></div>
+      <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">午餐盒 + 熟玉米 + 坚果 + 香蕉水壶 → 出门<small>到公司第一件事：午餐盒和玉米进冰箱</small></div></div>
+      <div class="ev"><div class="tm">10:30</div><div class="tg zz">温</div><div class="tx">从公司冰箱取出午餐盒，保持盖好回温 20–30 分钟</div></div>
+      <div class="ev"><div class="tm">11:00</div><div class="tg eat">吃</div><div class="tx">午餐：红薯 + 昨晚鸡腿 2 + 西兰花</div></div>
+      <div class="ev"><div class="tm">12:00</div><div class="tg walk">走</div><div class="tx">下楼走 30–40 分钟<small>走阴凉处，微汗即止</small></div></div>
+      <div class="ev"><div class="tm">12:50</div><div class="tg zz">休</div><div class="tx">午休到 13:45</div></div>
+      <div class="ev"><div class="tm">15:00</div><div class="tg eat">吃</div><div class="tx">加餐：坚果 25g + 玉米 1 + 奶 1 盒</div></div>
+      <div class="ev"><div class="tm">17:50</div><div class="tg eat">吃</div><div class="tx">香蕉 1 根<small>练前快碳</small></div></div>
       <div class="ev"><div class="tm">18:40</div><div class="tg swim">游</div><div class="tx">游泳 90 分钟 · 主项心率 140–150 · 约 4000m
         <details class="mini"><summary>四段结构</summary><div class="body">热身慢蛙 300m → <b>连续蛙泳 65 分钟</b>（每 500m 可扶边歇 20 秒）→ 自由泳 50m 全力 ×8 组（每组歇 30 秒，可冲到 165）→ 放松 200m</div></details>
       </div></div>
-      <div class="ev"><div class="tm">21:00–21:30</div><div class="tg eat">吃</div><div class="tx">到家一锅晚餐：玉米 + 虾仁 13 + 西兰花 + 奶；饭后煮明天鸡腿 2 根</div></div>
+      <div class="ev"><div class="tm">21:00–21:30</div><div class="tg eat">吃</div><div class="tx">到家一锅晚餐：玉米 + 虾仁 13 + 西兰花 + 奶</div></div>
+      <div class="ev"><div class="tm">饭后</div><div class="tg zz">备</div><div class="tx">煮明天鸡腿 2 根，稍散热后冷藏</div></div>
     </div>
     <p class="note"><b>周四是连续四天的最后一天</b>：肩膝有感觉，主项 65→50 分钟，明天休息。蛙泳游久膝盖内侧不适 → 一趟蛙一趟自由泳交替。</p>
     <details><summary>为什么主项不能游到心率 160</summary><div class="body">水里心率天然比陆地低约 10：水中 160 ≈ 陆上 170 ≈ 90% 最大心率，那个强度 18 分钟就得停。减脂看「强度 × 时长」的总量——游得稍慢但一直不停，才是赢法。心率怎么测见「名词卡」。</div></details>
@@ -496,6 +547,8 @@
     <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3</b><b>坚果 25g</b><b>奶 ×2盒</b><b>玉米 ×1</b><b>红薯 ×1</b><b>鸡腿 ×2</b><b>西兰花 ×1把</b><i>不带香蕉</i></div>
     <div class="tl">
       <div class="ev"><div class="tm">8:00</div><div class="tg eat">吃</div><div class="tx">早晨做饭（量减半）→ 8:20 早餐：蛋 3 + 奶 2 + 玉米 1</div></div>
+      <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">带午餐盒到公司，第一时间放进冰箱</div></div>
+      <div class="ev"><div class="tm">10:30</div><div class="tg zz">温</div><div class="tx">从公司冰箱取出午餐盒，保持盖好回温 20–30 分钟</div></div>
       <div class="ev"><div class="tm">11:00</div><div class="tg eat">吃</div><div class="tx">午餐盒同平时：红薯 + 昨晚鸡腿 2 + 西兰花</div></div>
       <div class="ev"><div class="tm">15:00</div><div class="tg eat">吃</div><div class="tx">坚果 25g<small>约会晚餐较晚时尤其别省</small></div></div>
       <div class="ev"><div class="tm">白天</div><div class="tg walk">走</div><div class="tx">不练，步数走到 8000<small>午间走路照旧</small></div></div>
@@ -610,7 +663,7 @@
   <details><summary><span class="no">e</span>「自由餐」</summary><div class="body">每周一顿不数热量、正常吃饱的饭（＝周六湘菜），作用是让计划能长期坚持。是「一顿」不是「一天」，且守点菜规则。</div></details>
   <details><summary><span class="no">f</span>「焯水」</summary><div class="body">肉冷水下锅、烧开煮 2 分钟、撇掉浮沫再冲净。去腥七成靠这一步，比任何调料都管用——本计划的鸡腿只靠「焯水 + 生抽盐姜」两步。</div></details>
   <details><summary><span class="no">g</span>为什么练了肚子还是最后瘦</summary><div class="body">脂肪分解是全身统一调度的，练哪里≠瘦哪里；肚子的脂肪细胞受体分布决定它「最先存、最后取」。顺序永远是脸→四肢→肚子。方法没错，坚持到第 8–12 周肚子才明显变化。</div></details>
-  <details><summary><span class="no">h</span>没有保温袋，怎么带到公司</summary><div class="body">昨晚鸡腿一直冷藏，早上出门时才取出；到公司第一件事连同熟玉米放进冰箱。一般把离开冷藏到重新入冰箱控制在 2 小时内；环境高于 32°C 时控制在 1 小时内。不要放暴晒车内或后备箱。常温奶与坚果不需要冷藏。</div></details>
+  <details><summary><span class="no">h</span>没有保温袋，怎么带到公司</summary><div class="body">昨晚鸡腿一直冷藏，早上出门时才取出；到公司第一件事连同熟玉米放进冰箱。一般把离开冷藏到重新入冰箱控制在 2 小时内；环境高于 32°C 时控制在 1 小时内。不要放暴晒车内或后备箱。10:30 再取出午餐盒、保持盖好回温 20–30 分钟，11:00 吃；这是为了减少冰冷口感，不需要长时间放在室温。常温奶与坚果不需要冷藏。</div></details>
 </section>
 
 <!-- ================= 决策档案 ================= -->
@@ -640,7 +693,7 @@
   <details class="dead"><summary><span class="no">15</span>麦当劳 1+1 替加餐——已移出计划</summary><div class="body">原规则：双吉+小玉米杯只替 15:00 加餐、当晚晚餐减量、每周 ≤2 次。<b>移出（2026-08-24）：</b>不留可选分支。真吃了就按原规则执行一次，别成常态。</div></details>
 
   <div class="dgroup">作息与流程类</div>
-  <details><summary><span class="no">16</span>午餐 11:00 自带 + 12:00 走路 30–40 分钟</summary><div class="body">把开车外食的 40 分钟死时间换成走路＋完整午休；饭后 45 分钟是控血糖走路最佳窗口；每天白捡 4000 步≈150 千卡。<b>何时改：</b>公司不方便工位吃饭则回退外食，走路保留。</div></details>
+  <details><summary><span class="no">16</span>10:30 午餐回温 + 11:00 吃 + 12:00 走路</summary><div class="body">午餐盒到公司后先冷藏，10:30 取出并保持盖好，回温 20–30 分钟后再吃，减少冰冷食物对肠胃的刺激感。把开车外食的时间换成走路和完整午休；12:00 走 30–40 分钟。<b>何时改：</b>公司不方便工位吃饭则回退外食，走路保留。</div></details>
   <details><summary><span class="no">17</span>加餐 15:00＝坚果 + 玉米 + 常温奶</summary><div class="body">11 点午餐到 18:40 训练间隔较长，中间保留一顿；坚果和常温奶无需冷藏，熟玉米到公司后进冰箱。17:50 香蕉仍是练前快碳，作用不同。</div></details>
   <details class="dead"><summary><span class="no">18</span>保温袋、冰袋和电热饭盒——目前都不买</summary><div class="body">公司有冰箱，通勤途中只要不超时，早到公司马上冷藏即可。秋冬想吃热饭再考虑电热饭盒；如果以后通勤经常超过 2 小时或需要在车里久放，再买保温袋和冰袋。</div></details>
   <details><summary><span class="no">19</span>晚餐在家现煮，放弃 9 点的自助</summary><div class="body">练完 9 点到自助只剩残菜；在家 15 分钟一锅出，省 20 分钟车程和找车位；没了炒菜油每顿再省 100–150 千卡。</div></details>
@@ -657,10 +710,10 @@
   <details><summary><span class="no">28</span>面拉 / 后束永不省略</summary><div class="body">每周游 5 次＋推拉 3 次＝「游泳肩」标准配方，面拉练的肩袖和后束就是保险。<b>触发：</b>肩前侧夹痛→停肩推两周、只游蛙泳。</div></details>
   <details><summary><span class="no">29</span>引体测试每两周一次（周六课首）</summary><div class="body">天天测既消耗恢复又打击信心；技能靠门框杠的高频低量积累。</div></details>
   <details><summary><span class="no">30</span>力量后不直接下水，固定恢复 30 分钟</summary><div class="body">力量结束后先慢走 10 分钟，再补水、擦汗、换泳装；不靠冲澡降温。确认能说完整句子、走路稳定、心率持续下降后才下水，游泳前 10 分钟只慢游。<b>触发：</b>30 分钟后仍明显心慌、头晕、胸闷、异常气短或心跳不规则 → 当天取消游泳。</div></details>
-  <details><summary><span class="no">31</span>公司冰箱替代保温袋与冰袋</summary><div class="body">鸡腿前一晚冷藏，早上最后取出，到公司第一件事重新冷藏；离开冷藏到公司冰箱一般不超过 2 小时，炎热环境（高于 32°C）不超过 1 小时。熟玉米同样冷藏；常温奶、坚果不需要。若通勤超时或需在车内久放，才补买冷链袋。</div></details>
+  <details><summary><span class="no">31</span>公司冰箱替代保温袋与冰袋</summary><div class="body">鸡腿前一晚冷藏，早上最后取出，到公司第一件事重新冷藏；离开冷藏到公司冰箱一般不超过 2 小时，炎热环境（高于 32°C）不超过 1 小时。熟玉米同样冷藏；常温奶、坚果不需要。10:30 从冰箱取出午餐盒，保持盖好回温 20–30 分钟，11:00 吃；这一步主要改善入口温度，不是因为合规冷藏的食物不能冷吃。若通勤超时或需在车内久放，才补买冷链袋。</div></details>
 </section>
 
-<footer>V13 · 2026-08-24 · 一周试行版。保留现有游泳量；力量改为 60 分钟引体专项，之后恢复 30 分钟再下水。鸡腿每晚只煮次日份，公司冰箱接管白天冷藏；鸡蛋每天 3 个，增加无盐坚果 25g。时间均为可浮动窗口。</footer>
+<footer>V14 · 2026-08-24 · 今日执行清单版。当前日期的时间线可勾选，完成后淡化并加删除线；首页自动聚焦下一件事并显示当天进度。公司午餐固定为到公司立即冷藏 → 10:30 取出回温 → 11:00 吃。完成状态仅保存在当前浏览器。</footer>
 
 </main>
 
@@ -704,12 +757,109 @@
     if(btn){btn.setAttribute('href','#'+id);btn.style.display='flex';}
     var todayTitle=document.getElementById('todayTitle');
     var todayType=document.getElementById('todayType');
-    var todayNext=document.getElementById('todayNext');
     var todayLink=document.getElementById('todayPlanLink');
     if(todayTitle){todayTitle.textContent=info.title;}
     if(todayType){todayType.textContent=info.type;}
-    if(todayNext){todayNext.textContent=info.next+' 时间前后浮动一小时没关系。';}
     if(todayLink){todayLink.href='#'+id;}
+
+    var todaySection=document.getElementById(id);
+    var timeline=todaySection&&todaySection.querySelector('.tl');
+    var rows=timeline?Array.prototype.filter.call(timeline.children,function(node){return node.classList&&node.classList.contains('ev');}):[];
+    var progressText=document.getElementById('todayProgressText');
+    var progressFill=document.getElementById('progressFill');
+    var nextTime=document.getElementById('nextTime');
+    var nextAction=document.getElementById('nextAction');
+    var completeNext=document.getElementById('completeNext');
+    var locateNext=document.getElementById('locateNext');
+    var nextIndex=-1;
+    var now=new Date();
+    var dateKey=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+    var storageKey='fitness-plan-v14:'+dateKey+':'+id;
+    var saved=[];
+    try{saved=JSON.parse(localStorage.getItem(storageKey)||'[]');if(!Array.isArray(saved))saved=[];}catch(ignore){saved=[];}
+
+    function actionText(row){
+      var tx=row&&row.querySelector('.tx');
+      if(!tx)return '';
+      var copy=tx.cloneNode(true);
+      Array.prototype.forEach.call(copy.querySelectorAll('small,details'),function(node){node.remove();});
+      return copy.textContent.replace(/\s+/g,' ').trim();
+    }
+    function minuteFor(row,previous){
+      var raw=(row.querySelector('.tm')||{}).textContent||'';
+      var match=raw.match(/(\d{1,2}):(\d{2})/);
+      if(match)return Number(match[1])*60+Number(match[2]);
+      if(raw.indexOf('白天')>-1)return 13*60;
+      if(raw.indexOf('下午')>-1)return 15*60;
+      if(raw.indexOf('晚上')>-1)return 19*60;
+      if(raw.indexOf('晚饭后')>-1)return 20*60;
+      if(raw.indexOf('回家后')>-1)return 21*60+30;
+      if(raw.indexOf('饭后')>-1)return Math.min(previous+30,23*60+30);
+      return previous+20;
+    }
+    function save(){try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch(ignore){}}
+    function setCompleted(index,value){
+      var pos=saved.indexOf(index);
+      if(value&&pos===-1)saved.push(index);
+      if(!value&&pos>-1)saved.splice(pos,1);
+      var row=rows[index];
+      if(row){
+        row.classList.toggle('completed',value);
+        var toggle=row.querySelector('.done-toggle');
+        if(toggle){toggle.setAttribute('aria-pressed',value?'true':'false');toggle.setAttribute('aria-label',(value?'撤销完成：':'标记完成：')+actionText(row));}
+      }
+      save();
+    }
+    function updateFocus(){
+      rows.forEach(function(row){row.classList.remove('is-next');});
+      var doneCount=rows.filter(function(row,index){return saved.indexOf(index)>-1;}).length;
+      if(progressText)progressText.textContent=doneCount+' / '+rows.length+' 已完成';
+      if(progressFill)progressFill.style.width=(rows.length?Math.round(doneCount/rows.length*100):0)+'%';
+      var current=new Date();
+      var currentMinute=current.getHours()*60+current.getMinutes();
+      var cutoff=currentMinute-90;
+      var incomplete=rows.map(function(row,index){return index;}).filter(function(index){return saved.indexOf(index)===-1;});
+      var timely=incomplete.filter(function(index){return Number(rows[index].dataset.minute)>=cutoff;});
+      nextIndex=timely.length?timely[0]:(incomplete.length?incomplete[0]:-1);
+      if(nextIndex===-1){
+        if(nextTime)nextTime.textContent='全部完成';
+        if(nextAction)nextAction.textContent='今天已经没有待办事项，放心休息。';
+        if(completeNext)completeNext.disabled=true;
+        if(locateNext)locateNext.disabled=true;
+        return;
+      }
+      var row=rows[nextIndex];
+      row.classList.add('is-next');
+      if(nextTime)nextTime.textContent=(row.querySelector('.tm')||{}).textContent||'接下来';
+      if(nextAction)nextAction.textContent=actionText(row);
+      if(completeNext)completeNext.disabled=false;
+      if(locateNext)locateNext.disabled=false;
+    }
+    if(todaySection)todaySection.classList.add('is-today-plan');
+    if(timeline&&rows.length){
+      timeline.classList.add('checkable');
+      var previousMinute=7*60+30;
+      rows.forEach(function(row,index){
+        previousMinute=minuteFor(row,previousMinute);
+        row.dataset.minute=String(previousMinute);
+        var toggle=document.createElement('button');
+        toggle.type='button';
+        toggle.className='done-toggle';
+        toggle.setAttribute('aria-pressed','false');
+        row.insertBefore(toggle,row.firstChild);
+        setCompleted(index,saved.indexOf(index)>-1);
+        toggle.addEventListener('click',function(){setCompleted(index,!row.classList.contains('completed'));updateFocus();});
+      });
+      updateFocus();
+    }else{
+      if(nextTime)nextTime.textContent='今日提示';
+      if(nextAction)nextAction.textContent=info.next;
+      if(progressText)progressText.textContent='暂无可勾选时间线';
+      if(completeNext)completeNext.disabled=true;
+      if(locateNext)locateNext.disabled=true;
+    }
+    if(completeNext)completeNext.addEventListener('click',function(){if(nextIndex<0)return;setCompleted(nextIndex,true);updateFocus();});
+    if(locateNext)locateNext.addEventListener('click',function(){if(nextIndex<0)return;var row=rows[nextIndex];row.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){var toggle=row.querySelector('.done-toggle');if(toggle)toggle.focus();},450);});
 
     var sheet=document.getElementById('menuSheet');
     var openers=[document.getElementById('menuOpen'),document.getElementById('moreOpen')];
