@@ -1,1040 +1,333 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0d2928">
-<meta name="description" content="12 周减脂与首个引体向上训练执行手册：周计划、饮食、采购、备餐与监测。">
-<title>减脂 · 引体执行手册 V16 · 回家补电解质版</title>
-<style>
-  :root{
-    --page:#f2f1eb;
-    --card:#fffefb;
-    --ink:#152a2a;
-    --muted:#667575;
-    --deep:#0d2928;
-    --deep-2:#143a37;
-    --swim:#0d8178;
-    --lift:#c26a25;
-    --rest:#7c8a89;
-    --free:#c84a45;
-    --eat:#477d46;
-    --walk:#477c9b;
-    --recover:#7968a6;
-    --line:#dfe2da;
-    --soft:#eef1ea;
-    --warm:#f8eee3;
-    --mint:#dff1eb;
-    --serif:"Noto Serif SC","Songti SC","STSong",serif;
-    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-    --shadow:0 12px 34px rgba(19,49,47,.08);
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123f3a">
+  <title>减脂 · 引体执行清单 V17</title>
+  <style>
+    :root{
+      --ink:#18302d;--muted:#6a7a77;--line:#dfe7e2;--paper:#f4f5f0;--card:#fffefa;
+      --deep:#123f3a;--green:#287969;--green-soft:#e5f2ec;--orange:#e9834f;--orange-soft:#fff0e6;
+      --blue:#347a9b;--blue-soft:#e8f2f7;--purple:#725e9b;--purple-soft:#f0ecf8;--danger:#b74d43;
+      --shadow:0 12px 34px rgba(30,58,53,.08);--radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:
+      radial-gradient(circle at 10% 0,rgba(233,131,79,.10),transparent 28rem),
+      radial-gradient(circle at 100% 12%,rgba(40,121,105,.09),transparent 32rem),var(--paper);
+      color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;
+      line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:96px}
+    button,input{font:inherit}
+    a{color:inherit}
+    main{width:min(960px,calc(100% - 28px));margin:0 auto}
+    section{scroll-margin-top:20px;margin:22px 0}
+    .hero{padding:28px 0 10px}
+    .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .eyebrow{margin:0 0 7px;color:var(--green);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(29px,7vw,54px);letter-spacing:-.04em;line-height:1.06}
+    .hero p{margin:12px 0 0;color:var(--muted);font-size:14px}
+    .version{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);padding:7px 11px;color:var(--muted);font-size:12px;font-weight:700}
+    .profile{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+    .profile div{padding:13px 12px;border:1px solid rgba(255,255,255,.55);border-radius:17px;background:rgba(255,255,255,.62);backdrop-filter:blur(10px)}
+    .profile b{display:block;font-size:19px;line-height:1.1}.profile span{display:block;margin-top:4px;color:var(--muted);font-size:11px}
 
-  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-  *{box-sizing:border-box}
-  html{scroll-padding-top:84px}
-  body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.68;-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility}
-  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(circle at 14% 5%,rgba(13,129,120,.11),transparent 27rem),radial-gradient(circle at 92% 20%,rgba(194,106,37,.09),transparent 24rem)}
-  a{-webkit-tap-highlight-color:transparent}
-  b{font-weight:700}
-  ::selection{background:#b9ddd4;color:var(--deep)}
-  :focus-visible{outline:3px solid rgba(13,129,120,.35);outline-offset:3px}
-  .skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-140%);padding:9px 13px;border-radius:9px;background:#fff;color:var(--deep);font-weight:700;text-decoration:none;box-shadow:var(--shadow)}
-  .skip-link:focus{transform:translateY(0)}
+    .mode-card{position:relative;overflow:hidden;padding:18px;border-radius:var(--radius);background:var(--deep);color:white;box-shadow:0 15px 34px rgba(18,63,58,.20)}
+    .mode-card:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-80px;top:-105px;background:rgba(255,255,255,.07)}
+    .mode-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .date{font-size:13px;color:rgba(255,255,255,.7)}
+    .date strong{display:block;margin-top:2px;color:#fff;font-size:22px;letter-spacing:-.02em}
+    .segmented{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.12)}
+    .segmented button{border:0;border-radius:10px;padding:9px 13px;background:transparent;color:rgba(255,255,255,.7);font-size:13px;font-weight:750;cursor:pointer}
+    .segmented button.active{background:#fff;color:var(--deep);box-shadow:0 3px 10px rgba(0,0,0,.12)}
+    .next{position:relative;z-index:1;margin-top:16px;padding-top:15px;border-top:1px solid rgba(255,255,255,.14)}
+    .next span{display:block;color:rgba(255,255,255,.62);font-size:11px;font-weight:700;letter-spacing:.12em}
+    .next b{display:block;margin-top:3px;font-size:17px}.next small{color:rgba(255,255,255,.68)}
+    .bar{height:5px;margin-top:13px;border-radius:99px;background:rgba(255,255,255,.13);overflow:hidden}.bar i{display:block;height:100%;width:0;background:#f5bb86;transition:width .25s ease}
 
-  .mobile-topbar,.mobile-bottom,.menu-sheet{display:none}
+    .section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:30px 2px 12px}
+    .section-title h2{margin:0;font-size:22px;letter-spacing:-.02em}.section-title p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+    .card{border:1px solid rgba(219,228,222,.9);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}
 
-  .today-hub{margin:18px 0 10px}
-  .today-panel{position:relative;overflow:hidden;padding:22px;border:1px solid #d7e4df;border-radius:20px;background:linear-gradient(135deg,#fffefb,#eaf5f0);box-shadow:var(--shadow)}
-  .today-panel::after{content:"";position:absolute;right:-45px;top:-70px;width:180px;height:180px;border:28px solid rgba(13,129,120,.05);border-radius:50%}
-  .today-panel>*{position:relative;z-index:1}
-  .today-eyebrow{color:var(--swim);font:800 10px/1 var(--mono);letter-spacing:.16em}
-  .today-title{margin:8px 0 4px;font-family:var(--serif);font-size:27px;line-height:1.25}
-  .today-type{margin:0;color:var(--muted);font-size:13px}
-  .today-next{display:block;margin:17px 0 11px;padding:15px;border:1px solid rgba(121,104,166,.16);border-radius:15px;background:rgba(255,255,255,.86);font-size:13.5px}
-  .next-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
-  .next-meta span{color:var(--recover);font:800 10px/1 var(--mono);letter-spacing:.12em}
-  .next-meta em{color:var(--muted);font:650 10.5px/1 var(--mono);font-style:normal}
-  .next-main{display:flex;align-items:baseline;gap:11px;min-width:0}
-  .next-main b{flex:0 0 auto;color:var(--deep);font:800 12px/1.3 var(--mono)}
-  .next-main strong{min-width:0;font-size:15px;line-height:1.5}
-  .progress-track{height:5px;margin:13px 0 12px;overflow:hidden;border-radius:999px;background:#e8ece7}
-  .progress-track i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--swim),#67bda8);transition:width .25s ease}
-  .next-actions{display:flex;gap:8px;flex-wrap:wrap}
-  .next-actions button{min-height:38px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font:700 12px var(--sans);cursor:pointer}
-  .next-actions .primary{border-color:var(--deep);background:var(--deep);color:#fff}
-  .next-actions button:disabled{cursor:default;opacity:.5}
-  .save-note{margin:0 0 13px;color:var(--muted);font-size:11.5px}
-  .today-link{display:inline-flex;align-items:center;min-height:40px;padding:8px 13px;border-radius:11px;background:var(--deep);color:#fff;font-size:12.5px;font-weight:700;text-decoration:none}
-  .today-link::after{content:"→";margin-left:8px}
+    .macro-summary{display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}
+    .macro-summary div{padding:16px 10px;text-align:center;border-right:1px solid var(--line)}
+    .macro-summary div:last-child{border-right:0}.macro-summary b{display:block;font-size:21px;line-height:1.15}.macro-summary span{display:block;margin-top:5px;color:var(--muted);font-size:11px}
+    .macro-summary .protein b{color:var(--green)}.macro-summary .carb b{color:var(--orange)}.macro-summary .fat b{color:var(--purple)}.macro-summary .energy b{color:var(--blue)}
+    .summary-note{margin:10px 4px 0;color:var(--muted);font-size:12px}
 
-  .masthead{position:relative;max-width:1060px;margin:22px auto 12px;padding:42px 46px 38px;overflow:hidden;border-radius:28px;color:#f6fbf8;background:linear-gradient(135deg,var(--deep),var(--deep-2));box-shadow:0 22px 55px rgba(13,41,40,.18)}
-  .masthead::before{content:"";position:absolute;width:360px;height:360px;right:-105px;top:-190px;border:1px solid rgba(151,222,204,.22);border-radius:50%;box-shadow:0 0 0 48px rgba(151,222,204,.045),0 0 0 96px rgba(151,222,204,.035)}
-  .masthead::after{content:"12 WEEKS";position:absolute;right:42px;bottom:26px;color:rgba(236,249,245,.09);font:800 54px/1 var(--mono);letter-spacing:-.08em;white-space:nowrap}
-  .masthead>*{position:relative;z-index:1}
-  .masthead .kicker{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.19em;color:#8dd7c7;text-transform:uppercase}
-  .masthead h1{max-width:700px;margin:10px 0 12px;font-family:var(--serif);font-weight:700;font-size:clamp(34px,5vw,52px);line-height:1.15;letter-spacing:.02em}
-  .masthead .goal{max-width:790px;margin:0;color:#bbceca;font-size:14px}
-  .masthead .goal b{color:#fff}
-  .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-  .hero-badges span{display:inline-flex;align-items:center;min-height:32px;padding:5px 11px;border:1px solid rgba(221,244,237,.18);border-radius:999px;background:rgba(255,255,255,.07);color:#e8f5f1;font:600 12px/1 var(--sans);backdrop-filter:blur(8px)}
-  .hero-badges span::before{content:"";width:6px;height:6px;margin-right:7px;border-radius:50%;background:#7bd1bd;box-shadow:0 0 0 4px rgba(123,209,189,.1)}
+    .ratio-card{padding:18px}.ratio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.ratio-head h3{margin:0;font-size:18px}.ratio-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.ratio-formula{flex:0 0 auto;border-radius:11px;background:var(--deep);color:#fff;padding:7px 10px;font-size:11px;font-weight:750}
+    .ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.ratio-item{padding:13px 10px;border-radius:15px;text-align:center}.ratio-item b{display:block;font-size:20px}.ratio-item span{display:block;margin-top:2px;font-size:11px}.ratio-item.p{background:var(--green-soft);color:var(--green)}.ratio-item.c{background:var(--orange-soft);color:#b85f32}.ratio-item.f{background:var(--purple-soft);color:var(--purple)}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.compare div{padding:12px;border:1px solid var(--line);border-radius:14px}.compare b{display:block;font-size:13px}.compare span{display:block;margin-top:3px;color:var(--muted);font-size:11px}.compare strong{color:var(--green)}
 
-  .chipnav{position:sticky;top:0;z-index:50;padding:8px 12px;background:rgba(242,241,235,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-  .chipnav .row{max-width:1060px;margin:0 auto;display:flex;gap:5px;overflow-x:auto;padding:6px;border:1px solid rgba(217,222,214,.85);border-radius:16px;background:rgba(255,254,251,.91);box-shadow:0 7px 24px rgba(19,49,47,.07);scrollbar-width:none}
-  .chipnav .row::-webkit-scrollbar{display:none}
-  .chipnav a{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:7px 12px;border-radius:11px;color:#506362;font-size:12.5px;font-weight:650;text-decoration:none;white-space:nowrap;transition:background .18s ease,color .18s ease,transform .18s ease}
-  .chipnav a:hover{background:var(--soft);color:var(--deep)}
-  .chipnav a.now{background:var(--deep);color:#fff;box-shadow:0 4px 10px rgba(13,41,40,.18)}
+    .meals{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .meal{position:relative;overflow:hidden;padding:18px}
+    .meal.done{opacity:.58}.meal.done .meal-name,.meal.done .food{text-decoration:line-through;text-decoration-thickness:1.5px}
+    .meal-top{display:flex;align-items:flex-start;gap:12px}
+    .check{position:relative;flex:0 0 29px;width:29px;height:29px;margin-top:1px}
+    .check input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .check span{display:grid;place-items:center;width:29px;height:29px;border:1.5px solid #bdcbc5;border-radius:10px;background:#fff;color:transparent;font-weight:900;transition:.18s ease}
+    .check input:checked+span{border-color:var(--green);background:var(--green);color:#fff}
+    .meal-kicker{color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.08em}.meal-name{margin:2px 0 0;font-size:19px;line-height:1.25}
+    .food{margin:13px 0 14px;color:#3f514e;font-size:14px}
+    .food b{color:var(--ink)}
+    .macros{display:flex;flex-wrap:wrap;gap:6px}.macro{display:inline-flex;align-items:baseline;gap:4px;border-radius:9px;padding:6px 9px;font-size:11px;font-weight:700}
+    .macro b{font-size:15px}.macro.p{background:var(--green-soft);color:var(--green)}.macro.c{background:var(--orange-soft);color:#b85f32}.macro.f{background:var(--purple-soft);color:var(--purple)}
+    .meal-tip{margin:14px -18px -18px;padding:11px 18px;background:#f8f8f4;color:var(--muted);font-size:11.5px}
+    .training-only[hidden]{display:none!important}
 
-  main{max-width:920px;margin:0 auto;padding:10px 18px 110px}
-  section{scroll-margin-top:82px}
-  h2{display:flex;align-items:center;gap:14px;margin:44px 0 14px;font-family:var(--serif);font-size:clamp(23px,3vw,29px);line-height:1.3;letter-spacing:.015em}
-  h2::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
-  h3{margin:20px 0 8px;font-size:15px;line-height:1.5;letter-spacing:.025em}
-  h3 .tag{display:inline-block;margin-right:8px;color:var(--swim);font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em}
-  p{margin:9px 0}
-  ul,ol{margin:8px 0 14px;padding-left:21px}
-  li{margin:6px 0}
-  .note{color:var(--muted);font-size:13.5px}
-  .warn{color:var(--free);font-weight:700}
+    .creatine{display:flex;align-items:center;gap:14px;padding:16px 18px;margin-top:12px;border-color:#cfe2da;background:linear-gradient(135deg,#f4fbf7,#fffefa)}
+    .creatine .symbol{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:var(--green-soft);color:var(--green);font-size:20px;font-weight:900}
+    .creatine .copy{min-width:0;flex:1}.creatine b{display:block}.creatine small{display:block;margin-top:2px;color:var(--muted)}
 
-  .card{margin:18px 0;padding:21px 22px 12px;border:1px solid var(--line);border-radius:20px;background:rgba(255,254,251,.94);box-shadow:var(--shadow)}
-  #howto .card{position:relative;margin-top:12px;border-color:#d1e5df;background:linear-gradient(145deg,#fffefb 55%,#edf7f3)}
-  #howto .card::before{content:"执行优先";position:absolute;top:18px;right:20px;color:#a4b7b2;font:700 10px/1 var(--mono);letter-spacing:.12em}
-  #howto .card ol{padding-left:25px}
-  #howto .card li::marker{color:var(--swim);font:700 13px var(--mono)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .step{padding:17px}.step .no{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--deep);color:white;font-size:12px;font-weight:800}.step h3{margin:12px 0 6px;font-size:16px}.step p{margin:0;color:var(--muted);font-size:13px}
+    .recipe{margin-top:12px;padding:16px 18px}.recipe summary{cursor:pointer;font-weight:750}.recipe p,.recipe li{color:var(--muted);font-size:13px}.recipe ul{padding-left:20px;margin-bottom:0}
 
-  .lanes{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;margin:18px 0 8px}
-  .lane{position:relative;display:block;min-height:118px;padding:18px 7px 10px;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);text-align:center;text-decoration:none;box-shadow:0 5px 14px rgba(19,49,47,.045);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-  .lane::before{content:"";position:absolute;inset:0 0 auto;height:6px;background:var(--rest)}
-  .lane.lift::before{background:var(--lift)}
-  .lane.swim::before{background:var(--swim)}
-  .lane:hover{transform:translateY(-3px);border-color:#cdd8d3;box-shadow:0 10px 20px rgba(19,49,47,.09)}
-  .lane .d{font-family:var(--serif);font-size:25px;font-weight:700;line-height:1.1}
-  .lane .t{margin-top:8px;color:#405756;font-size:11.5px;font-weight:700;line-height:1.3}
-  .lane .m{margin-top:4px;color:var(--muted);font-family:var(--mono);font-size:10px;white-space:nowrap}
-  .lane .dot{display:inline-block;width:7px;height:7px;margin-top:6px;border-radius:50%;background:var(--free);box-shadow:0 0 0 4px rgba(200,74,69,.1)}
-  .todaytag{position:absolute;z-index:2;top:9px;left:50%;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:var(--free);color:#fff;font:700 9px/1 var(--mono);box-shadow:0 4px 9px rgba(200,74,69,.23)}
-  .lanecap{margin:10px 0 0;color:var(--muted);font-size:12px}
-  .lanecap i{font-style:normal}
+    .week-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:14px}
+    .session{position:relative;border:1px solid var(--line);border-radius:15px;background:#fff;padding:14px 10px;text-align:center;cursor:pointer}
+    .session input{position:absolute;inset:0;opacity:0;cursor:pointer}.session strong{display:block;font-size:16px}.session span{display:block;margin-top:3px;color:var(--muted);font-size:11px}.session.done{border-color:#9dc9b8;background:var(--green-soft)}.session.done strong{color:var(--green)}
+    .train-copy{padding:3px 18px 18px}.train-copy p{margin:8px 0;color:var(--muted);font-size:13px}.train-copy b{color:var(--ink)}
 
-  .legend{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0}
-  .legend span{padding:3px 9px;border-radius:7px;color:#fff;font:700 10.5px/1.4 var(--mono)}
-  .lg-eat{background:var(--eat)} .lg-lift{background:var(--lift)} .lg-swim{background:var(--swim)}
-  .lg-walk{background:var(--walk)} .lg-rest{background:var(--rest)} .lg-out{background:var(--free)} .lg-recover{background:var(--recover)}
+    .shopping{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px}
+    .shop-item{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:13px;background:#f7f8f4}
+    .shop-item span{font-size:13px}.shop-item b{font-size:13px;white-space:nowrap}
+    .shopping-foot{padding:0 18px 17px;color:var(--muted);font-size:12px}
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:13px 0 18px}
-  .stat{min-height:104px;padding:16px 13px;border:1px solid #dbe7e2;border-radius:14px;background:linear-gradient(145deg,#f4f8f5,#eaf2ee)}
-  .stat .v{color:var(--deep);font-family:var(--mono);font-size:14px;font-weight:800;line-height:1.35}
-  .stat .k{margin-top:7px;color:var(--muted);font-size:11.5px;line-height:1.45}
-  .redline{margin:8px 0;padding:9px 12px;border-left:4px solid var(--free);border-radius:0 10px 10px 0;background:#fbeeed;color:#5b3030;font-size:13.5px}
-  .switchline{margin:16px 0 19px;padding:14px 15px;border:1px solid #ddd7ed;border-radius:14px;background:linear-gradient(135deg,#f5f1fb,#fbfaf7);color:#403753;font-size:13.5px}
-  .switchline b{color:var(--recover)}
+    .rules{padding:8px 18px}.rule{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.rule:last-child{border-bottom:0}.rule i{font-style:normal;color:var(--orange);font-weight:850}.rule p{margin:0;font-size:13px}.rule small{display:block;margin-top:3px;color:var(--muted)}
+    .faq details{border-bottom:1px solid var(--line)}.faq details:last-child{border-bottom:0}.faq summary{position:relative;padding:16px 42px 16px 18px;cursor:pointer;list-style:none;font-size:14px;font-weight:760}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"＋";position:absolute;right:18px;top:14px;color:var(--green);font-size:20px}.faq details[open] summary:after{content:"−"}.faq .answer{padding:0 18px 17px;color:var(--muted);font-size:13px}.faq .answer b{color:var(--ink)}
 
-  .day{margin:24px 0;overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:var(--shadow)}
-  .day>header{position:relative;display:flex;align-items:center;gap:8px;min-height:86px;padding:20px 22px;border-bottom:1px solid var(--line);background:linear-gradient(110deg,#f3f7f3,#fffefb 64%);flex-wrap:wrap}
-  .day>header::before{content:"";position:absolute;left:0;top:19px;bottom:19px;width:4px;border-radius:0 4px 4px 0;background:var(--swim)}
-  #d13>header::before,#sat>header::before{background:var(--lift)}
-  #fri>header::before,#sun>header::before{background:var(--rest)}
-  .day>header .plate{margin-right:5px;font-family:var(--serif);font-size:27px;font-weight:700;line-height:1.2}
-  .badge{display:inline-flex;align-items:center;padding:4px 9px;border:1px solid currentColor;border-radius:999px;font-family:var(--mono);font-size:10.5px;font-weight:700;line-height:1.2}
-  .badge.lift{color:var(--lift);background:#fff7ee}.badge.swim{color:var(--swim);background:#eef9f6}.badge.rest{color:var(--rest);background:#f3f5f3}.badge.free{color:var(--free);background:#fff2f1}.badge.recover{color:var(--recover);background:#f5f1fb}
-  .kcal{margin-left:auto;color:var(--muted);font-family:var(--mono);font-size:11.5px;white-space:nowrap}
-  .day .inner{padding:8px 22px 20px}
+    footer{width:min(960px,calc(100% - 28px));margin:26px auto 4px;color:var(--muted);font-size:11px;text-align:center}
+    .bottom-nav{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;grid-template-columns:repeat(5,1fr);width:min(460px,calc(100% - 28px));padding:6px;border:1px solid rgba(214,224,218,.9);border-radius:18px;background:rgba(255,254,250,.92);box-shadow:0 14px 35px rgba(24,48,45,.16);backdrop-filter:blur(16px)}
+    .bottom-nav a{padding:8px 4px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:750;text-align:center;text-decoration:none}.bottom-nav a.active{background:var(--deep);color:#fff}
 
-  .chips{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:14px 0 17px}
-  .chips .lb{margin-right:2px;color:var(--swim);font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.1em}
-  .chips b{padding:4px 9px;border:1px solid #e0e8e2;border-radius:8px;background:var(--soft);font-size:12px;font-weight:650;line-height:1.45}
-  .chips i{width:100%;color:var(--muted);font-size:12.5px;font-style:normal}
-
-  .carry-map{position:relative;margin:4px 0 18px;padding:15px 15px 12px 46px;border:1px solid #d7e5df;border-radius:16px;background:linear-gradient(145deg,#f7fbf8,#eef6f2)}
-  .carry-map::before{content:"";position:absolute;left:27px;top:48px;bottom:23px;width:2px;border-radius:99px;background:#bddbd1}
-  .carry-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px -30px;color:var(--deep);font-size:12.5px;font-weight:800}
-  .carry-title small{color:var(--muted);font:600 10px/1.3 var(--mono)}
-  .carry-row{position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) 18px minmax(92px,.85fr);align-items:center;gap:7px;min-height:43px;padding:7px 0;border-bottom:1px dashed #dbe6e1;font-size:12.5px;line-height:1.45}
-  .carry-row:last-child{border-bottom:0}
-  .carry-row::before{content:attr(data-no);position:absolute;left:-32px;top:50%;z-index:1;display:grid;place-items:center;width:24px;height:24px;transform:translateY(-50%);border:3px solid #f4f9f6;border-radius:50%;background:var(--deep);color:#fff;font:800 10px/1 var(--mono)}
-  .carry-row b{display:block;color:var(--deep)}
-  .carry-row .pack{display:grid;grid-template-columns:20px minmax(0,1fr);align-items:start;gap:7px;cursor:pointer}
-  .carry-row .pack small{display:block;margin-top:2px;color:var(--muted);font-size:10.5px;line-height:1.45}
-  .pack-check{appearance:none;-webkit-appearance:none;width:19px;height:19px;margin:1px 0 0;border:1.5px solid #91aaa2;border-radius:6px;background:#fff;cursor:pointer}
-  .pack-check:checked{border-color:var(--swim);background:var(--swim)}
-  .pack-check:checked::after{content:"✓";display:grid;place-items:center;height:100%;color:#fff;font:800 12px/1 var(--sans)}
-  .pack-check:checked+span{opacity:.48;text-decoration:line-through;text-decoration-thickness:1.2px}
-  .carry-row .arrow{color:var(--swim);font-weight:900;text-align:center}
-  .carry-row .dest{color:#415957}
-  .carry-row.cold::before{background:var(--walk)}
-  .carry-row.train::before{background:var(--lift)}
-  .carry-foot{margin:9px 0 0 -30px;padding:9px 10px;border-radius:10px;background:#fff;color:var(--muted);font-size:11px;line-height:1.5}
-  .carry-foot b{color:var(--deep)}
-  .meal-ref{display:inline-flex;align-items:center;margin-left:5px;padding:2px 6px;border-radius:999px;background:#e3f1ec;color:var(--swim);font:800 9.5px/1.4 var(--mono);vertical-align:1px}
-
-  .tl{position:relative;margin:8px 0 17px}
-  .tl::before{content:"";position:absolute;top:15px;bottom:15px;left:84px;width:1px;background:#dce5df}
-  .phase{position:relative;z-index:2;display:flex;align-items:center;gap:8px;margin:12px 0 2px;padding:7px 10px;border:1px solid #e0e8e3;border-radius:10px;background:#f4f7f4;color:#48615e;font:800 10.5px/1.3 var(--mono);letter-spacing:.05em}
-  .phase::before{content:"";flex:0 0 7px;width:7px;height:7px;border-radius:50%;background:var(--swim);box-shadow:0 0 0 4px rgba(13,129,120,.09)}
-  .phase.home::before{background:var(--eat)}
-  .phase.train::before{background:var(--lift)}
-  .phase.out::before{background:var(--free)}
-  .ev{position:relative;display:grid;grid-template-columns:65px 40px minmax(0,1fr);gap:10px;align-items:start;min-height:54px;padding:10px 0;border-bottom:1px solid var(--soft)}
-  .ev:last-child{border-bottom:0}
-  .ev .tm{padding-top:3px;color:var(--muted);font-family:var(--mono);font-size:11.5px;text-align:right}
-  .ev .tg{position:relative;z-index:1;margin-top:1px;padding:4px 0;border:4px solid var(--card);border-radius:9px;color:#fff;font-family:var(--mono);font-size:10px;font-weight:800;line-height:1;text-align:center;box-sizing:content-box}
-  .tg.eat{background:var(--eat)} .tg.lift{background:var(--lift)} .tg.swim{background:var(--swim)}
-  .tg.walk{background:var(--walk)} .tg.zz{background:var(--rest)} .tg.out{background:var(--free)} .tg.recover{background:var(--recover)}
-  .ev .tx{padding-top:1px;font-size:14px;line-height:1.58}
-  .ev .tx small{display:block;margin-top:2px;color:var(--muted);font-size:12px;line-height:1.5}
-  .day.is-today-plan{border-color:#b8d7cc;box-shadow:0 15px 38px rgba(13,129,120,.12)}
-  .tl.checkable::before{left:124px}
-  .tl.checkable .ev{grid-template-columns:30px 65px 40px minmax(0,1fr);transition:opacity .18s ease,background .18s ease,box-shadow .18s ease}
-  .done-toggle{position:relative;z-index:2;display:grid;place-items:center;width:27px;height:27px;margin-top:0;border:1.5px solid #a9b9b4;border-radius:9px;background:#fff;color:#fff;cursor:pointer;transition:background .16s ease,border-color .16s ease,transform .16s ease}
-  .done-toggle::before{content:"✓";font:800 14px/1 var(--sans);opacity:0;transform:scale(.6);transition:opacity .16s ease,transform .16s ease}
-  .done-toggle:hover{transform:translateY(-1px);border-color:var(--swim)}
-  .ev.completed{opacity:.5}
-  .ev.completed .done-toggle{border-color:var(--swim);background:var(--swim)}
-  .ev.completed .done-toggle::before{opacity:1;transform:scale(1)}
-  .ev.completed .tx{text-decoration:line-through;text-decoration-color:rgba(21,42,42,.55);text-decoration-thickness:1.5px}
-  .ev.is-next{margin-inline:-9px;padding-inline:9px;border-radius:12px;background:#edf6f2;box-shadow:inset 4px 0 0 var(--swim)}
-  .ev.is-next .done-toggle{border-color:var(--swim);box-shadow:0 0 0 4px rgba(13,129,120,.1)}
-
-  .tbl-wrap{margin:8px 0 15px;overflow-x:auto;border:1px solid var(--line);border-radius:13px;background:#fff;overscroll-behavior-inline:contain}
-  table{width:100%;min-width:610px;margin:0;border-collapse:collapse;font-size:13.5px}
-  th{padding:10px 11px;border-bottom:1px solid var(--line);background:#f1f4ef;color:#536563;font-size:11px;font-weight:750;letter-spacing:.06em;text-align:left;white-space:nowrap}
-  td{padding:10px 11px;border-bottom:1px solid var(--soft);vertical-align:top}
-  tbody tr:last-child td,table>tr:last-child td{border-bottom:0}
-  tr:hover td{background:#fbfcf8}
-
-  details{margin:9px 0;padding:0 14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,254,251,.95);transition:border-color .18s ease,box-shadow .18s ease}
-  details[open]{border-color:#cbded7;box-shadow:0 6px 16px rgba(19,49,47,.055)}
-  summary{display:flex;align-items:center;gap:9px;min-height:48px;padding:10px 0;cursor:pointer;list-style:none;font-size:13.5px;font-weight:650;line-height:1.45}
-  summary::-webkit-details-marker{display:none}
-  summary .no{flex:0 0 auto;color:var(--swim);font-family:var(--mono);font-size:10.5px;font-weight:800}
-  summary::after{content:"＋";display:grid;place-items:center;flex:0 0 26px;width:26px;height:26px;margin-left:auto;border-radius:50%;background:var(--soft);color:var(--muted);font:600 14px/1 var(--mono)}
-  details[open] summary::after{content:"－";background:var(--mint);color:var(--swim)}
-  details .body{padding:0 1px 14px;color:#2a4140;font-size:13.5px}
-  details .body b{color:var(--swim)}
-  details.dead{opacity:.65;background:#f5f5f1}
-  details.dead summary{text-decoration:line-through}
-  .dgroup{display:flex;align-items:center;gap:10px;margin:28px 0 8px;color:#344f4d;font-family:var(--serif);font-size:17px;font-weight:700}
-  .dgroup::before{content:"";width:18px;height:4px;border-radius:4px;background:var(--lift)}
-
-  details.mini{margin:4px 0 0;padding:0;border:0;background:transparent;box-shadow:none}
-  details.mini summary{display:inline-flex;min-height:30px;padding:3px 0;color:var(--swim);font-size:12px;font-weight:650}
-  details.mini summary::after{content:"展开";display:block;width:auto;height:auto;margin-left:5px;background:transparent;color:var(--swim);font-size:10px}
-  details.mini[open] summary::after{content:"收起";background:transparent}
-  details.mini .body{padding:3px 0 5px;color:var(--ink);font-size:12.5px}
-
-  details.cook{border-radius:16px}
-  details.cook summary{min-height:58px;padding:12px 1px;font-size:14.5px}
-  details.cook summary .ct{flex:0 0 auto;padding:4px 9px;border-radius:7px;color:#fff;font-family:var(--mono);font-size:10px;font-weight:800}
-  .ct.morning{background:var(--eat)} .ct.dinner{background:var(--swim)} .ct.sunday{background:var(--lift)} .ct.night{background:var(--rest)}
-  details.cook summary .tc{color:var(--muted);font-family:var(--mono);font-size:11px;font-weight:400}
-
-  #gotoday{display:none;position:fixed;right:20px;bottom:22px;z-index:60;align-items:center;justify-content:center;width:92px;height:46px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:var(--deep);color:#fff;text-decoration:none;font-size:13px;font-weight:750;box-shadow:0 10px 24px rgba(13,41,40,.26);transition:transform .18s ease,background .18s ease}
-  #gotoday::before{content:"●";margin-right:7px;color:#70d0bb;font-size:9px}
-  #gotoday:hover{transform:translateY(-2px);background:var(--swim)}
-
-  footer{max-width:920px;margin:18px auto 0;padding:28px 18px 42px;border-top:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11.5px;line-height:1.65}
-
-  @media (max-width:760px){
-    body{font-size:15px;line-height:1.65}
-    .masthead{margin:0;padding:24px 18px 21px;border-radius:0 0 20px 20px}
-    .masthead::before{right:-200px;top:-220px}
-    .masthead::after{right:18px;bottom:20px;font-size:36px}
-    .masthead h1{margin:8px 0 7px;font-size:29px}
-    .masthead .goal{display:-webkit-box;overflow:hidden;font-size:12.5px;line-height:1.55;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-    .hero-badges{gap:6px;margin-top:14px}
-    .hero-badges span{min-height:30px;padding:5px 9px;font-size:11px}
-    .hero-badges span:nth-child(n+4){display:none}
-    .chipnav{display:none}
-    .mobile-topbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 14px;border-bottom:1px solid rgba(217,222,214,.9);background:rgba(255,254,251,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-    .mobile-topbar strong{max-width:75%;overflow:hidden;color:var(--deep);font-size:13px;text-overflow:ellipsis;white-space:nowrap}
-    .mobile-topbar button{min-width:54px;min-height:36px;border:0;border-radius:10px;background:var(--soft);color:var(--deep);font:700 12px var(--sans)}
-    .mobile-bottom{position:fixed;z-index:80;display:grid;grid-template-columns:repeat(4,1fr);left:10px;right:10px;bottom:10px;height:62px;padding:6px;border:1px solid rgba(217,222,214,.9);border-radius:18px;background:rgba(255,254,251,.96);box-shadow:0 12px 30px rgba(13,41,40,.2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-    .mobile-bottom a,.mobile-bottom button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;border-radius:12px;background:transparent;color:#657574;font:700 11px var(--sans);text-decoration:none}
-    .mobile-bottom a::before,.mobile-bottom button::before{font-size:17px;font-weight:400;line-height:1}
-    .mobile-bottom a[href="#today"]::before{content:"●"}.mobile-bottom a[href="#overview"]::before{content:"七"}.mobile-bottom a[href="#cooking"]::before{content:"煮"}.mobile-bottom button::before{content:"＋"}
-    .mobile-bottom a.active{background:var(--deep);color:#fff}
-    .menu-sheet{position:fixed;z-index:100;display:block;inset:0;background:rgba(8,28,27,.5);opacity:0;pointer-events:none;transition:opacity .2s ease}
-    .menu-sheet.open{opacity:1;pointer-events:auto}
-    .menu-sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:82vh;overflow-y:auto;padding:18px 16px 28px;border-radius:24px 24px 0 0;background:var(--card);transform:translateY(102%);transition:transform .22s ease}
-    .menu-sheet.open .menu-sheet-panel{transform:translateY(0)}
-    .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .sheet-head strong{font-family:var(--serif);font-size:20px}
-    .sheet-head button{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);color:var(--deep);font-size:20px}
-    .sheet-group{margin:16px 0}
-    .sheet-group>span{display:block;margin-bottom:7px;color:var(--muted);font:800 10px var(--mono);letter-spacing:.12em}
-    .sheet-links{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-    .sheet-links a{min-height:44px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-size:13px;font-weight:650;text-decoration:none}
-    body.menu-open{overflow:hidden}
-    main{padding:4px 14px 112px;overflow:hidden}
-    h2{margin:35px 0 12px;font-size:23px}
-    .card{padding:18px 16px 10px;border-radius:17px}
-    #howto .card::before{display:none}
-    #howto .card ol{padding-left:22px}
-    .lanes{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0;padding:0;overflow:visible}
-    .lane{display:grid;grid-template-columns:46px minmax(0,1fr) auto;align-items:center;min-height:70px;padding:12px 13px;text-align:left}
-    .lane::before{inset:0 auto 0 0;width:5px;height:auto}
-    .lane .d{grid-row:1 / span 2;font-size:23px;text-align:center}
-    .lane .t{margin:0;font-size:12.5px}
-    .lane .m{grid-column:3;grid-row:1 / span 2;margin:0;font-size:10px}
-    .lane .dot{position:absolute;right:12px;bottom:10px}
-    .todaytag{top:8px;left:auto;right:9px;transform:none}
-    .stats{grid-template-columns:repeat(2,1fr)}
-    .stat{min-height:105px}
-    .day{margin:20px -1px;border-radius:18px}
-    .day>header{align-items:center;min-height:0;padding:17px 16px 14px}
-    .day>header::before{top:15px;bottom:15px}
-    .day>header .plate{width:100%;margin-bottom:3px;font-size:24px}
-    .kcal{width:100%;margin:4px 0 0}
-    .day .inner{padding:7px 14px 15px}
-    .chips{margin-bottom:12px}
-    .carry-map{margin:2px 0 15px;padding:13px 11px 10px 43px;border-radius:14px}
-    .carry-map::before{left:25px;top:45px;bottom:21px}
-    .carry-title{align-items:flex-start;flex-direction:column;gap:3px;margin-left:-28px}
-    .carry-row{grid-template-columns:minmax(0,1.45fr) 13px minmax(82px,.75fr);gap:4px;min-height:46px;font-size:11.5px}
-    .carry-row::before{left:-30px;width:22px;height:22px}
-    .carry-row .pack{grid-template-columns:19px minmax(0,1fr);gap:6px}
-    .carry-row .pack small{font-size:10px}
-    .pack-check{width:18px;height:18px}
-    .carry-foot{margin-left:-28px;font-size:10.5px}
-    .phase{margin-top:10px;padding:6px 8px;font-size:10px}
-    .tl::before{left:61px}
-    .ev{grid-template-columns:46px 31px minmax(0,1fr);gap:7px;padding:9px 0}
-    .ev .tm{font-size:10.5px}
-    .ev .tg{border-width:3px;border-radius:8px;font-size:9px}
-    .ev .tx{font-size:13.5px;line-height:1.55}
-    .ev .tx small{font-size:11.5px}
-    .tl.checkable::before{left:96px}
-    .tl.checkable .ev{grid-template-columns:28px 46px 31px minmax(0,1fr);gap:7px}
-    .done-toggle{width:25px;height:25px;border-radius:8px}
-    .ev.is-next{margin-inline:-6px;padding-inline:6px}
-    .next-main{align-items:flex-start;flex-direction:column;gap:4px}
-    .next-main strong{font-size:14px}
-    .next-actions{display:grid;grid-template-columns:1fr 1fr}
-    .next-actions button{width:100%;padding-inline:8px}
-    .tbl-wrap{overflow:visible;border:0;background:transparent}
-    table{display:block;min-width:0;font-size:13px}
-    table>tbody,table>tbody>tr,table>tr{display:block}
-    table>tbody>tr,table>tr{margin:9px 0;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:#fff}
-    table>tbody>tr:first-child,table>tr:first-child{display:none}
-    td{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px;padding:5px 0;border:0!important;background:transparent!important}
-    td::before{content:attr(data-label);color:var(--muted);font-size:10.5px;font-weight:750;letter-spacing:.04em}
-    details{padding:0 12px}
-    summary{font-size:13px}
-    details.cook summary{align-items:flex-start;flex-wrap:wrap;padding:11px 0}
-    details.cook summary .tc{order:3;width:calc(100% - 44px);margin:-4px 0 0 43px}
-    #gotoday{display:none!important}
-  }
-
-  @media (max-width:390px){
-    .masthead h1{font-size:30px}
-    .masthead .goal{font-size:12.5px}
-    main{padding-inline:11px}
-    .card{padding-inline:14px}
-    .stats{gap:7px}
-    .stat{padding:13px 10px}
-    .stat .v{font-size:12.5px}
-    .day .inner{padding-inline:11px}
-    .ev{grid-template-columns:43px 29px minmax(0,1fr);gap:6px}
-    .tl::before{left:57px}
-    .tl.checkable::before{left:91px}
-    .tl.checkable .ev{grid-template-columns:28px 43px 29px minmax(0,1fr);gap:6px}
-  }
-
-  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-
-  @media print{
-    body{background:#fff;font-size:11pt}
-    body::before,.chipnav,#gotoday{display:none!important}
-    .masthead{max-width:none;margin:0;border-radius:0;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-    main,footer{max-width:none;padding-right:0;padding-left:0}
-    .card,.day,details{box-shadow:none;break-inside:avoid}
-    details .body{display:block}
-    .lanes{grid-template-columns:repeat(7,1fr)}
-  }
-</style>
+    @media(max-width:700px){
+      main{width:min(100% - 22px,620px)}.hero{padding-top:21px}.hero-top{gap:8px}.version{font-size:10px}.profile{gap:6px}.profile div{padding:11px 9px}.profile b{font-size:17px}
+      .mode-head{display:block}.segmented{margin-top:14px}.macro-summary{grid-template-columns:1fr 1fr}.macro-summary div:nth-child(2){border-right:0}.macro-summary div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .meals{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.week-grid{grid-template-columns:1fr 1fr}.shopping{grid-template-columns:1fr}.section-title p{max-width:150px}.ratio-head{display:block}.ratio-formula{display:inline-block;margin-top:10px}.compare{grid-template-columns:1fr}
+    }
+    @media(min-width:900px){body{padding-bottom:30px}.bottom-nav{left:22px;top:50%;bottom:auto;transform:translateY(-50%);width:92px;grid-template-columns:1fr}.bottom-nav a{padding:12px 6px}}
+    @media print{body{background:#fff;padding:0}.bottom-nav{display:none}.card{box-shadow:none}.mode-card{background:#fff;color:var(--ink);border:1px solid var(--line)}.date,.next span,.next small{color:var(--muted)}.date strong,.next b{color:var(--ink)}}
+  </style>
 </head>
 <body>
-
-<a class="skip-link" href="#howto">跳到正文</a>
-
-<header class="masthead">
-  <div class="kicker">CUT &amp; PULL-UP · WEEKLY SYSTEM</div>
-  <h1>减脂 · 引体 执行手册</h1>
-  <p class="goal">3 个月：体重 <b>−6～8 kg</b> · 腰围 <b>−5 cm+</b> · <b>第一个引体向上</b>　｜　基线 170cm / 77.5kg（155 斤）/ 28 岁</p>
-  <div class="hero-badges" aria-label="计划核心指标">
-    <span>12 周周期</span><span>力量 45 → 恢复 30 → 游泳</span><span>蛋白 135–145g</span><span>当天现煮 · 公司加热</span><span>睡眠 ≥7 小时</span>
-  </div>
-</header>
-
-<div class="mobile-topbar">
-  <strong id="mobilePageTitle">减脂 · 引体</strong>
-  <button type="button" id="menuOpen" aria-controls="menuSheet" aria-expanded="false">目录</button>
-</div>
-
-<nav class="chipnav" aria-label="页面章节导航"><div class="row">
-  <a href="#today" class="now">今日</a><a href="#howto">先读</a>
-  <a href="#overview">总览</a>
-  <a href="#shopping">采购</a>
-  <a href="#cooking">做饭</a>
-  <a href="#d13">一·三</a><a href="#d24">二·四</a><a href="#fri">五</a><a href="#sat">六</a><a href="#sun">日</a>
-  <a href="#portions">份量</a>
-  <a href="#rules">外食</a>
-  <a href="#monitor">监测</a>
-  <a href="#glossary">名词卡</a>
-  <a href="#decisions">决策档案</a>
-</div></nav>
-
-<main>
-
-<section id="today" class="today-hub" aria-labelledby="todayTitle">
-  <div class="today-panel">
-    <div><span class="tag">TODAY</span><p class="today-eyebrow">今天先看这一张</p><h2 id="todayTitle" class="today-title">正在读取今天的计划</h2></div>
-    <p id="todayType" class="today-type">训练与饮食会自动按星期显示</p>
-    <div id="todayNext" class="today-next" aria-live="polite">
-      <div class="next-meta"><span>下一步</span><em id="todayProgressText">正在读取今日进度</em></div>
-      <div class="next-main"><b id="nextTime">--:--</b><strong id="nextAction">正在读取下一件事</strong></div>
-      <div class="progress-track" aria-hidden="true"><i id="progressFill"></i></div>
-      <div class="next-actions"><button type="button" class="primary" id="completeNext">✓ 完成这个</button><button type="button" id="locateNext">定位到时间线</button></div>
-    </div>
-    <p class="save-note">完成状态按日期保存在当前浏览器；点已勾选的方框可以撤销。Mac 与 iPhone 暂不互相同步。</p>
-    <a id="todayPlanLink" class="today-link" href="#overview">打开今天完整安排</a>
-  </div>
-</section>
-
-<!-- ================= 使用说明 ================= -->
-<section id="howto">
-  <div class="card">
-    <h3><span class="tag">START</span>第一次打开，先读这四条</h3>
-    <ol>
-      <li><b>买什么看「采购」，怎么做看「做饭」</b>——一号店买牛腱、虾仁、鸡蛋、牛奶；玉米、小红薯、西兰花和姜在楼下买。牛腱周日批量煮，鸡蛋、玉米、红薯、西兰花和虾仁当天早上现做；到公司立刻冷藏，吃前用微波炉彻底加热。</li>
-      <li><b>每天练什么吃什么看当天那一页</b>（点右下角圆按钮直接跳到今天）。时间表按颜色分类：<span style="color:var(--eat);font-weight:600">绿=吃</span>、<span style="color:var(--lift);font-weight:600">琥珀=举铁</span>、<span style="color:var(--recover);font-weight:600">紫=换项恢复</span>、<span style="color:var(--swim);font-weight:600">青=游泳</span>、<span style="color:var(--walk);font-weight:600">蓝=走路</span>、<span style="color:var(--free);font-weight:600">红=在外吃</span>、灰=日常。写着「展开」的行点一下看细节。</li>
-      <li>原理就一句话：普通训练日先按约 1800 千卡执行，5km 游泳日按饥饿和状态加 1–2 个小红薯；蛋白保持 <b>135–145g</b>，不用为了凑 2 倍体重继续加肉。<b>组合日力量按真实 45 分钟记录，之后另留完整 30 分钟恢复再下水</b>。</li>
-      <li>菜单是固定的、没有备选项——少一个「今天换不换」的念头，就多一分执行率。看不懂的词查「名词卡」；想改安排，先翻「决策档案」。</li>
-    </ol>
-  </div>
-</section>
-
-<!-- ================= 总览 ================= -->
-<section id="overview">
-  <h2>本周一览</h2>
-  <div class="lanes">
-    <a class="lane lift" href="#d13"><div class="d">一</div><div class="t">力·缓·游</div><div class="m">45+30+45分</div></a>
-    <a class="lane swim" href="#d24"><div class="d">二</div><div class="t">纯游</div><div class="m">3–5km</div></a>
-    <a class="lane lift" href="#d13"><div class="d">三</div><div class="t">力·缓·游</div><div class="m">45+30+45分</div></a>
-    <a class="lane swim" href="#d24"><div class="d">四</div><div class="t">纯游</div><div class="m">3–5km</div></a>
-    <a class="lane" href="#fri"><div class="d">五</div><div class="t">休·约会</div><div class="m">8000步</div><span class="dot"></span></a>
-    <a class="lane lift" href="#sat"><div class="d">六</div><div class="t">力·缓·游</div><div class="m">45+30+75分</div><span class="dot"></span></a>
-    <a class="lane" href="#sun"><div class="d">日</div><div class="t">休·备周一</div><div class="m">1万步</div></a>
-  </div>
-  <p class="lanecap">泳道颜色＝课型（琥珀=力量+恢复+游 · 青=纯游 · 灰=休息）；红点＝晚餐在外。时间表里的颜色标签：</p>
-  <div class="legend"><span class="lg-eat">吃</span><span class="lg-lift">力</span><span class="lg-recover">换项</span><span class="lg-swim">游</span><span class="lg-walk">走</span><span class="lg-rest">日常</span><span class="lg-out">在外</span></div>
-
-  <div class="card">
-    <h3><span class="tag">NUMBERS</span>核心数字</h3>
-    <div class="stats">
-      <div class="stat"><div class="v">约 1800 千卡起</div><div class="k">5km 日额外加 1–2 个小红薯</div></div>
-      <div class="stat"><div class="v">135–145g 蛋白</div><div class="k">约 1.7–1.85g/kg，已经足够</div></div>
-      <div class="stat"><div class="v">纯游 3–5km</div><div class="k">最低 3km，状态好再向 5km 靠</div></div>
-      <div class="stat"><div class="v">−0.6～0.7 kg / 周</div><div class="k">预期速度，周一早上称</div></div>
-    </div>
-    <div class="switchline"><b>组合日固定顺序：</b>力量约 45 分钟 → 慢走降心率 10 分钟 → 坐下补水、换装约 20 分钟 → 游泳。能说完整句子、走路稳定、心率持续下降才下水；休息 30 分钟仍明显心慌、头晕、胸闷或异常气短，当天取消游泳。</div>
-    <h3><span class="tag">RED LINES</span>三条红线 · 出现任何一条 → 按顺序加食物，训练不动</h3>
-    <div class="redline">① 连续两周、每周掉超过 0.8 kg（掉太快会掉肌肉）</div>
-    <div class="redline">② 举铁重量不涨甚至倒退</div>
-    <div class="redline">③ 晚上饿到影响睡觉</div>
-    <p>加回顺序：5km 日先 +1 个小红薯 → 仍饿再 +1 根玉米 → 睡前仍饿再加 1 盒奶；蛋白不随训练距离继续堆高。</p>
-    <details><summary>为什么这样定 · 两条补充</summary><div class="body">脸和四肢会先瘦、肚子最后瘦——这是脂肪分布的生理机制，不是方法错了，前 6 周别盯着肚子。睡眠必须 ≥7 小时。纯游的 5km 是努力目标而不是每次必须完成：当天最低先守 3km，动作变形、肩膝不适或明显乏力就停。</div></details>
-  </div>
-</section>
-
-<!-- ================= 采购 ================= -->
-<section id="shopping">
-  <h2>采购清单（固定食材 · 一号店 + 楼下超市）</h2>
-  <div class="card">
-    <h3><span class="tag">ONLINE</span>一号店 · 8–10 天检查一次库存</h3>
-    <div class="tbl-wrap"><table>
-      <tr><th>搜索名</th><th>买多少</th><th>周转方式</th></tr>
-      <tr><td data-label="搜索名">国产安格斯黑牛原切牛腱 1kg</td><td data-label="买多少"><b>1 袋 / 约 2 周</b></td><td data-label="说明">周日一次煮熟，按每天生重约 100g 等额分 10 份；工作日一份拆给午餐和 17:00 练前餐</td></tr>
-      <tr><td data-label="搜索名">量贩装零添加保水剂白虾仁 1.5kg（3 袋）</td><td data-label="买多少"><b>1 份 / 约 1 周</b></td><td data-label="说明">训练日约 17 只，整周约 105–115 只；三袋分装，前一晚只把次日份量移到冷藏</td></tr>
-      <tr><td data-label="搜索名">大码可生食鲜鸡蛋 24 枚（60g / 枚）</td><td data-label="买多少"><b>1 盒</b></td><td data-label="说明">每天 3 个，24 个约吃 8 天；冷藏</td></tr>
-      <tr><td data-label="搜索名">4.0g 蛋白脱脂纯牛奶 200ml×20</td><td data-label="买多少"><b>2 箱</b></td><td data-label="说明">先喝完家里全脂奶，再统一买脱脂；每周约 25 盒，喝前倒入玻璃杯或陶瓷杯加热</td></tr>
-    </table></div>
-    <h3><span class="tag">FRESH</span>楼下超市 · 看新鲜度分 2–3 次买</h3>
-    <div class="tbl-wrap"><table>
-      <tr><th>食材</th><th>每周约需</th><th>说明</th></tr>
-      <tr><td data-label="食材">甜玉米</td><td data-label="每周约需"><b>17–19 根</b></td><td data-label="说明">普通训练日 3 根；5km 日若仍饿可多 1 根，按新鲜度分批买</td></tr>
-      <tr><td data-label="食材">小红薯</td><td data-label="每周约需"><b>25–30 个小的</b></td><td data-label="说明">普通训练日 4 个；5km 日再加 1–2 个。第一批称一下单个重量，避免“个头小”估错</td></tr>
-      <tr><td data-label="食材">西兰花</td><td data-label="每周约需"><b>约 1.8–2kg</b></td><td data-label="说明">训练日约 300g；分 2–3 次买，发黄、黏软或有异味就丢弃</td></tr>
-      <tr><td data-label="食材">姜</td><td data-label="每周约需"><b>1 小块</b></td><td data-label="说明">煮牛腱时放几片即可</td></tr>
-    </table></div>
-    <details><summary><span class="no">＋</span>坚果 · 调味 · 一次性装备</summary><div class="body">
-      <p><b>坚果先不买</b>：先吃完家里的山姆存货，每天 25g。吃完后买一号店「洽洽每日纯坚果 750g / 30 袋」，一天一袋；不选蜜汁、糖衣、重盐或带果干款。</p>
-      <p><b>一次性</b>：公司微波炉、2 个耐热玻璃饭盒、已有锡纸保温袋、可冷冻的 500ml 水瓶、牛腱冷冻分装袋、生抽、盐、黑胡椒、600ml 水壶、厨房秤（第一次分牛腱和称小红薯时使用）、引体弹力带一套三条。先用冻水瓶做通勤冷源，不必马上另买冰袋。</p>
-    </div></details>
-  </div>
-</section>
-
-<!-- ================= 做饭 ================= -->
-<section id="cooking">
-  <h2>当天现煮与公司加热（固定五段）</h2>
-  <details class="cook" open>
-    <summary><span class="ct night">夜</span>① 前一天晚上 · 只解冻和摆好装备 <span class="tc">约 3 分钟</span></summary>
-    <div class="body">
-      <div class="tl">
-        <div class="ev"><div class="tm">睡前</div><div class="tg zz">解</div><div class="tx">从冷冻取次日虾仁约 17 只，放密封盒进冷藏解冻；取 1 份熟牛腱到冷藏<small>只在冰箱解冻，不泡常温水；周五只需午餐半份</small></div></div>
-        <div class="ev"><div class="tm">同时</div><div class="tg zz">冻</div><div class="tx">冻好 500ml 水瓶；摆好 2 个玻璃盒、坚果 25g、1 盒奶和健身包<small>前晚不再煮早餐、虾仁或蔬菜</small></div></div>
+  <main>
+    <header class="hero">
+      <div class="hero-top">
+        <div><p class="eyebrow">Nutrition × Pull-up</p><h1>减脂执行清单</h1><p>不排时间，只看今天要完成的餐和训练。</p></div>
+        <span class="version">V17 · 简化版</span>
       </div>
-    </div>
-  </details>
-  <details class="cook" open>
-    <summary><span class="ct morning">早</span>② 早上 · 早餐与两份公司餐一起现做 <span class="tc">约 30 分钟</span></summary>
-    <div class="body">
-      <div class="tl">
-        <div class="ev"><div class="tm">7:35</div><div class="tg eat">煮</div><div class="tx">鸡蛋 3 个、玉米 2 根、小红薯 4 个同锅煮约 20 分钟<small>早餐吃玉米 1 + 红薯 1；午餐红薯 1；17:00 练前餐红薯 2 + 玉米 1。5km 日多煮 1–2 个红薯</small></div></div>
-        <div class="ev"><div class="tm">最后7分</div><div class="tg eat">煮</div><div class="tx">另一小锅煮虾仁 10 只与西兰花约 220g，完全变色熟透后捞出<small>午餐和练前餐各 5 只虾仁；牛腱每日份从冷藏取出，早上不用再久煮</small></div></div>
-        <div class="ev"><div class="tm">装盒</div><div class="tg zz">装</div><div class="tx"><b>① 午餐盒：</b>牛腱半份 + 虾仁 5 + 红薯 1 + 西兰花约 150g；<b>② 练前餐盒：</b>牛腱半份 + 虾仁 5 + 红薯 2 + 玉米 1 + 西兰花约 70g</div></div>
-        <div class="ev"><div class="tm">早餐</div><div class="tg eat">吃</div><div class="tx">鸡蛋 3 + 玉米 1 + 红薯 1 + 加热牛奶 1 盒<small>鸡蛋只在早餐吃，不装进午餐或练前餐盒，因此没有公司微波鸡蛋的爆裂风险</small></div></div>
-        <div class="ev"><div class="tm">8:35</div><div class="tg zz">带</div><div class="tx">两个饭盒分开放散热，摸起来不再烫手后盖紧；与冻水瓶一起放进锡纸袋<small>若时间紧，浅盒可先放冰箱快速降温；不要把热盒紧贴牛奶，也不要用保温袋把热食焖成温温的</small></div></div>
+      <div class="profile" aria-label="身体数据">
+        <div><b>170 cm</b><span>身高</span></div><div><b>78.5 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
       </div>
-      <p class="note">到公司第一件事：①②两个饭盒和 15:00 的奶全部进冰箱。锡纸袋负责隔热，冻水瓶才是冷源；两者都不能进微波炉。</p>
-    </div>
-  </details>
-  <details class="cook" open>
-    <summary><span class="ct morning">热</span>③ 公司 · 编号对应三顿 <span class="tc">11:00 / 15:00 / 17:00</span></summary>
-    <div class="body">
-      <ol>
-        <li><b>10:00 牛奶：</b>1 盒脱脂牛奶倒入玻璃杯或陶瓷杯，先微波 40–60 秒并搅拌；温热即可，不煮沸</li>
-        <li><b>11:00 吃①午餐盒：</b>饭盒从冰箱拿出后，加水共 15–30ml；红薯切面淋约 10ml，西兰花 5–10ml，牛腱可加 10ml 水或原汤</li>
-        <li>取下饭盒盖，或按饭盒说明打开排气阀；先微波约 2 分钟，翻动牛腱 / 虾仁并调整红薯位置，再每次追加 30–60 秒，直到中心也持续冒热气。静置 1 分钟再吃</li>
-        <li><b>15:00 吃③加餐：</b>坚果 25g + 1 盒倒杯加热的奶，只是防止午餐到练前餐间隔过长，不再承担主餐作用</li>
-        <li><b>17:00 吃②练前餐盒：</b>与午餐同样彻底加热；吃完离 18:40 训练约 90–100 分钟，红薯、牛腱和虾仁负责饱腹与训练供能</li>
-      </ol>
-      <p class="note"><b>不要靠微波炉补救已经长时间温温放置的食物。</b>工作日链路固定为：早上现煮并尽快降温 → 冻水瓶通勤 → 公司立刻冷藏 → 对应时间再加热。</p>
-    </div>
-  </details>
-  <details class="cook">
-    <summary><span class="ct dinner">晚</span>④ 练后餐 · 回家现煮 <span class="tc">10–15 分钟</span></summary>
-    <div class="body"><p>到家煮玉米 1 根，最后 3–5 分钟放虾仁 7 只，最后 2–3 分钟放西兰花 80–100g；另喝 1 盒倒杯加热的奶。它提供约 30g 蛋白和不少于 20g 碳水。若当天真的游到 5km 或睡前仍饿，再补 1 个小红薯，不再加鸡蛋。</p></div>
-  </details>
-  <details class="cook">
-    <summary><span class="ct sunday">牛</span>⑤ 周日一次备牛腱 <span class="tc">1kg 分 10 个“每日份”</span></summary>
-    <div class="body">
-      <ol>
-        <li>1kg 牛腱整批冷水下锅 + 姜，烧开后撇沫；换水，小火盖盖煮 60–90 分钟，筷子能穿透即可。盐和少量生抽出锅前放，不加也行</li>
-        <li>记录熟肉总重，再平均分成 <b>10 个每日份</b>；每份代表生重约 100g。工作日早上取一份，对半放入午餐盒和 17:00 练前餐盒</li>
-        <li>只留未来 1–2 天要吃的份量冷藏，其余平铺冷冻；前一晚把次日一份移到冷藏解冻。这样 1kg 大约覆盖两周，不靠冷藏硬撑</li>
-        <li>玻璃带饭盒只装当天两顿，不用于长期占冰箱；牛腱长期份用小分装袋或小盒</li>
-        <li>熟牛腱分浅层后尽快冷却；从做熟到冷藏或冷冻最迟不超过 2 小时，解冻只在冰箱进行</li>
-      </ol>
-    </div>
-  </details>
-</section>
+    </header>
 
-<!-- ================= 周一 · 周三 ================= -->
-<section class="day" id="d13">
-  <header><span class="plate">周一 · 周三</span><span class="badge lift">力量 45分</span><span class="badge recover">恢复 30分</span><span class="badge swim">游 45分</span><span class="kcal">均衡固定餐 · 蛋白≈138–145g</span></header>
-  <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3（只早餐）</b><b>坚果 25g</b><b>奶 ×4盒</b><b>玉米 ×3</b><b>小红薯 ×4</b><b>牛腱生重等额 100g</b><b>虾仁 ×17</b><b>西兰花约 300g</b><i>午餐和 17:00 练前餐完全同一种组合，只是红薯数量不同</i></div>
-    <div class="carry-map" aria-label="通勤物品与用餐对应关系">
-      <div class="carry-title">出门装包清单 <small>逐项勾选；这里已经写全，不用再查时间线</small></div>
-      <div class="carry-row" data-no="1"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装午餐盒"><span><b>午餐玻璃盒 ×1</b><small>牛腱半份 + 虾仁 5 + 小红薯 1 + 西兰花约 150g</small></span></label><span class="arrow">→</span><span class="dest">11:00 午餐</span></div>
-      <div class="carry-row" data-no="2"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装练前餐盒"><span><b>练前餐玻璃盒 ×1</b><small>牛腱半份 + 虾仁 5 + 小红薯 2 + 玉米 1 + 西兰花约 70g</small></span></label><span class="arrow">→</span><span class="dest">17:00 晚餐 / 练前餐</span></div>
-      <div class="carry-row" data-no="3"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装牛奶和坚果"><span><b>牛奶 ×2盒 + 坚果 25g</b><small>两盒都是 200ml；坚果单独小袋装</small></span></label><span class="arrow">→</span><span class="dest">奶 10:00；坚果＋奶 15:00</span></div>
-      <div class="carry-row cold" data-no="4"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装冷链用品"><span><b>冻水瓶 500ml ×1 + 锡纸袋 ×1</b><small>两个饭盒与冻水瓶一起装袋</small></span></label><span class="arrow">→</span><span class="dest">通勤冷链；到公司饭盒立即冷藏</span></div>
-      <div class="carry-row train" data-no="5"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装训练饮水"><span><b>水壶 600ml ×1</b><small>电解质水不出门，固定留在家里</small></span></label><span class="arrow">→</span><span class="dest">力量与 30 分钟恢复期喝；下水前存回柜子</span></div>
-      <div class="carry-row" data-no="6"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装餐具"><span><b>筷子 / 勺 ×1套</b><small>公司没有固定杯子时，再带可微波杯 ×1</small></span></label><span class="arrow">→</span><span class="dest">两顿饭与加热牛奶</span></div>
-      <div class="carry-row train" data-no="7"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装训练包"><span><b>健身包 ×1</b><small>训练衣、泳衣、泳帽、泳镜、毛巾、拖鞋、换洗衣物</small></span></label><span class="arrow">→</span><span class="dest">力量房 + 泳池</span></div>
-      <div class="carry-foot"><b>留在家里：</b>早餐鸡蛋 / 玉米 / 红薯 / 奶，以及练后玉米 1 + 虾仁 7 + 西兰花 80–100g + 奶 1、<b>电解质水 1 瓶</b>。鸡蛋和电解质水都不带去公司。</div>
-    </div>
-    <div class="tl">
-      <div class="phase home">早上在家 · 一次完成早餐与两个饭盒</div>
-      <div class="ev"><div class="tm">7:35</div><div class="tg zz">做</div><div class="tx">早餐和两份公司餐一起现煮、分装<small>同锅约 20 分钟：蛋 3 + 玉米 2 + 小红薯 4；最后 7 分钟另锅煮虾仁 10 + 西兰花约 220g。午餐盒装红薯 1，练前盒装红薯 2 + 玉米 1</small></div></div>
-      <div class="ev"><div class="tm">8:10</div><div class="tg eat">吃</div><div class="tx">早餐：鸡蛋 3 + 加热牛奶 1 盒 + 玉米 1 + 小红薯 1<small>鸡蛋只在家里早餐吃，不带去公司微波</small></div></div>
-      <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">按上方装包清单勾完 ①–⑦ 再出门；到公司立刻把两个饭盒和两盒奶放冰箱<small>不用再从时间线反查内容；上方每项已经写出数量与用途</small></div></div>
-      <div class="phase">公司白天 · 饭盒和奶先冷藏，需要时再取</div>
-      <div class="ev"><div class="tm">10:00</div><div class="tg eat">热</div><div class="tx">脱脂奶 1 盒倒进杯中，微波到温热后喝</div></div>
-      <div class="ev"><div class="tm">11:00</div><div class="tg eat">热</div><div class="tx">吃①：牛腱半份 + 虾仁 5 + 小红薯 1 + 西兰花约 150g <span class="meal-ref">对应①</span><small>洒水 15–30ml，开盖排气；先 2 分钟，翻动后每次追加 30–60 秒至中心冒热气</small></div></div>
-      <div class="ev"><div class="tm">12:00</div><div class="tg walk">走</div><div class="tx">下楼走 30–40 分钟<small>走阴凉处，微汗即止，别汗透影响午睡</small></div></div>
-      <div class="ev"><div class="tm">12:50</div><div class="tg zz">休</div><div class="tx">午休到 13:45</div></div>
-      <div class="ev"><div class="tm">15:00</div><div class="tg eat">吃</div><div class="tx">吃③：坚果 25g + 倒杯加热的牛奶 1 盒 <span class="meal-ref">对应③</span><small>这是小加餐；真正顶到训练的是 17:00 那盒</small></div></div>
-      <div class="ev"><div class="tm">17:00</div><div class="tg eat">热</div><div class="tx">吃②：牛腱半份 + 虾仁 5 + 小红薯 2 + 玉米 1 + 西兰花约 70g <span class="meal-ref">对应②</span><small>从冰箱直接彻底加热；吃完到训练约 90–100 分钟，替代原先只有玉米、牛奶或两个鸡蛋的晚餐</small></div></div>
-      <div class="phase train">训练 · 力量 → 完整恢复 30 分钟 → 游泳</div>
-      <div class="ev"><div class="tm">18:40–19:25</div><div class="tg lift">力</div><div class="tx">引体专项力量约 45 分钟<small>组间休足，不追心率。今天的动作直接点开：</small><details class="mini"><summary>周一 / 周三动作清单</summary><div class="body"><b>周一：</b>死挂 3组 → 肩胛引体 3组 → 辅助引体 4×4–6 → 高位下拉 4×6–8 → 划船 3×8–10 → 面拉 3×15 → 罗马尼亚硬拉 2–3×8。<br><b>周三：</b>引体离心 4×3（慢放5–8秒）→ 辅助引体 3×5 → 高位下拉 3×8 → 划船 3×10 → 俯卧撑 2×8–12 → 面拉 3×15 → 核心 3组。</div></details></div></div>
-      <div class="ev"><div class="tm">19:25–19:55</div><div class="tg recover">缓</div><div class="tx"><b>完整恢复 30 分钟</b>：先慢走 10 分钟，再坐下用水壶补水、擦汗、换泳装<small>下水前把水壶存回更衣柜；不洗热水澡、不冲冷水，状态没恢复就取消当天游泳</small></div></div>
-      <div class="ev"><div class="tm">19:55–20:40</div><div class="tg swim">游</div><div class="tx">游泳 45 分钟 · 前 10 分钟只慢游，主项心率 140–150
-        <details class="mini"><summary>四段结构</summary><div class="body"><b>慢蛙热身 10 分钟</b> → 连续蛙泳 20 分钟（比平时慢一档，游到「能一直游不用停」）→ 自由泳 50m 全力 ×6 组（每组歇 30 秒）→ 放松慢游到满 45 分钟</div></details>
-      </div></div>
-      <div class="phase home">回家 · 只做练后恢复餐与明早 3 分钟准备</div>
-      <div class="ev"><div class="tm">21:10左右</div><div class="tg eat">吃</div><div class="tx">回家先喝电解质水，再吃练后餐：玉米 1 + 虾仁 7 + 西兰花 80–100g + 加热牛奶 1 盒<small>电解质水约 300–400ml，按口渴分次喝，不必一口气灌完；练后餐约 30g 蛋白、碳水超过 20g</small></div></div>
-      <div class="ev"><div class="tm">饭后</div><div class="tg zz">备</div><div class="tx">虾仁与熟牛腱移到冷藏，冻水瓶，摆好明早两个饭盒<small>只做 3 分钟准备；食物明早现煮</small></div></div>
-      <div class="ev"><div class="tm">23:30–00:00</div><div class="tg zz">睡</div><div class="tx">睡觉；当天若整体晚一小时，整段顺延，不用赶时间</div></div>
-    </div>
-    <p class="note">17:00 已经是一顿完整晚餐，所以训练后不需要再吃很大一顿；练后餐只负责补足碳水和蛋白。力量动作质量优先，每组保留 1–2 次余力。</p>
+    <section id="today">
+      <div class="mode-card">
+        <div class="mode-head">
+          <div class="date"><span id="dateText">今天</span><strong id="modeTitle">训练日</strong></div>
+          <div class="segmented" role="group" aria-label="选择今天类型">
+            <button type="button" class="active" data-mode="train">训练日</button><button type="button" data-mode="rest">休息日</button>
+          </div>
+        </div>
+        <div class="next" aria-live="polite"><span>下一项</span><b id="nextTask">先完成早餐</b><small id="progressText">0 / 6 已完成</small><div class="bar"><i id="progressBar"></i></div></div>
+      </div>
+    </section>
 
-    <h3><span class="tag">PULL-UP</span>力量课 · 三天不同任务，全部围绕第一个引体</h3>
-    <details open><summary><span class="no">一</span>周一 · 基础拉力</summary><div class="body"><b>死挂 3 组</b> → 肩胛引体 3 组 → 辅助引体 4×4–6 → 高位下拉 4×6–8 → 划船 3×8–10 → 面拉 3×15 → 罗马尼亚硬拉 2–3×8。大动作休 2–3 分钟；最后一组仍能再做 1–2 次。</div></details>
-    <details><summary><span class="no">三</span>周三 · 离心与控制</summary><div class="body"><b>引体离心 4×3，每次慢放 5–8 秒</b> → 辅助引体 3×5 → 高位下拉 3×8 → 划船 3×10 → 俯卧撑 2×8–12 → 面拉 3×15 → hollow hold 或 dead bug 3 组。肩肘疲劳时，先减离心一组，不硬撑。</div></details>
-    <p class="note"><b>进阶规则：</b>辅助引体所有组都能干净做到 6 次，下次减少一档辅助；高位下拉完成目标次数后加 2.5kg；离心先把每次从 5 秒练到 8 秒，再加次数。</p>
-  </div>
-</section>
+    <section id="meals">
+      <div class="section-title"><h2>今天吃什么</h2><p>数值取整数<br>不追调料小数</p></div>
+      <div class="macro-summary card" aria-label="全天营养估算">
+        <div class="protein"><b id="sumP">160g</b><span>蛋白质</span></div>
+        <div class="carb"><b id="sumC">250g</b><span>碳水</span></div>
+        <div class="fat"><b id="sumF">50g</b><span>脂肪</span></div>
+        <div class="energy"><b id="sumKcal">≈2100</b><span>千卡</span></div>
+      </div>
+      <p class="summary-note" id="summaryNote">训练日包含练后餐；米饭、蔬菜和调料中的零碎营养已经用整十数吸收，不单独记账。</p>
 
-<!-- ================= 周二 · 周四 ================= -->
-<section class="day" id="d24">
-  <header><span class="plate">周二 · 周四</span><span class="badge swim">纯游 3–5km</span><span class="kcal">均衡固定餐 · 蛋白≈138–145g</span></header>
-  <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3（只早餐）</b><b>坚果 25g</b><b>奶 ×4盒</b><b>玉米 ×3</b><b>小红薯 ×4</b><b>牛腱生重等额 100g</b><b>虾仁 ×17</b><b>西兰花约 300g</b><i>若真游到 5km，只加 1–2 个小红薯或 1 根玉米，不再加蛋白</i></div>
-    <div class="carry-map" aria-label="通勤物品与用餐对应关系">
-      <div class="carry-title">出门装包清单 <small>逐项勾选；这里已经写全，不用再查时间线</small></div>
-      <div class="carry-row" data-no="1"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装午餐盒"><span><b>午餐玻璃盒 ×1</b><small>牛腱半份 + 虾仁 5 + 小红薯 1 + 西兰花约 150g</small></span></label><span class="arrow">→</span><span class="dest">11:00 午餐</span></div>
-      <div class="carry-row" data-no="2"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装练前餐盒"><span><b>练前餐玻璃盒 ×1</b><small>牛腱半份 + 虾仁 5 + 小红薯 2 + 玉米 1 + 西兰花约 70g</small></span></label><span class="arrow">→</span><span class="dest">17:00 晚餐 / 练前餐</span></div>
-      <div class="carry-row" data-no="3"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装牛奶和坚果"><span><b>牛奶 ×2盒 + 坚果 25g</b><small>两盒都是 200ml；坚果单独小袋装</small></span></label><span class="arrow">→</span><span class="dest">奶 10:00；坚果＋奶 15:00</span></div>
-      <div class="carry-row cold" data-no="4"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装冷链用品"><span><b>冻水瓶 500ml ×1 + 锡纸袋 ×1</b><small>两个饭盒与冻水瓶一起装袋</small></span></label><span class="arrow">→</span><span class="dest">通勤冷链；到公司饭盒立即冷藏</span></div>
-      <div class="carry-row train" data-no="5"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装日间水壶"><span><b>水壶 600ml ×1</b><small>只供白天与下水前喝；电解质水留在家里</small></span></label><span class="arrow">→</span><span class="dest">离开公司前补水；到泳池后存进更衣柜</span></div>
-      <div class="carry-row" data-no="6"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装餐具"><span><b>筷子 / 勺 ×1套</b><small>公司没有固定杯子时，再带可微波杯 ×1</small></span></label><span class="arrow">→</span><span class="dest">两顿饭与加热牛奶</span></div>
-      <div class="carry-row train" data-no="7"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装游泳包"><span><b>游泳包 ×1</b><small>泳衣、泳帽、泳镜、毛巾、拖鞋、换洗衣物</small></span></label><span class="arrow">→</span><span class="dest">泳池</span></div>
-      <div class="carry-foot"><b>留在家里：</b>早餐鸡蛋 / 玉米 / 红薯 / 奶，以及练后玉米 1 + 虾仁 7 + 西兰花 80–100g + 奶 1、<b>电解质水 1 瓶</b>。鸡蛋和电解质水都不带去公司。</div>
-    </div>
-    <div class="tl">
-      <div class="phase home">早上在家 · 一次完成早餐与两个饭盒</div>
-      <div class="ev"><div class="tm">7:35</div><div class="tg zz">做</div><div class="tx">早餐和两份公司餐一起现煮、分装<small>同锅约 20 分钟：蛋 3 + 玉米 2 + 小红薯 4；最后 7 分钟另锅煮虾仁 10 + 西兰花约 220g。目标 5km 时再多煮 1–2 个小红薯</small></div></div>
-      <div class="ev"><div class="tm">8:10</div><div class="tg eat">吃</div><div class="tx">早餐：鸡蛋 3 + 加热牛奶 1 盒 + 玉米 1 + 小红薯 1<small>鸡蛋只在家里早餐吃，不带去公司微波</small></div></div>
-      <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">按上方装包清单勾完 ①–⑦ 再出门；到公司立刻把两个饭盒和两盒奶放冰箱<small>不用再从时间线反查内容；上方每项已经写出数量与用途</small></div></div>
-      <div class="phase">公司白天 · 饭盒和奶先冷藏，需要时再取</div>
-      <div class="ev"><div class="tm">10:00</div><div class="tg eat">热</div><div class="tx">脱脂奶 1 盒倒进杯中，微波到温热后喝</div></div>
-      <div class="ev"><div class="tm">11:00</div><div class="tg eat">热</div><div class="tx">吃①：牛腱半份 + 虾仁 5 + 小红薯 1 + 西兰花约 150g <span class="meal-ref">对应①</span><small>洒水 15–30ml，开盖排气；先 2 分钟，翻动后每次追加 30–60 秒至中心冒热气</small></div></div>
-      <div class="ev"><div class="tm">12:00</div><div class="tg walk">走</div><div class="tx">下楼走 30–40 分钟<small>走阴凉处，微汗即止</small></div></div>
-      <div class="ev"><div class="tm">12:50</div><div class="tg zz">休</div><div class="tx">午休到 13:45</div></div>
-      <div class="ev"><div class="tm">15:00</div><div class="tg eat">吃</div><div class="tx">吃③：坚果 25g + 倒杯加热的牛奶 1 盒 <span class="meal-ref">对应③</span><small>只做小加餐，避免 11:00 到 17:00 完全空档</small></div></div>
-      <div class="ev"><div class="tm">17:00</div><div class="tg eat">热</div><div class="tx">吃②：牛腱半份 + 虾仁 5 + 小红薯 2 + 玉米 1 + 西兰花约 70g <span class="meal-ref">对应②</span><small>从冰箱直接彻底加热；吃完到下水约 90–100 分钟</small></div></div>
-      <div class="phase train">泳池 · 水壶锁柜；先完成 3km，再决定是否继续</div>
-      <div class="ev"><div class="tm">18:40</div><div class="tg swim">游</div><div class="tx">纯游：最低完成 3000m，状态好再向 5000m 靠近
-        <details class="mini"><summary>里程与强度直接照做</summary><div class="body">热身 300m → 主项连续游至累计 2500–4500m（每 500m 可扶边歇 20–30 秒）→ 自由泳技术 / 适量加速 → 放松 200m。主项以能断续说短句为准；完全说不出话就降速。5km 不是每次硬凑，动作散、肩膝不适或异常乏力就停。</div></details>
-      </div></div>
-      <div class="phase home">回家 · 只做练后恢复餐与明早 3 分钟准备</div>
-      <div class="ev"><div class="tm">20:30–21:10</div><div class="tg eat">吃</div><div class="tx">回家先喝电解质水，再吃练后餐：玉米 1 + 虾仁 7 + 西兰花 80–100g + 加热牛奶 1 盒<small>电解质水约 300–400ml，按口渴分次喝；游到 5km 或仍饿，再加小红薯 1</small></div></div>
-      <div class="ev"><div class="tm">饭后</div><div class="tg zz">备</div><div class="tx">虾仁与熟牛腱移到冷藏，冻水瓶，摆好明早两个饭盒<small>只做 3 分钟准备；食物明早现煮</small></div></div>
-    </div>
-    <p class="note"><b>周四是连续四天的最后一天</b>：3km 完成后先看肩膝和动作质量，再决定要不要继续。因为池边不放水瓶，出现明显口渴、头晕、头痛、恶心、抽筋或动作散掉就结束，不为凑 5km 硬撑。蛙泳游久膝盖内侧不适 → 一趟蛙一趟自由泳交替。</p>
-    <details><summary>为什么主项不能游到心率 160</summary><div class="body">水里心率天然比陆地低约 10：水中 160 ≈ 陆上 170 ≈ 90% 最大心率，那个强度 18 分钟就得停。减脂看「强度 × 时长」的总量——游得稍慢但一直不停，才是赢法。没有手表就用说话测试：能断续说短句合适；一个字都说不出就是过快。</div></details>
-  </div>
-</section>
+      <div class="meals" style="margin-top:13px">
+        <article class="meal card" data-card="breakfast">
+          <div class="meal-top"><label class="check"><input type="checkbox" data-task="breakfast" aria-label="早餐已完成"><span>✓</span></label><div><div class="meal-kicker">01 · 每天相同</div><h3 class="meal-name">早餐</h3></div></div>
+          <p class="food"><b>2个全蛋＋2个蛋白</b><br>玉米1根 · 山姆混合坚果5颗</p>
+          <div class="macros"><span class="macro p">蛋白 <b>25g</b></span><span class="macro c">碳水 <b>30g</b></span><span class="macro f">脂肪 <b>15g</b></span></div>
+          <div class="meal-tip">鸡蛋在家吃，不放进饭盒微波。</div>
+        </article>
 
-<!-- ================= 周五 ================= -->
-<section class="day" id="fri">
-  <header><span class="plate">周五</span><span class="badge rest">休息</span><span class="badge free">晚餐·约会</span><span class="kcal">公司只带午餐 · 蛋白约130g+</span></header>
-  <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3（只早餐）</b><b>坚果 25g</b><b>奶 ×3盒</b><b>玉米 ×1</b><b>小红薯 ×3</b><b>牛腱生重等额 100g</b><b>虾仁 ×8</b><b>西兰花约 200g</b><i>周五晚上不在公司吃，所以不带②练前餐盒</i></div>
-    <div class="carry-map" aria-label="周五通勤物品与用餐对应关系">
-      <div class="carry-title">周五出门装包清单 <small>只有午餐，没有公司晚餐</small></div>
-      <div class="carry-row" data-no="1"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装周五午餐盒"><span><b>午餐玻璃盒 ×1</b><small>牛腱一份 + 虾仁 8 + 小红薯 2 + 西兰花约 200g</small></span></label><span class="arrow">→</span><span class="dest">11:00 午餐</span></div>
-      <div class="carry-row" data-no="3"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装周五牛奶和坚果"><span><b>牛奶 ×2盒 + 坚果 25g</b><small>两盒都是 200ml；坚果单独小袋装</small></span></label><span class="arrow">→</span><span class="dest">奶 10:00；坚果＋奶 15:00</span></div>
-      <div class="carry-row cold" data-no="4"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装周五冷链用品"><span><b>冻水瓶 500ml ×1 + 锡纸袋 ×1</b><small>午餐盒与冻水瓶一起装袋</small></span></label><span class="arrow">→</span><span class="dest">通勤冷链；到公司饭盒立即冷藏</span></div>
-      <div class="carry-row" data-no="6"><label class="pack"><input class="pack-check" type="checkbox" aria-label="已装周五餐具"><span><b>筷子 / 勺 ×1套</b><small>公司没有固定杯子时，再带可微波杯 ×1</small></span></label><span class="arrow">→</span><span class="dest">午餐与加热牛奶</span></div>
-      <div class="carry-foot"><b>周五明确不带：</b>练前餐盒、训练饮水和健身 / 游泳包。晚上直接约会吃饭。</div>
-    </div>
-    <div class="tl">
-      <div class="phase home">早上在家 · 早餐与唯一一个公司饭盒</div>
-      <div class="ev"><div class="tm">7:40</div><div class="tg zz">做</div><div class="tx">当天现煮早餐和①午餐盒：蛋 3、玉米 1、红薯 3；午餐另煮牛腱一份 + 虾仁 8 + 西兰花约 200g</div></div>
-      <div class="ev"><div class="tm">8:10</div><div class="tg eat">吃</div><div class="tx">早餐：蛋 3 + 奶 1 + 玉米 1 + 小红薯 1</div></div>
-      <div class="ev"><div class="tm">8:45</div><div class="tg zz">带</div><div class="tx">按上方清单勾完 ①③④⑥ 再出门；到公司立刻把午餐盒和两盒奶放冰箱<small>今天不带②练前餐盒，也不带训练包；晚上直接约会</small></div></div>
-      <div class="phase">公司白天 · 只吃午餐与加餐，不留晚饭</div>
-      <div class="ev"><div class="tm">10:00</div><div class="tg eat">热</div><div class="tx">脱脂奶 1 盒倒进杯中，微波到温热后喝</div></div>
-      <div class="ev"><div class="tm">11:00</div><div class="tg eat">热</div><div class="tx">吃①：小红薯 2 + 牛腱一份 + 虾仁 8 + 西兰花约 200g <span class="meal-ref">对应①</span></div></div>
-      <div class="ev"><div class="tm">15:00</div><div class="tg eat">热</div><div class="tx">坚果 25g + 倒杯加热的脱脂奶 1 盒<small>约会晚餐较晚时尤其别省</small></div></div>
-      <div class="ev"><div class="tm">白天</div><div class="tg walk">走</div><div class="tx">不练，步数走到 8000<small>午间走路照旧</small></div></div>
-      <div class="phase out">晚上 · 直接约会，不回公司吃饭</div>
-      <div class="ev"><div class="tm">晚上</div><div class="tg out">外</div><div class="tx">约会晚餐 · 不是自由餐
-        <details class="mini"><summary>点菜规则</summary><div class="body">一荤 + 一素 + 一主食；今天白天已经吃牛腱，晚餐优先鱼或虾，自己实际吃到约 150–180g 熟肉（约 32–35g 蛋白）。如果只点豆腐，要再配蛋；主食一份别续；不喝酒、不喝含糖饮料；甜点分一半。</div></details>
-      </div></div>
-      <div class="ev"><div class="tm">回家后</div><div class="tg zz">备</div><div class="tx">确认周六虾仁和牛腱已在冷藏<small>不再提前煮周六食物；若约会晚一小时，睡觉一起顺延</small></div></div>
-      <div class="ev"><div class="tm">23:00</div><div class="tg zz">睡</div><div class="tx">睡。恢复日，四天的疲劳靠今晚睡掉</div></div>
-    </div>
-  </div>
-</section>
+        <article class="meal card" data-card="lunch">
+          <div class="meal-top"><label class="check"><input type="checkbox" data-task="lunch" aria-label="午餐已完成"><span>✓</span></label><div><div class="meal-kicker">02 · 公司加热</div><h3 class="meal-name">午餐</h3></div></div>
+          <p class="food"><b>鸡胸肉200g（生重）</b><br>生米105g／熟饭约220g · 西兰花</p>
+          <div class="macros"><span class="macro p">蛋白 <b>55g</b></span><span class="macro c">碳水 <b>95g</b></span><span class="macro f">脂肪 <b>15g</b></span></div>
+          <div class="meal-tip">晚间煎熟装盒，隔天从公司冰箱取出彻底加热。</div>
+        </article>
 
-<!-- ================= 周六 ================= -->
-<section class="day" id="sat">
-  <header><span class="plate">周六</span><span class="badge lift">力量 45分</span><span class="badge recover">恢复 30分</span><span class="badge swim">游 75分</span><span class="badge free">湘菜·自由餐</span><span class="kcal">均衡固定餐 · 蛋白约130g+</span></header>
-  <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3（只早餐）</b><b>坚果 25g</b><b>奶 ×3盒</b><b>玉米 ×2</b><b>小红薯 ×3</b><b>牛腱生重等额 100g</b><b>虾仁 ×8</b><b>西兰花约 200g</b><i>白天现做，晚餐在外吃鱼虾</i></div>
-    <div class="tl">
-      <div class="phase home">上午在家 · 早餐、午餐和练前加餐</div>
-      <div class="ev"><div class="tm">8:00前</div><div class="tg eat">做</div><div class="tx">当天现煮 → 早餐：蛋 3 + 奶 1 + 玉米 1 + 小红薯 1</div></div>
-      <div class="ev"><div class="tm">10:00</div><div class="tg eat">热</div><div class="tx">脱脂奶 1 盒倒杯加热后喝</div></div>
-      <div class="ev"><div class="tm">12:00</div><div class="tg eat">吃</div><div class="tx">午餐：小红薯 2 + 牛腱一份 + 虾仁 8 + 西兰花约 200g</div></div>
-      <div class="ev"><div class="tm">14:00</div><div class="tg eat">吃</div><div class="tx">加餐：坚果 25g + 玉米 1 + 加热脱脂奶 1 盒<small>这份碳水与蛋白负责支撑 15:00 训练</small></div></div>
-      <div class="phase train">训练 · 力量 → 恢复 30 分钟 → 游泳</div>
-      <div class="ev"><div class="tm">15:00–15:45</div><div class="tg lift">力</div><div class="tx">周六引体综合课 45 分钟<small>每两周一次的引体测试放课首；完整动作清单在本段时间线后直接展开</small></div></div>
-      <div class="ev"><div class="tm">15:45–16:15</div><div class="tg recover">缓</div><div class="tx">完整恢复 30 分钟：慢走 10 分钟 + 坐下用水壶补水、擦汗、换泳装<small>下水前把水壶存回更衣柜，不把无人照看的饮料留在池边</small></div></div>
-      <div class="ev"><div class="tm">16:15–17:30</div><div class="tg swim">游</div><div class="tx">游泳 75 分钟 · 前 10 分钟只慢游
-        <details class="mini"><summary>四段结构</summary><div class="body"><b>慢蛙热身 10 分钟</b> → 连续蛙泳 45 分钟（心率 140–150）→ 自由泳 50m×6 组 → 放松慢游到满 75 分钟</div></details>
-      </div></div>
-      <div class="phase home">游完回家 · 补水</div>
-      <div class="ev"><div class="tm">到家后</div><div class="tg eat">喝</div><div class="tx">喝电解质水约 300–400ml<small>按口渴分次喝；这是训练后补水，不要求在泳池期间喝</small></div></div>
-      <div class="phase out">晚上 · 唯一自由餐</div>
-      <div class="ev"><div class="tm">19:00</div><div class="tg out">外</div><div class="tx">湘菜 · <b>本周唯一自由餐</b>（不数热量、吃饱）
-        <details class="mini"><summary>点菜规则</summary><div class="body">今天白天已经吃牛腱，晚餐优先剁椒鱼头、清蒸鱼或虾，自己实际吃到约 150–180g 熟肉；如果只点豆腐，要再配蛋。避开肥肠、五花、红烧肉和油炸；夹菜沥油、不用汤汁拌饭、米饭一碗；不喝啤酒。</div></details>
-      </div></div>
-      <div class="ev"><div class="tm">回家后</div><div class="tg zz">备</div><div class="tx">把周日要用的虾仁移到冷藏<small>周日食物仍当天现煮，牛腱下午批量处理</small></div></div>
-      <div class="ev"><div class="tm">23:00</div><div class="tg zz">睡</div><div class="tx">睡</div></div>
-    </div>
-    <details open><summary><span class="no">六</span>周六 · 引体综合课</summary><div class="body">每两周课首测 1 次引体 → 辅助引体 4×5 → 高位下拉 3×6–8 → 划船 3×8–10 → 腿举或深蹲 3×8 → 肩推 2×8 → 面拉 3×15 → 核心 3 组。测试不是每天做；失败也不追加尝试。</div></details>
-    <p class="note">自由餐是「这一顿」不是「这一天」：前后照常吃，别为它饿一天。若时间不够，先删肩推，不删面拉，也不压缩 30 分钟换项恢复。</p>
-  </div>
-</section>
+        <article class="meal card" data-card="dinner">
+          <div class="meal-top"><label class="check"><input type="checkbox" data-task="dinner" aria-label="晚餐已完成"><span>✓</span></label><div><div class="meal-kicker">03 · 公司加热</div><h3 class="meal-name">晚餐</h3></div></div>
+          <p class="food"><b>猪里脊200g（生重）</b><br>生米105g／熟饭约220g · 西兰花</p>
+          <div class="macros"><span class="macro p">蛋白 <b>55g</b></span><span class="macro c">碳水 <b>95g</b></span><span class="macro f">脂肪 <b>18g</b></span></div>
+          <div class="meal-tip">和午餐做法一致，肉类分开腌制、分开装盒。</div>
+        </article>
 
-<!-- ================= 周日 ================= -->
-<section class="day" id="sun">
-  <header><span class="plate">周日</span><span class="badge rest">休息 · 采购日</span><span class="kcal">当天现煮 · 下午批量牛腱</span></header>
-  <div class="inner">
-    <div class="chips"><span class="lb">今日用料</span><b>蛋 ×3（只早餐）</b><b>坚果 25g</b><b>奶 ×3盒</b><b>玉米 ×2</b><b>小红薯 ×2</b><b>牛腱生重等额 100g</b><b>虾仁 ×17</b><b>西兰花约 300g</b><i>日常三餐当天现煮；下午另批量煮 1kg 牛腱并分 10 个每日份</i></div>
-    <div class="tl">
-      <div class="phase home">上午 · 当天早餐、走路和午餐</div>
-      <div class="ev"><div class="tm">8:00前</div><div class="tg eat">做</div><div class="tx">当天现煮 → 早餐：蛋 3 + 奶 1 + 玉米 1 + 小红薯 1</div></div>
-      <div class="ev"><div class="tm">9:00</div><div class="tg walk">走</div><div class="tx">出门走 1 小时，凑 1 万步</div></div>
-      <div class="ev"><div class="tm">12:00</div><div class="tg eat">吃</div><div class="tx">午餐：小红薯 1 + 牛腱一份 + 虾仁 10 + 西兰花约 200g</div></div>
-      <div class="phase train">下午 · 一次完成采购核对与牛腱分装</div>
-      <div class="ev"><div class="tm">15:00</div><div class="tg eat">备</div><div class="tx">坚果 25g + 加热牛奶 1 盒；按库存下一号店单；同时煮 1kg 牛腱<small>熟后称总重并平均分 10 个每日份；只留周一、周二两份冷藏，其余平铺冷冻</small></div></div>
-      <div class="phase home">晚上 · 晚餐与周一 3 分钟准备</div>
-      <div class="ev"><div class="tm">18:30</div><div class="tg eat">吃</div><div class="tx">晚餐：玉米 1 + 虾仁 7 + 西兰花约 100g；牛奶 1 盒倒杯加热</div></div>
-      <div class="ev"><div class="tm">晚饭后</div><div class="tg zz">备</div><div class="tx">把周一虾仁 17 只和 1 个牛腱每日份移到冷藏；冻好水瓶、摆好两个饭盒<small>周一早餐与公司两顿仍在周一早上现煮</small></div></div>
-      <div class="ev"><div class="tm">23:00</div><div class="tg zz">睡</div><div class="tx">睡。饿就加 1 盒奶或 1 根玉米，休息日不用硬饿</div></div>
-    </div>
-  </div>
-</section>
+        <article class="meal card training-only" data-card="postworkout">
+          <div class="meal-top"><label class="check"><input type="checkbox" data-task="postworkout" aria-label="练后餐已完成"><span>✓</span></label><div><div class="meal-kicker">04 · 仅训练日</div><h3 class="meal-name">练后餐</h3></div></div>
+          <p class="food"><b>蛋白粉粉末1勺（约30g）</b><br>香蕉1根</p>
+          <div class="macros"><span class="macro p">蛋白 <b>25g</b></span><span class="macro c">碳水 <b>30g</b></span><span class="macro f">脂肪 <b>2g</b></span></div>
+          <div class="meal-tip">一勺是30g粉末，不按30g纯蛋白计算。</div>
+        </article>
+      </div>
 
-<!-- ================= 份量 ================= -->
-<section id="portions">
-  <h2>份量与蛋白（第一周称一次即可）</h2>
-  <div class="card"><div class="tbl-wrap">
-    <table>
-      <tr><th>食物</th><th>一份是多少</th><th>热量(千卡)</th><th>蛋白质</th></tr>
-      <tr><td data-label="食物">甜玉米</td><td data-label="份量">1 根（200g）</td><td data-label="热量">≈105</td><td data-label="蛋白质">3g</td></tr>
-      <tr><td data-label="食物">小红薯</td><td data-label="份量">普通训练日 4 个小的；5km 日再加 1–2 个</td><td data-label="热量">按首次实称重量估</td><td data-label="蛋白质">约 1–2g / 小个</td></tr>
-      <tr><td data-label="食物">水煮蛋</td><td data-label="份量">1 个</td><td data-label="热量">≈72</td><td data-label="蛋白质">6.5g</td></tr>
-      <tr><td data-label="食物">无盐混合坚果</td><td data-label="份量">25g（小把，先分 7 份）</td><td data-label="热量">≈150</td><td data-label="蛋白质">≈4–5g</td></tr>
-      <tr><td data-label="食物">4.0g 脱脂牛奶</td><td data-label="份量">1 盒（200ml）</td><td data-label="热量">看包装，通常约 60–70</td><td data-label="蛋白质"><b>8g</b></td></tr>
-      <tr><td data-label="食物">原切牛腱</td><td data-label="份量">每天生重等额约 100g；工作日两盒各半份</td><td data-label="热量">依肥瘦约 150–200</td><td data-label="蛋白质">约 20g</td></tr>
-      <tr><td data-label="食物">白虾仁</td><td data-label="份量">训练日 17 只：午餐 5 + 练前 5 + 练后 7</td><td data-label="热量">约 10–12 / 只</td><td data-label="蛋白质">约 2.4g / 只</td></tr>
-      <tr><td data-label="食物">新鲜西兰花</td><td data-label="份量">训练日约 300g，分午餐 / 练前 / 练后</td><td data-label="热量">≈100 / 300g</td><td data-label="蛋白质">约 7–8g</td></tr>
-    </table>
-  </div>
-  <h3><span class="tag">PROTEIN</span>七天蛋白核算</h3>
-  <div class="tbl-wrap"><table>
-    <tr><th>日期</th><th>主蛋白安排</th><th>全天估算</th><th>结论</th></tr>
-    <tr><td data-label="日期">周一至周四</td><td data-label="主蛋白">蛋 3 + 奶 4 + 牛腱约 100g + 虾仁 17</td><td data-label="全天估算">约 138–145g</td><td data-label="结果"><b>目标区间</b></td></tr>
-    <tr><td data-label="日期">周五</td><td data-label="主蛋白">蛋 3 + 奶 3 + 牛腱约 100g + 虾仁 8 + 外食鱼虾</td><td data-label="全天估算">约 130g+</td><td data-label="结果"><b>够用</b></td></tr>
-    <tr><td data-label="日期">周六</td><td data-label="主蛋白">白天牛腱 + 虾仁，晚餐鱼虾</td><td data-label="全天估算">约 130g+</td><td data-label="结果"><b>够用</b></td></tr>
-    <tr><td data-label="日期">周日</td><td data-label="主蛋白">蛋 3 + 奶 3 + 牛腱约 100g + 虾仁 17</td><td data-label="全天估算">约 120–130g</td><td data-label="结果"><b>休息日够用</b></td></tr>
-  </table></div>
-  <p class="note">估算按：60g 鸡蛋 6.5g / 个、牛奶 8g / 盒、牛腱约 20g / 100g 生重、虾仁约 2.4g / 只。训练日目标 135–145g，不要求达到 156g；不同批次与烹调失水有误差，不追求小数点。厨房秤第一次分牛腱并称一批小红薯即可。</p></div>
-</section>
+      <article class="creatine card" data-card="creatine">
+        <label class="check"><input type="checkbox" data-task="creatine" aria-label="今日肌酸已完成"><span>✓</span></label>
+        <div class="symbol">Cr</div><div class="copy"><b>肌酸 6g · 每天一次</b><small>任选一顿正餐饭后喝；训练日和休息日都喝，不重复补。</small></div>
+      </article>
+    </section>
 
-<!-- ================= 外食与喝水 ================= -->
-<section id="rules">
-  <h2>在外吃饭 · 喝水</h2>
-  <div class="card">
-    <p><b>一周固定两顿在外</b>：周五约会（按规则吃）、周六湘菜（唯一自由餐）——两套点菜规则都写在当天页里，点「展开」就能看。</p>
-    <h3><span class="tag">WATER</span>喝水 · 一句话版</h3>
-    <p>600ml 水壶一天 4–5 壶（训练日总水量约 2.5–3L）；<b>水壶只用于白天、力量和下水前，进泳池前存回更衣柜</b>。电解质水留在家里，游完回家喝。看尿色调节：淡黄＝正好，深黄＝加量。</p>
-    <details><summary>全天喝水节奏 · 细则</summary><div class="body">起床 300 → 上午 2 杯 → 午饭前后 500 → 下午 500 → 出发前约 300 → 力量与恢复期按口渴喝 → 纯游日下水前适量喝 → 回家电解质水约 300–400ml。电解质水不是训练中的补给，但回家喝仍能完成训练后补水；不要为了凑数字一次灌完。清得像水＝略多收半档；早起第一泡偏深不算数；睡前 1 小时别再大量喝，免得起夜。休息日 2–2.5L。</div></details>
-  </div>
-</section>
+    <section id="ratio">
+      <div class="section-title"><h2>一周四练配比</h2><p>每周训练4天<br>每次约60分钟</p></div>
+      <div class="ratio-card card">
+        <div class="ratio-head"><div><h3>按当前体重 78.5kg 换算</h3><p>这是训练频率对应的通用参考，不要求每天精确到1克。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
+        <div class="ratio-grid">
+          <div class="ratio-item c"><b>236g</b><span>碳水 · 78.5×3</span></div>
+          <div class="ratio-item p"><b>133g</b><span>蛋白质 · 78.5×1.7</span></div>
+          <div class="ratio-item f"><b>79g</b><span>脂肪 · 78.5×1</span></div>
+        </div>
+        <div class="compare">
+          <div><b>训练日固定餐</b><span>约蛋白160g · 碳水250g · 脂肪50g。蛋白和碳水略高，<strong>不用继续加</strong>。</span></div>
+          <div><b>脂肪看周平均</b><span>工作日约50g；周末家常菜通常会补回一部分，不为了凑79g额外灌油。</span></div>
+        </div>
+      </div>
+    </section>
 
-<!-- ================= 监测 ================= -->
-<section id="monitor">
-  <h2>引体阶段 · 监测与调整</h2>
-  <div class="card">
-    <h3><span class="tag">PULL-UP</span>引体阶段表（每次力量课的前 10 分钟）</h3>
-    <div class="tbl-wrap"><table>
-      <tr><th>阶段</th><th>练什么</th><th>达到就升级</th></tr>
-      <tr><td data-label="阶段">0 · 现在</td><td data-label="练什么">死挂 3×20–30 秒 + 肩胛引体 3×8</td><td data-label="升级标准">挂满 30 秒、动作干净</td></tr>
-      <tr><td data-label="阶段">1 · 离心</td><td data-label="练什么">踩凳到下巴过杠，<b>5–8 秒匀速放下来</b>，周三 4×3</td><td data-label="升级标准">每个稳定 8 秒</td></tr>
-      <tr><td data-label="阶段">2 · 辅助</td><td data-label="练什么">弹力带或辅助机做完整引体；周一 4×4–6、周三 3×5、周六 4×5</td><td data-label="升级标准">所有组动作干净到上限，减少一档辅助</td></tr>
-      <tr><td data-label="阶段">3 · 首个</td><td data-label="练什么">周六课首每两周测 1 次；成功后 5×1 → 5×2 → 3×5</td><td data-label="升级标准">—</td></tr>
-    </table></div>
-    <p><b>测试每两周一次</b>（周六），别天天试。<span class="warn">肩膀保险：面拉永远不省；肩前侧一夹痛 → 停肩推两周、只游蛙泳。</span></p>
-    <details><summary>引体要点 · 可选的门框单杠</summary><div class="body">正手全握（掌心朝外）；拉到顶胸口朝杠、手肘往下往后带；放到底手臂伸直但肩不耸；不蹬腿不摆身体。家里装单杠后也只做轻量练习：非力量日挂 2×20–30 秒即可，肩肘不舒服就停；第一周先不额外加。</div></details>
-    <h3><span class="tag">TRACK</span>怎么监测 · 一句话版</h3>
-    <p><b>每周一早上</b>空腹称重 + 量腰围（软尺绕肚脐、呼气末不收腹），只信这一个数。目标每周 −0.5～0.7 kg。</p>
-    <details open><summary>第一周只记录 5 件事</summary><div class="body">① 五天训练完成了几天；② 力量后 30 分钟能否恢复到适合下水；③ 辅助引体用了多少辅助、做了几次；④ 睡眠和晚上饥饿；⑤ 周日分装、批量煮牛腱是否麻烦。先不因一天状态改总计划，一周后再一起复盘。</div></details>
-  </div>
-</section>
+    <section id="prep">
+      <div class="section-title"><h2>晚间备餐</h2><p>一次做好<br>隔天两顿</p></div>
+      <div class="steps">
+        <article class="step card"><span class="no">1</span><h3>提前解冻</h3><p>鸡胸和里脊按每份200g冷冻。要吃的前一天移到冷藏室解冻。</p></article>
+        <article class="step card"><span class="no">2</span><h3>一次煮两顿</h3><p>生米共210g；鸡胸、里脊分别煎熟；西兰花焯水后加蒜、小米辣和少量油快炒。</p></article>
+        <article class="step card"><span class="no">3</span><h3>分盒冷藏</h3><p>午餐盒装鸡胸，晚餐盒装里脊。浅盒尽快冷藏，隔天到公司继续放冰箱。</p></article>
+      </div>
+      <details class="recipe card">
+        <summary>腌料与操作 · 展开查看</summary>
+        <ul>
+          <li>蒜、老抽2勺、生抽1勺、料酒1勺、淀粉1大勺；不纳入每天精确记账。</li>
+          <li>腌制1小时必须放冰箱冷藏，不在室温放置；再按200g一份冷冻。</li>
+          <li>生鸡肉与猪肉使用的夹子、碗和砧板及时清洗，避免碰到熟食。</li>
+          <li>饭盒只是冷藏和微波容器，不用来过夜保温；公司加热到整盒中心持续冒热气。</li>
+        </ul>
+      </details>
+    </section>
 
-<!-- ================= 名词卡 ================= -->
-<section id="glossary">
-  <h2>名词卡（看不懂的词来这查）</h2>
-  <details><summary><span class="no">a</span>「3×10」「组间休息」「留余力」</summary><div class="body">3×10＝同一个动作做 3 组、每组连续 10 次；本版大动作（硬拉、下拉、划船、肩推）组间歇 2–3 分钟，小动作歇 90 秒。「留 2 次余力」＝这组停下时感觉还能再做 2 个——不要做到一个也做不动（力竭），也别用短休息把力量课练成心肺课。</div></details>
-  <details><summary><span class="no">b</span>心率 140–150 怎么测</summary><div class="body">有运动手表直接看。没有就两个土办法：① 游完一段立刻摸颈动脉数 10 秒 ×6；② 说话测试——能断断续续说短句＝大约 140–150（对了），一个字都说不出＝太快，能轻松聊天＝太慢。</div></details>
-  <details><summary><span class="no">c</span>「离心」</summary><div class="body">动作的下放阶段：肌肉被拉长的同时发力刹车（比如从杠上慢慢降下来）。涨力量效率极高，是练出第一个引体的核心手段。</div></details>
-  <details><summary><span class="no">d</span>「热身 / 主项 / 冲刺 / 放松」</summary><div class="body">热身＝慢游进入状态；主项＝当天主要消耗段（长时间中等强度）；冲刺＝短距离全力（练心肺和自由泳技术）；放松＝慢游降心率。四段固定：组合日先慢游 10 分钟、冲刺 6 趟；纯游日冲刺 8 趟，其余靠主项时长调节。</div></details>
-  <details><summary><span class="no">e</span>「自由餐」</summary><div class="body">每周一顿不数热量、正常吃饱的饭（＝周六湘菜），作用是让计划能长期坚持。是「一顿」不是「一天」，且守点菜规则。</div></details>
-  <details><summary><span class="no">f</span>「焯水」</summary><div class="body">牛腱冷水下锅、烧开后撇掉浮沫，再换清水慢煮。这样能减少血沫和腥味；姜、盐与少量生抽都只是调味，不放也可以。</div></details>
-  <details><summary><span class="no">g</span>为什么练了肚子还是最后瘦</summary><div class="body">脂肪分解是全身统一调度的，练哪里≠瘦哪里；肚子的脂肪细胞受体分布决定它「最先存、最后取」。顺序永远是脸→四肢→肚子。方法没错，坚持到第 8–12 周肚子才明显变化。</div></details>
-  <details><summary><span class="no">h</span>锡纸保温袋，怎么安全带到公司</summary><div class="body">早上现做的①午餐盒和②练前餐盒先用浅盒尽快降温，再与冻硬的 500ml 水一起放进锡纸保温袋。锡纸袋只隔热，冻水瓶才提供冷源；到公司第一件事把两个饭盒和牛奶放入冰箱。吃前从冰箱直接取出、加水后微波，不提前放到室温。锡纸袋、冻水瓶和带金属的部件都不能进微波炉。</div></details>
-  <details><summary><span class="no">i</span>为什么完整熟鸡蛋不能微波</summary><div class="body">即使已经剥壳，完整熟鸡蛋内部仍可能因局部蒸汽压力在微波炉里或取出后爆裂。本版鸡蛋只在早上现煮后直接作为早餐吃，不装午餐或练前餐盒，也不进公司微波炉。不要用“只热几秒”或“扎几个洞”碰运气。</div></details>
-</section>
+    <section id="training">
+      <div class="section-title"><h2>本周四练</h2><p>不绑定星期<br>完成一次勾一次</p></div>
+      <div class="card">
+        <div class="week-grid" id="weekGrid">
+          <label class="session"><input type="checkbox" data-session="1"><strong>第1练</strong><span>约60分钟</span></label>
+          <label class="session"><input type="checkbox" data-session="2"><strong>第2练</strong><span>约60分钟</span></label>
+          <label class="session"><input type="checkbox" data-session="3"><strong>第3练</strong><span>约60分钟</span></label>
+          <label class="session"><input type="checkbox" data-session="4"><strong>第4练</strong><span>约60分钟</span></label>
+        </div>
+        <div class="train-copy">
+          <p><b>目标：</b>减脂，同时练出第一个标准引体向上。训练动作、热身和收操按私教当日安排执行。</p>
+          <p><b>饮食切换：</b>当天完成力量或游泳，就选“训练日”并保留练后餐；没训练就选“休息日”，其余三餐不变。</p>
+        </div>
+      </div>
+    </section>
 
-<!-- ================= 决策档案 ================= -->
-<section id="decisions">
-  <h2>决策依据档案</h2>
-  <p class="note">每条＝当时怎么定 + 为什么 + 什么情况下该改。想调方案，先来这里对一遍再动手。</p>
+    <section id="shopping">
+      <div class="section-title"><h2>工作日采购量</h2><p>按周一至周五<br>五天固定餐</p></div>
+      <div class="card">
+        <div class="shopping">
+          <div class="shop-item"><span>鸡蛋</span><b>20个</b></div><div class="shop-item"><span>玉米</span><b>5根</b></div>
+          <div class="shop-item"><span>鸡胸肉</span><b>1kg</b></div><div class="shop-item"><span>猪里脊</span><b>1kg</b></div>
+          <div class="shop-item"><span>生米</span><b>约1.05kg</b></div><div class="shop-item"><span>西兰花</span><b>约1.5kg</b></div>
+          <div class="shop-item"><span>香蕉</span><b>训练几天买几根</b></div><div class="shop-item"><span>蛋白粉</span><b>训练日30g</b></div>
+          <div class="shop-item"><span>混合坚果</span><b>约40g</b></div><div class="shop-item"><span>肌酸</span><b>42g／周</b></div>
+        </div>
+        <div class="shopping-foot">周末吃家常菜，不强行复制工作日菜单；油大的菜少配一点米饭即可，不做补偿性断食。</div>
+      </div>
+    </section>
 
-  <div class="dgroup">总原则</div>
-  <details><summary><span class="no">00</span>固定菜单：牛腱 + 虾仁每顿都搭配（2026-08-28 更新）</summary><div class="body">早餐固定鸡蛋、牛奶、甜玉米和小红薯；工作日午餐与 17:00 练前餐都固定为牛腱 + 虾仁 + 红薯 + 西兰花，不再按星期轮换。鸡腿、鸡胸、鸡肉制品、牛肉饼和香蕉均移出计划。依据：相同的两盒更容易分装、记忆和执行。</div></details>
-  <details><summary><span class="no">0b</span>除牛腱外，食物改为当天早上现煮（2026-08-28 更新）</summary><div class="body">牛腱耗时长，周日一次煮 1kg 并分 10 个每日份；鸡蛋、玉米、红薯、西兰花和虾仁当天早上现做。前一晚只把虾仁与一个牛腱每日份移到冷藏、冻水瓶并摆好饭盒。</div></details>
+    <section id="rules">
+      <div class="section-title"><h2>只记四条</h2><p>执行优先<br>不追求小数</p></div>
+      <div class="rules card">
+        <div class="rule"><i>01</i><p><b>米饭只记生米重量。</b><small>每天生米210g，煮熟后平均分成午餐和晚餐。</small></p></div>
+        <div class="rule"><i>02</i><p><b>调料不逐勺记账。</b><small>固定配方、固定肉量即可；只避免油越倒越多。</small></p></div>
+        <div class="rule"><i>03</i><p><b>休息日只删除练后餐。</b><small>早餐、午餐、晚餐和肌酸都照旧。</small></p></div>
+        <div class="rule"><i>04</i><p><b>看周平均，不纠结单日。</b><small>连续两周体重趋势不变，再调整米饭；先不频繁改菜单。</small></p></div>
+      </div>
+    </section>
 
-  <div class="dgroup">饮食类</div>
-  <details><summary><span class="no">01</span>训练日蛋白目标 135–145g，不强求 2 倍体重</summary><div class="body">当前体重约 77.5–78kg，135–145g 约等于 1.7–1.85g/kg，已经覆盖力量训练和减脂期需要。156g 是可接受上限，不是必须达标线。调整饥饿和长距离游泳时优先加红薯或玉米，不继续堆肉和鸡蛋。</div></details>
-  <details><summary><span class="no">02</span>家里不出现米饭，工作日主食＝红薯 + 玉米</summary><div class="body">不想煮饭洗碗；红薯和玉米能与鸡蛋同锅完成。17:00 的两枚小红薯加一根玉米，替代原先容易饿的“玉米 + 牛奶”。米饭只在周六湘菜出现。</div></details>
-  <details><summary><span class="no">03</span>普通训练日小红薯 4 个，5km 日加 1–2 个</summary><div class="body">你买的红薯个头小，普通训练日分到早餐 1、午餐 1、17:00 练前餐 2；纯游真的完成 5km 或晚上仍饿，再加 1–2 个。第一批称一次单个重量，避免用“个数”长期低估。</div></details>
-  <details><summary><span class="no">04</span>甜玉米楼下买，一周约 17–19 根</summary><div class="body">训练日早餐、17:00 练前和练后各 1 根；5km 日仍饿可以再加 1 根。按新鲜度分两三次买，生玉米冷藏保存。</div></details>
-  <details><summary><span class="no">05</span>现有全脂喝完，再买 4.0g 蛋白脱脂奶</summary><div class="body">每 100ml 蛋白 4.0g，所以每盒 200ml 是 8g；加热不改变蛋白估算。每盒倒进玻璃杯或陶瓷杯，先微波 40–60 秒并搅拌，不连纸盒加热，也不用煮沸。先不浪费家里现有全脂奶，喝完再统一采购脱脂。</div></details>
-  <details><summary><span class="no">06</span>脱脂用于后续固定采购</summary><div class="body">选择脱脂是为了在每天 3–4 盒的频率下降低额外脂肪和热量，不是因为全脂奶不能喝。减脂结束进维持期可换低脂或全脂。</div></details>
-  <details><summary><span class="no">07</span>虾仁买一号店量贩白虾仁 1.5kg / 3 袋</summary><div class="body">白虾仁 ¥139，约 100–130 只，分 3 袋且标注零添加保水剂。计划整周约 105–115 只，一份大约覆盖一周；比黑虎虾便宜，也比 1kg 白虾仁单价更低。</div></details>
-  <details class="dead"><summary><span class="no">08</span>鸡腿、鸡胸和鸡肉制品——已全部移出</summary><div class="body">鸡胸口感和腥味不接受，山姆鸡腿评价也让你不放心；本版不再留下任何鸡肉采购或备用分支。</div></details>
-  <details><summary><span class="no">09</span>主牛肉选一号店国产安格斯原切牛腱 1kg</summary><div class="body">价格 ¥86.9/kg，在已比较的原切牛腱中性价比最高。整袋一次煮熟后按熟重平均分 10 个每日份，每份代表生重约 100g；工作日再对半分给午餐和 17:00 练前餐。</div></details>
-  <details><summary><span class="no">10</span>每天 25g 坚果补脂肪</summary><div class="body">固定无盐混合坚果 25g，替代原训练日加餐的 2 个蛋；更方便携带，也把脂肪来源从每天 5 个蛋调整为 3 个蛋 + 坚果。提前分成 7 小份，避免抓着吃超量。</div></details>
-  <details><summary><span class="no">11</span>红肉不靠“几天内吃完”，靠每日份冷冻</summary><div class="body">1kg 牛腱约分 10 个每日份。只留未来 1–2 天量冷藏，其余立即冷冻，前一晚只移一份到冷藏；不要求一袋熟肉在冰箱冷藏一周。</div></details>
-  <details><summary><span class="no">12</span>牛腱周日批量煮，其他食材当天现煮</summary><div class="body">牛腱普通锅要 60–90 分钟，因此周日下午整袋处理；鸡蛋、玉米、红薯、虾仁和西兰花都在当天早上约 30 分钟内完成。这样兼顾冰箱空间、口感和执行时间。</div></details>
-  <details><summary><span class="no">13</span>鸡蛋每天 3 个，只在早餐吃</summary><div class="body">早餐现煮 3 个蛋并直接吃完；午餐、17:00 练前餐和练后餐都不用鸡蛋，所以不存在公司微波完整熟鸡蛋的爆裂风险。坚果固定 25g，不直接抱袋吃。</div></details>
-  <details class="dead"><summary><span class="no">14</span>周四晚餐自助（饭卡）——已停用</summary><div class="body">原依据：¥600 余额不浪费＋纯游日免做饭。<b>停用（2026-08-24）：</b>周四改回在家虾仁，全周晚餐统一；饭卡不进计划。</div></details>
-  <details class="dead"><summary><span class="no">15</span>麦当劳 1+1 替加餐——已移出计划</summary><div class="body">原规则：双吉+小玉米杯只替 15:00 加餐、当晚晚餐减量、每周 ≤2 次。<b>移出（2026-08-24）：</b>不留可选分支。真吃了就按原规则执行一次，别成常态。</div></details>
+    <section id="faq">
+      <div class="section-title"><h2>FAQ · 已确认口径</h2><p>以后有争议<br>先查这里</p></div>
+      <div class="faq card">
+        <details open><summary>为什么当前菜单不放牛奶？</summary><div class="answer">早餐鸡蛋、午晚餐肉类和练后蛋白粉已经能覆盖蛋白质；坚果、蛋黄和烹调油也提供脂肪，因此牛奶不是必需项。<b>脱脂牛奶本身并不高脂</b>，这里只是为了减少采购和执行步骤，所以不纳入固定菜单，也不纳入营养记账。</div></details>
+        <details><summary>为什么虾仁不再作为日常主蛋白？</summary><div class="answer">冷冻虾仁解冻、烹调后会流失水分，成品看起来缩水明显；蛋白质不会因此凭空消失，但按每顿实际可吃份量和采购价格计算，成本通常高于鸡胸肉、猪里脊。虾仁可以偶尔吃，不再承担每天主要蛋白。</div></details>
+        <details><summary>每天主要吃什么肉？</summary><div class="answer"><b>午餐鸡胸肉200g生重，晚餐猪里脊200g生重</b>。两种都比较瘦、蛋白质密度高，也适合分份腌制冷冻，是当前性价比和执行难度更平衡的组合。</div></details>
+        <details><summary>牛腱还买吗？</summary><div class="answer">不作为日常顿顿摄入。鸡胸或里脊吃腻时，牛腱可以临时替换其中一顿的肉类；买回来再单独安排，不进入每周固定采购量。</div></details>
+        <details><summary>为什么练后写25g蛋白，不写30g？</summary><div class="answer">一勺约30g指的是<b>蛋白粉粉末重量</b>，多数产品实际提供约22–25g蛋白质。练后不用单独凑满30g，因为全天其他食物会把总蛋白补足。</div></details>
+        <details><summary>调料、蒜和西兰花要不要每天计算？</summary><div class="answer">不用。页面采用简易记账，固定食材和大致用油即可。营养数字已经按整十数留出误差，不为每勺生抽、淀粉或每朵西兰花修改表格。</div></details>
+        <details><summary>休息日怎么吃？</summary><div class="answer">早餐、午餐、晚餐完全照旧，饭后肌酸6g照旧；只删除蛋白粉加香蕉这一份练后餐。</div></details>
+      </div>
+    </section>
+  </main>
 
-  <div class="dgroup">作息与流程类</div>
-  <details><summary><span class="no">16</span>11:00 从冰箱直接微波 + 12:00 走路</summary><div class="body">取消原来的 10:30 室温回温。午餐盒一直冷藏到 11:00，加入 15–30ml 水，开盖或打开排气阀，先微波约 2 分钟、翻动，再每次追加 30–60 秒，直到中心持续冒热气。12:00 走 30–40 分钟照旧。</div></details>
-  <details><summary><span class="no">17</span>15:00 小加餐，17:00 完整练前餐</summary><div class="body">15:00 固定坚果 25g + 加热牛奶，只填补午餐后的空档；17:00 才是完整一顿：牛腱半份 + 虾仁 5 + 红薯 2 + 玉米 1 + 西兰花。它解决原来 15 点多吃、17 点又饿的问题。</div></details>
-  <details class="dead"><summary><span class="no">18</span>不买微波炉、通勤不带冷源——已停用</summary><div class="body">试行后下午出现腹泻，旧流程里热食在锡纸袋中可能长时间处于温温的状态，且午餐靠室温回温。新版改为购买公司微波炉，并用已有锡纸袋 + 冻水瓶保持通勤低温；到公司立即冷藏，吃前再加热。</div></details>
-  <details><summary><span class="no">19</span>17:00 公司吃晚餐，练后回家吃恢复餐</summary><div class="body">原来晚间只有玉米和牛奶，容易在训练前饿。现在 17:00 在公司吃完整饭盒；练后回家只需 10–15 分钟煮玉米、虾仁和西兰花并喝奶，目标约 30g 蛋白、至少 20g 碳水。</div></details>
-  <details class="dead"><summary><span class="no">20</span>每天晚上煮牛腱——已停用</summary><div class="body">牛腱需要更长时间，改为周日下午一次煮 1kg 并分 10 个每日份；平日晚间只需将次日份移到冷藏。</div></details>
-  <details><summary><span class="no">21</span>时间是窗口，允许前后浮动一小时</summary><div class="body">计划按真实流程排，不追求分钟级准时。组合日重点是顺序和完整恢复：力量约 45 分钟 → 恢复 30 分钟 → 游泳；整体晚一小时就整体顺延，优先守睡眠。</div></details>
+  <footer>V17 · 固定餐简化版 · 三大营养使用可执行的整数估算，调料和品牌差异不追小数。完成状态只保存在当前浏览器。</footer>
 
-  <div class="dgroup">训练类</div>
-  <details><summary><span class="no">22</span>保留训练频率：一三六力量→恢复→游，二四纯游</summary><div class="body">力量按真实时长记为约 45 分钟，之后固定恢复 30 分钟再游；周二、周四纯游最低 3km，状态好向 5km 靠。5km 是目标而非强制完成线。</div></details>
-  <details><summary><span class="no">23</span>游量增加先补碳水，不补更多蛋白</summary><div class="body">普通训练日蛋白已经在 135–145g。真的完成 5km 或晚上明显饿，先加 1–2 个小红薯，再视情况加 1 根玉米；不要用额外鸡蛋和更多牛肉把蛋白堆到 2 倍体重以上。</div></details>
-  <details><summary><span class="no">24</span>游泳主项心率 140–150，禁止 160</summary><div class="body">水里心率比陆地低约 10：水中 160≈陆上 170≈90% 最大心率，18 分钟就得停。减脂看总做功＝强度×时长——之前「游 1000m 就得歇」正是强度开太高；蛙泳「轻松」恰恰是能连游 60 分钟的优点。</div></details>
-  <details><summary><span class="no">25</span>自由泳冲刺保留：组合日 6×50m、纯游日 8×50m</summary><div class="body">既是高强度段也是技术课：组合日力量在前，为避免恢复后刚下水又把强度顶满，冲刺减到 6 趟；纯游日保留 8 趟。两个月后技术成型，主项可逐步换成自由泳。</div></details>
-  <details><summary><span class="no">26</span>波比跳取消，全部换成游泳</summary><div class="body">会游、能游久、不伤膝腕；10 分钟波比≈多游 15 分钟，还少一个「今天做不做」的心理消耗。</div></details>
-  <details><summary><span class="no">27</span>力量课以拉背为主（为了引体）</summary><div class="body">引体＝拉力÷体重：体重每减 1kg 引体容易 1.3%，减到 70kg 白送 10% 力量；下拉到体重 80%×5＋8 秒离心×5≈第一个引体到手。<b>何时改：</b>做出 3×5 后换回全身均衡计划。</div></details>
-  <details><summary><span class="no">28</span>面拉 / 后束永不省略</summary><div class="body">每周游 5 次＋推拉 3 次＝「游泳肩」标准配方，面拉练的肩袖和后束就是保险。<b>触发：</b>肩前侧夹痛→停肩推两周、只游蛙泳。</div></details>
-  <details><summary><span class="no">29</span>引体测试每两周一次（周六课首）</summary><div class="body">天天测既消耗恢复又打击信心；技能靠门框杠的高频低量积累。</div></details>
-  <details><summary><span class="no">30</span>力量后不直接下水，固定恢复 30 分钟</summary><div class="body">力量结束后先慢走 10 分钟，再补水、擦汗、换泳装；不靠冲澡降温。确认能说完整句子、走路稳定、心率持续下降后才下水，游泳前 10 分钟只慢游。<b>触发：</b>30 分钟后仍明显心慌、头晕、胸闷、异常气短或心跳不规则 → 当天取消游泳。</div></details>
-  <details><summary><span class="no">31</span>公司冰箱 + 冻水瓶，组成通勤冷链</summary><div class="body">公司冰箱只能负责到公司之后，不能给通勤路上降温。早上现做的①午餐盒和②练前餐盒先尽快降温，再与冻水瓶一起放入已有锡纸袋；到公司立即冷藏两个饭盒和牛奶。食物如果已经长时间温温放置，之后再微波也不作为补救手段。</div></details>
-  <details><summary><span class="no">32</span>下午腹泻先排查冷链，再单独排查牛奶</summary><div class="body">先连续 2–3 天严格执行饭盒快速降温、冻水瓶通勤、公司冰箱和吃前加热，同时所有牛奶都倒杯加热。如果仍在下午 3–4 点腹泻，先停 15:00 那盒奶 3 天做单变量对照，其他食物不改；加热不会去除乳糖。若腹泻累计超过 2 天仍未缓解，或出现血便 / 黑便、明显脱水、高热、剧烈腹痛、频繁呕吐，当天停止训练并就医。</div></details>
-  <details><summary><span class="no">33</span>早上现做的两盒要快速降温再装袋</summary><div class="body">食物按一餐分进两个浅玻璃盒，摊薄并留出散热空间；摸起来不再烫手后盖紧，与冻水瓶放进锡纸袋。时间紧可短暂放入干净冰箱快速降温，但不要把仍烫的两个饭盒叠在一起，也不要让锡纸袋把热食长期焖在温温状态。</div></details>
-  <details><summary><span class="no">34</span>电解质水留在家里，游完回家喝（2026-08-28 更新）</summary><div class="body">不把无人照看的饮料放在泳池边，也不要求在不方便的更衣室喝。工作日水壶用于白天、力量课和换项恢复，进泳池前存回柜子；纯游日离开公司前适量补水。游完回家喝约 300–400ml 电解质水，仍属于训练后补水。因为长距离游泳期间没有饮水，明显口渴、头晕、头痛、恶心、抽筋或动作散掉时立即结束，不为凑 5km 硬撑。</div></details>
-</section>
+  <nav class="bottom-nav" aria-label="页面导航">
+    <a href="#today" class="active">今天</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
+  </nav>
 
-<footer>V16 · 回家补电解质版 · 2026-08-28。电解质水固定留在家里，游泳结束回家后按口渴喝；水壶用于白天、力量和下水前，进泳池前存回更衣柜。鸡蛋只在早餐吃；周一至周四午餐与 17:00 练前餐统一为牛腱 + 虾仁 + 红薯 + 西兰花，训练日蛋白约 135–145g。当前日期的时间线可勾选，完成状态仅保存在当前浏览器。</footer>
+  <script>
+  (function(){
+    var date=new Date();
+    var dateKey=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+    var weekdays=['周日','周一','周二','周三','周四','周五','周六'];
+    document.getElementById('dateText').textContent=(date.getMonth()+1)+'月'+date.getDate()+'日 · '+weekdays[date.getDay()];
+    var modeKey='fitness-v17-mode-'+dateKey;
+    var taskPrefix='fitness-v17-task-'+dateKey+'-';
+    var mode=localStorage.getItem(modeKey)||'train';
+    var buttons=Array.prototype.slice.call(document.querySelectorAll('[data-mode]'));
+    var tasks=Array.prototype.slice.call(document.querySelectorAll('[data-task]'));
 
-</main>
+    function visibleTasks(){return tasks.filter(function(input){return !input.closest('.training-only')||mode==='train';});}
+    function setMode(next){
+      mode=next;localStorage.setItem(modeKey,mode);
+      buttons.forEach(function(button){button.classList.toggle('active',button.dataset.mode===mode);});
+      document.querySelectorAll('.training-only').forEach(function(el){el.hidden=mode!=='train';});
+      document.getElementById('modeTitle').textContent=mode==='train'?'训练日':'休息日';
+      document.getElementById('sumP').textContent=mode==='train'?'160g':'135g';
+      document.getElementById('sumC').textContent=mode==='train'?'250g':'220g';
+      document.getElementById('sumF').textContent=mode==='train'?'50g':'48g';
+      document.getElementById('sumKcal').textContent=mode==='train'?'≈2100':'≈1850';
+      document.getElementById('summaryNote').textContent=mode==='train'?'训练日包含练后餐；米饭、蔬菜和调料中的零碎营养已用整十数吸收，不单独记账。':'休息日只删除练后餐，其余三餐和饭后6g肌酸完全不变。';
+      update();
+    }
+    buttons.forEach(function(button){button.addEventListener('click',function(){setMode(button.dataset.mode);});});
+    tasks.forEach(function(input){
+      input.checked=localStorage.getItem(taskPrefix+input.dataset.task)==='1';
+      input.addEventListener('change',function(){localStorage.setItem(taskPrefix+input.dataset.task,input.checked?'1':'0');update();});
+    });
+    function update(){
+      tasks.forEach(function(input){var card=input.closest('[data-card]');if(card)card.classList.toggle('done',input.checked);});
+      var list=visibleTasks();var done=list.filter(function(input){return input.checked;}).length;
+      var next=list.find(function(input){return !input.checked;});
+      var names={breakfast:'完成早餐',lunch:'完成午餐',dinner:'完成晚餐',postworkout:'训练后喝蛋白粉并吃香蕉',creatine:'饭后喝6g肌酸'};
+      document.getElementById('nextTask').textContent=next?names[next.dataset.task]:'今天已经全部完成';
+      document.getElementById('progressText').textContent=done+' / '+list.length+' 已完成';
+      document.getElementById('progressBar').style.width=(list.length?done/list.length*100:0)+'%';
+    }
 
-<a id="gotoday" href="#overview" aria-label="跳到今天的计划">今日</a>
-
-<nav class="mobile-bottom" aria-label="主要导航">
-  <a href="#today" class="active">今日</a>
-  <a href="#overview">一周</a>
-  <a href="#cooking">备餐</a>
-  <button type="button" id="moreOpen" aria-controls="menuSheet" aria-expanded="false">更多</button>
-</nav>
-
-<div class="menu-sheet" id="menuSheet" aria-hidden="true">
-  <div class="menu-sheet-panel" role="dialog" aria-modal="true" aria-label="完整目录">
-    <div class="sheet-head"><strong>完整目录</strong><button type="button" id="menuClose" aria-label="关闭目录">×</button></div>
-    <div class="sheet-group"><span>今天与本周</span><div class="sheet-links"><a href="#today">今日首页</a><a href="#overview">一周总览</a><a href="#d13">周一 · 周三</a><a href="#d24">周二 · 周四</a><a href="#fri">周五</a><a href="#sat">周六</a><a href="#sun">周日</a></div></div>
-    <div class="sheet-group"><span>吃与准备</span><div class="sheet-links"><a href="#shopping">采购清单</a><a href="#cooking">做饭流程</a><a href="#portions">份量标准</a><a href="#rules">外食喝水</a></div></div>
-    <div class="sheet-group"><span>理解与复盘</span><div class="sheet-links"><a href="#howto">先读说明</a><a href="#monitor">引体与监测</a><a href="#glossary">名词卡</a><a href="#decisions">决策档案</a></div></div>
-  </div>
-</div>
-<script>
-(function(){
-  try{
-    var map=['sun','d13','d24','d13','d24','fri','sat'];
-    var dayInfo=[
-      {title:'周日 · 休息与采购',type:'1 万步 · 当天现煮 · 下午批量备牛腱',next:'15:00 按库存下单，并把 1kg 牛腱分成 10 个每日份。'},
-      {title:'周一 · 基础拉力',type:'力量 45 分 → 恢复 30 分 → 游泳 45 分',next:'17:00 先吃②练前餐；18:40 开始力量。'},
-      {title:'周二 · 纯游',type:'纯游 3–5km · 17:00 完整练前餐',next:'最低先守 3km，状态好再向 5km 靠。'},
-      {title:'周三 · 离心控制',type:'力量 45 分 → 恢复 30 分 → 游泳 45 分',next:'17:00 先吃②练前餐；离心动作优先。'},
-      {title:'周四 · 纯游',type:'纯游 3–5km · 连续训练第 4 天',next:'3km 后先检查肩膝和动作，再决定是否继续。'},
-      {title:'周五 · 恢复日',type:'休息 · 公司只带午餐 · 约会晚餐',next:'15:00 吃坚果和奶；晚上不在公司吃。'},
-      {title:'周六 · 引体综合',type:'力量 45 分 → 恢复 30 分 → 游泳 75 分',next:'15:00 开始力量；晚餐优先鱼虾。'}
-    ];
-    var d=new Date().getDay();
-    var id=map[d];
-    var info=dayInfo[d];
-    var lanes=document.querySelectorAll('.lane');
-    var idx=(d===0)?6:(d-1);
-    if(lanes[idx]){var s=document.createElement('span');s.className='todaytag';s.textContent='今天';lanes[idx].appendChild(s);}
-    var btn=document.getElementById('gotoday');
-    if(btn){btn.setAttribute('href','#'+id);btn.style.display='flex';}
-    var todayTitle=document.getElementById('todayTitle');
-    var todayType=document.getElementById('todayType');
-    var todayLink=document.getElementById('todayPlanLink');
-    if(todayTitle){todayTitle.textContent=info.title;}
-    if(todayType){todayType.textContent=info.type;}
-    if(todayLink){todayLink.href='#'+id;}
-    Array.prototype.forEach.call(document.querySelectorAll('a[href="#today"]'),function(link){link.setAttribute('href','#'+id);});
-
-    var todaySection=document.getElementById(id);
-    var timeline=todaySection&&todaySection.querySelector('.tl');
-    var rows=timeline?Array.prototype.filter.call(timeline.children,function(node){return node.classList&&node.classList.contains('ev');}):[];
-    var progressText=document.getElementById('todayProgressText');
-    var progressFill=document.getElementById('progressFill');
-    var nextTime=document.getElementById('nextTime');
-    var nextAction=document.getElementById('nextAction');
-    var completeNext=document.getElementById('completeNext');
-    var locateNext=document.getElementById('locateNext');
-    var nextIndex=-1;
-    var now=new Date();
-    var dateKey=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
-    var storageKey='fitness-plan-v15-freshcook:'+dateKey+':'+id;
-    var saved=[];
-    try{saved=JSON.parse(localStorage.getItem(storageKey)||'[]');if(!Array.isArray(saved))saved=[];}catch(ignore){saved=[];}
-    var packChecks=todaySection?Array.prototype.slice.call(todaySection.querySelectorAll('.pack-check')):[];
-    var packStorageKey=storageKey+':packing';
-    var packed=[];
-    try{packed=JSON.parse(localStorage.getItem(packStorageKey)||'[]');if(!Array.isArray(packed))packed=[];}catch(ignore){packed=[];}
-    packChecks.forEach(function(input,index){
-      input.checked=packed.indexOf(index)>-1;
-      input.addEventListener('change',function(){
-        var pos=packed.indexOf(index);
-        if(input.checked&&pos===-1)packed.push(index);
-        if(!input.checked&&pos>-1)packed.splice(pos,1);
-        try{localStorage.setItem(packStorageKey,JSON.stringify(packed));}catch(ignore){}
-        syncPackingRow();
-        updateFocus();
-      });
+    var monday=new Date(date);monday.setDate(date.getDate()-((date.getDay()+6)%7));
+    var weekKey='fitness-v17-week-'+monday.getFullYear()+'-'+String(monday.getMonth()+1).padStart(2,'0')+'-'+String(monday.getDate()).padStart(2,'0')+'-';
+    document.querySelectorAll('[data-session]').forEach(function(input){
+      input.checked=localStorage.getItem(weekKey+input.dataset.session)==='1';input.closest('.session').classList.toggle('done',input.checked);
+      input.addEventListener('change',function(){localStorage.setItem(weekKey+input.dataset.session,input.checked?'1':'0');input.closest('.session').classList.toggle('done',input.checked);});
     });
 
-    function actionText(row){
-      var tx=row&&row.querySelector('.tx');
-      if(!tx)return '';
-      var copy=tx.cloneNode(true);
-      Array.prototype.forEach.call(copy.querySelectorAll('small,details'),function(node){node.remove();});
-      return copy.textContent.replace(/\s+/g,' ').trim();
-    }
-    function minuteFor(row,previous){
-      var raw=(row.querySelector('.tm')||{}).textContent||'';
-      var match=raw.match(/(\d{1,2}):(\d{2})/);
-      if(match)return Number(match[1])*60+Number(match[2]);
-      if(raw.indexOf('白天')>-1)return 13*60;
-      if(raw.indexOf('下午')>-1)return 15*60;
-      if(raw.indexOf('晚上')>-1)return 19*60;
-      if(raw.indexOf('晚饭后')>-1)return 20*60;
-      if(raw.indexOf('回家后')>-1)return 21*60+30;
-      if(raw.indexOf('饭后')>-1)return Math.min(previous+30,23*60+30);
-      return previous+20;
-    }
-    function save(){try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch(ignore){}}
-    function setCompleted(index,value){
-      var pos=saved.indexOf(index);
-      if(value&&pos===-1)saved.push(index);
-      if(!value&&pos>-1)saved.splice(pos,1);
-      var row=rows[index];
-      if(row){
-        row.classList.toggle('completed',value);
-        var toggle=row.querySelector('.done-toggle');
-        if(toggle){toggle.setAttribute('aria-pressed',value?'true':'false');toggle.setAttribute('aria-label',(value?'撤销完成：':'标记完成：')+actionText(row));}
-      }
-      save();
-    }
-    function syncPackingRow(){
-      if(!packChecks.length)return;
-      var packingIndex=rows.findIndex(function(row){return ((row.querySelector('.tm')||{}).textContent||'').trim()==='8:45';});
-      if(packingIndex<0)return;
-      var allPacked=packChecks.every(function(input){return input.checked;});
-      setCompleted(packingIndex,allPacked);
-    }
-    function updateFocus(){
-      rows.forEach(function(row){row.classList.remove('is-next');});
-      var doneCount=rows.filter(function(row,index){return saved.indexOf(index)>-1;}).length;
-      if(progressText)progressText.textContent=doneCount+' / '+rows.length+' 已完成';
-      if(progressFill)progressFill.style.width=(rows.length?Math.round(doneCount/rows.length*100):0)+'%';
-      var current=new Date();
-      var currentMinute=current.getHours()*60+current.getMinutes();
-      var cutoff=currentMinute-90;
-      var incomplete=rows.map(function(row,index){return index;}).filter(function(index){return saved.indexOf(index)===-1;});
-      var timely=incomplete.filter(function(index){return Number(rows[index].dataset.minute)>=cutoff;});
-      nextIndex=timely.length?timely[0]:(incomplete.length?incomplete[0]:-1);
-      if(nextIndex===-1){
-        if(nextTime)nextTime.textContent='全部完成';
-        if(nextAction)nextAction.textContent='今天已经没有待办事项，放心休息。';
-        if(completeNext)completeNext.disabled=true;
-        if(locateNext)locateNext.disabled=true;
-        return;
-      }
-      var row=rows[nextIndex];
-      row.classList.add('is-next');
-      if(nextTime)nextTime.textContent=(row.querySelector('.tm')||{}).textContent||'接下来';
-      if(nextAction)nextAction.textContent=actionText(row);
-      if(completeNext)completeNext.disabled=false;
-      if(locateNext)locateNext.disabled=false;
-    }
-    if(todaySection)todaySection.classList.add('is-today-plan');
-    if(timeline&&rows.length){
-      timeline.classList.add('checkable');
-      var previousMinute=7*60+30;
-      rows.forEach(function(row,index){
-        previousMinute=minuteFor(row,previousMinute);
-        row.dataset.minute=String(previousMinute);
-        var toggle=document.createElement('button');
-        toggle.type='button';
-        toggle.className='done-toggle';
-        toggle.setAttribute('aria-pressed','false');
-        row.insertBefore(toggle,row.firstChild);
-        setCompleted(index,saved.indexOf(index)>-1);
-        toggle.addEventListener('click',function(){setCompleted(index,!row.classList.contains('completed'));updateFocus();});
-      });
-      syncPackingRow();
-      updateFocus();
-    }else{
-      if(nextTime)nextTime.textContent='今日提示';
-      if(nextAction)nextAction.textContent=info.next;
-      if(progressText)progressText.textContent='暂无可勾选时间线';
-      if(completeNext)completeNext.disabled=true;
-      if(locateNext)locateNext.disabled=true;
-    }
-    if(completeNext)completeNext.addEventListener('click',function(){if(nextIndex<0)return;setCompleted(nextIndex,true);updateFocus();});
-    if(locateNext)locateNext.addEventListener('click',function(){if(nextIndex<0)return;var row=rows[nextIndex];row.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){var toggle=row.querySelector('.done-toggle');if(toggle)toggle.focus();},450);});
-
-    var sheet=document.getElementById('menuSheet');
-    var openers=[document.getElementById('menuOpen'),document.getElementById('moreOpen')];
-    function openSheet(){if(!sheet)return;sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');document.body.classList.add('menu-open');openers.forEach(function(x){if(x)x.setAttribute('aria-expanded','true');});}
-    function closeSheet(){if(!sheet)return;sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');document.body.classList.remove('menu-open');openers.forEach(function(x){if(x)x.setAttribute('aria-expanded','false');});}
-    openers.forEach(function(x){if(x)x.addEventListener('click',openSheet);});
-    var closeBtn=document.getElementById('menuClose');
-    if(closeBtn)closeBtn.addEventListener('click',closeSheet);
-    if(sheet){sheet.addEventListener('click',function(e){if(e.target===sheet||e.target.closest('a'))closeSheet();});}
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet();});
-
-    var navLinks=Array.prototype.slice.call(document.querySelectorAll('.chipnav a'));
-    var bottomLinks=Array.prototype.slice.call(document.querySelectorAll('.mobile-bottom a'));
-    var mobileTitle=document.getElementById('mobilePageTitle');
-    function setActive(sectionId){
-      var activeId=sectionId==='today'?id:sectionId;
-      navLinks.forEach(function(link){
-        var active=link.getAttribute('href')==='#'+activeId;
-        link.classList.toggle('now',active);
-        if(active){link.setAttribute('aria-current','location');}
-        else{link.removeAttribute('aria-current');}
-      });
-      bottomLinks.forEach(function(link){link.classList.toggle('active',link.getAttribute('href')==='#'+activeId);});
-      var section=document.getElementById(activeId);
-      if(mobileTitle&&section){var heading=section.querySelector('h2,.plate');if(heading)mobileTitle.textContent=heading.textContent.trim();}
-    }
-    setActive('today');
+    var nav=Array.prototype.slice.call(document.querySelectorAll('.bottom-nav a'));
     if('IntersectionObserver' in window){
-      var observer=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){if(entry.isIntersecting){setActive(entry.target.id);}});
-      },{rootMargin:'-24% 0px -66% 0px',threshold:0});
-      document.querySelectorAll('main section[id]').forEach(function(section){observer.observe(section);});
+      var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){nav.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id);});}});},{rootMargin:'-20% 0px -65% 0px'});
+      ['today','meals','ratio','prep','faq'].forEach(function(id){var el=document.getElementById(id);if(el)observer.observe(el);});
     }
-  }catch(e){}
-})();
-</script>
+    setMode(mode);
+  })();
+  </script>
 </body>
 </html>
