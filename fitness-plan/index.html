@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123f3a">
-  <title>减脂 · 引体执行清单 V17</title>
+  <title>减脂 · 引体执行清单 V18</title>
   <style>
     :root{
       --ink:#18302d;--muted:#6a7a77;--line:#dfe7e2;--paper:#f4f5f0;--card:#fffefa;
@@ -80,6 +80,23 @@
     .creatine .symbol{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:var(--green-soft);color:var(--green);font-size:20px;font-weight:900}
     .creatine .copy{min-width:0;flex:1}.creatine b{display:block}.creatine small{display:block;margin-top:2px;color:var(--muted)}
 
+    .water-card{padding:18px;overflow:hidden}
+    .water-head{display:flex;align-items:center;gap:12px}
+    .water-symbol{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:15px;background:var(--blue-soft);color:var(--blue);font-size:22px}
+    .water-head h3{margin:0;font-size:18px}.water-head p{margin:2px 0 0;color:var(--muted);font-size:12px}
+    .water-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px;margin-top:17px}
+    .capacity-label,.bottle-label{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:750}
+    .capacity-input{display:flex;align-items:center;border:1px solid var(--line);border-radius:14px;background:#fff;padding:0 12px;transition:border-color .18s ease,box-shadow .18s ease}
+    .capacity-input:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(52,122,155,.12)}
+    .capacity-input input{min-width:0;width:100%;border:0;outline:0;background:transparent;padding:11px 0;color:var(--ink);font-size:18px;font-weight:800}
+    .capacity-input span{color:var(--muted);font-size:12px;font-weight:700}
+    .bottle-counter{display:grid;grid-template-columns:42px 62px 42px;gap:5px;padding:4px;border-radius:14px;background:#edf3f2}
+    .bottle-counter button{border:0;border-radius:10px;background:#fff;color:var(--deep);font-size:22px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(24,48,45,.07)}
+    .bottle-counter button:active{transform:scale(.96)}
+    .bottle-counter output{display:grid;place-items:center;color:var(--deep);font-size:18px;font-weight:850}
+    .water-total{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:16px -18px -18px;padding:14px 18px;background:var(--blue-soft)}
+    .water-total span{color:var(--blue);font-size:12px}.water-total strong{display:block;margin-top:1px;color:#235f7b;font-size:24px;line-height:1.1}.water-total small{color:#527685;font-size:11px;text-align:right}
+
     .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
     .step{padding:17px}.step .no{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--deep);color:white;font-size:12px;font-weight:800}.step h3{margin:12px 0 6px;font-size:16px}.step p{margin:0;color:var(--muted);font-size:13px}
     .recipe{margin-top:12px;padding:16px 18px}.recipe summary{cursor:pointer;font-weight:750}.recipe p,.recipe li{color:var(--muted);font-size:13px}.recipe ul{padding-left:20px;margin-bottom:0}
@@ -98,7 +115,7 @@
     .faq details{border-bottom:1px solid var(--line)}.faq details:last-child{border-bottom:0}.faq summary{position:relative;padding:16px 42px 16px 18px;cursor:pointer;list-style:none;font-size:14px;font-weight:760}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"＋";position:absolute;right:18px;top:14px;color:var(--green);font-size:20px}.faq details[open] summary:after{content:"−"}.faq .answer{padding:0 18px 17px;color:var(--muted);font-size:13px}.faq .answer b{color:var(--ink)}
 
     footer{width:min(960px,calc(100% - 28px));margin:26px auto 4px;color:var(--muted);font-size:11px;text-align:center}
-    .bottom-nav{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;grid-template-columns:repeat(5,1fr);width:min(460px,calc(100% - 28px));padding:6px;border:1px solid rgba(214,224,218,.9);border-radius:18px;background:rgba(255,254,250,.92);box-shadow:0 14px 35px rgba(24,48,45,.16);backdrop-filter:blur(16px)}
+    .bottom-nav{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;grid-template-columns:repeat(6,1fr);width:min(520px,calc(100% - 28px));padding:6px;border:1px solid rgba(214,224,218,.9);border-radius:18px;background:rgba(255,254,250,.92);box-shadow:0 14px 35px rgba(24,48,45,.16);backdrop-filter:blur(16px)}
     .bottom-nav a{padding:8px 4px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:750;text-align:center;text-decoration:none}.bottom-nav a.active{background:var(--deep);color:#fff}
 
     @media(max-width:700px){
@@ -115,7 +132,7 @@
     <header class="hero">
       <div class="hero-top">
         <div><p class="eyebrow">Nutrition × Pull-up</p><h1>减脂执行清单</h1><p>不排时间，只看今天要完成的餐和训练。</p></div>
-        <span class="version">V17 · 简化版</span>
+        <span class="version">V18 · 饮水记录</span>
       </div>
       <div class="profile" aria-label="身体数据">
         <div><b>170 cm</b><span>身高</span></div><div><b>78.5 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
@@ -132,6 +149,34 @@
         </div>
         <div class="next" aria-live="polite"><span>下一项</span><b id="nextTask">先完成早餐</b><small id="progressText">0 / 6 已完成</small><div class="bar"><i id="progressBar"></i></div></div>
       </div>
+    </section>
+
+    <section id="water">
+      <div class="section-title"><h2>今日饮水</h2><p>每喝完一瓶<br>点一次＋</p></div>
+      <article class="water-card card">
+        <div class="water-head">
+          <div class="water-symbol" aria-hidden="true">💧</div>
+          <div><h3>记录容器与瓶数</h3><p>瓶数每天归零，容器容量默认沿用上一次。</p></div>
+        </div>
+        <div class="water-controls">
+          <label>
+            <span class="capacity-label">容器容量</span>
+            <span class="capacity-input"><input id="waterCapacity" type="number" inputmode="numeric" min="50" max="3000" step="10" value="500" aria-label="容器容量，单位毫升"><span>ml</span></span>
+          </label>
+          <div>
+            <span class="bottle-label">已喝瓶数</span>
+            <div class="bottle-counter">
+              <button type="button" id="waterMinus" aria-label="减少一瓶">−</button>
+              <output id="waterCount" aria-live="polite">0 瓶</output>
+              <button type="button" id="waterPlus" aria-label="增加一瓶">＋</button>
+            </div>
+          </div>
+        </div>
+        <div class="water-total">
+          <div><span>今天已喝</span><strong id="waterTotal">0 ml</strong></div>
+          <small id="waterFormula">500 ml × 0 瓶</small>
+        </div>
+      </article>
     </section>
 
     <section id="meals">
@@ -268,10 +313,10 @@
     </section>
   </main>
 
-  <footer>V17 · 固定餐简化版 · 三大营养使用可执行的整数估算，调料和品牌差异不追小数。完成状态只保存在当前浏览器。</footer>
+  <footer>V18 · 固定餐与饮水记录 · 三大营养使用可执行的整数估算，调料和品牌差异不追小数。完成状态只保存在当前浏览器。</footer>
 
   <nav class="bottom-nav" aria-label="页面导航">
-    <a href="#today" class="active">今天</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
+    <a href="#today" class="active">今天</a><a href="#water">饮水</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
   </nav>
 
   <script>
@@ -285,6 +330,45 @@
     var mode=localStorage.getItem(modeKey)||'train';
     var buttons=Array.prototype.slice.call(document.querySelectorAll('[data-mode]'));
     var tasks=Array.prototype.slice.call(document.querySelectorAll('[data-task]'));
+
+    var waterCapacity=document.getElementById('waterCapacity');
+    var waterCount=document.getElementById('waterCount');
+    var waterTotal=document.getElementById('waterTotal');
+    var waterFormula=document.getElementById('waterFormula');
+    var waterCapacityKey='fitness-water-capacity-'+dateKey;
+    var waterCountKey='fitness-water-count-'+dateKey;
+    var lastWaterCapacityKey='fitness-water-last-capacity';
+    var savedCapacity=parseInt(localStorage.getItem(waterCapacityKey)||localStorage.getItem(lastWaterCapacityKey),10);
+    var capacity=savedCapacity>=50&&savedCapacity<=3000?savedCapacity:500;
+    var savedBottleCount=parseInt(localStorage.getItem(waterCountKey),10);
+    var bottleCount=savedBottleCount>=0&&savedBottleCount<=99?savedBottleCount:0;
+    waterCapacity.value=capacity;
+
+    function updateWater(){
+      waterCount.textContent=bottleCount+' 瓶';
+      waterTotal.textContent=(capacity*bottleCount).toLocaleString('zh-CN')+' ml';
+      waterFormula.textContent=capacity+' ml × '+bottleCount+' 瓶';
+      document.getElementById('waterMinus').disabled=bottleCount===0;
+    }
+    function saveCapacity(){
+      var next=parseInt(waterCapacity.value,10);
+      if(!Number.isFinite(next)){waterCapacity.value=capacity;return;}
+      capacity=Math.min(3000,Math.max(50,next));
+      waterCapacity.value=capacity;
+      localStorage.setItem(waterCapacityKey,String(capacity));
+      localStorage.setItem(lastWaterCapacityKey,String(capacity));
+      updateWater();
+    }
+    function changeBottleCount(delta){
+      bottleCount=Math.min(99,Math.max(0,bottleCount+delta));
+      localStorage.setItem(waterCountKey,String(bottleCount));
+      updateWater();
+    }
+    waterCapacity.addEventListener('change',saveCapacity);
+    waterCapacity.addEventListener('blur',saveCapacity);
+    document.getElementById('waterMinus').addEventListener('click',function(){changeBottleCount(-1);});
+    document.getElementById('waterPlus').addEventListener('click',function(){changeBottleCount(1);});
+    updateWater();
 
     function visibleTasks(){return tasks.filter(function(input){return !input.closest('.training-only')||mode==='train';});}
     function setMode(next){
@@ -324,7 +408,7 @@
     var nav=Array.prototype.slice.call(document.querySelectorAll('.bottom-nav a'));
     if('IntersectionObserver' in window){
       var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){nav.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id);});}});},{rootMargin:'-20% 0px -65% 0px'});
-      ['today','meals','ratio','prep','faq'].forEach(function(id){var el=document.getElementById(id);if(el)observer.observe(el);});
+      ['today','water','meals','ratio','prep','faq'].forEach(function(id){var el=document.getElementById(id);if(el)observer.observe(el);});
     }
     setMode(mode);
   })();
