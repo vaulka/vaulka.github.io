@@ -2,9 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123f3a">
-  <title>减脂 · 引体执行清单 V18</title>
+  <title>减脂 · 引体执行清单 V19</title>
   <style>
     :root{
       --ink:#18302d;--muted:#6a7a77;--line:#dfe7e2;--paper:#f4f5f0;--card:#fffefa;
@@ -132,10 +132,10 @@
     <header class="hero">
       <div class="hero-top">
         <div><p class="eyebrow">Nutrition × Pull-up</p><h1>减脂执行清单</h1><p>不排时间，只看今天要完成的餐和训练。</p></div>
-        <span class="version">V18 · 饮水记录</span>
+        <span class="version">V19 · 75kg减脂版</span>
       </div>
       <div class="profile" aria-label="身体数据">
-        <div><b>170 cm</b><span>身高</span></div><div><b>78.5 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
+        <div><b>170 cm</b><span>身高</span></div><div><b>75 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
       </div>
     </header>
 
@@ -183,11 +183,11 @@
       <div class="section-title"><h2>今天吃什么</h2><p>数值取整数<br>不追调料小数</p></div>
       <div class="macro-summary card" aria-label="全天营养估算">
         <div class="protein"><b id="sumP">160g</b><span>蛋白质</span></div>
-        <div class="carb"><b id="sumC">250g</b><span>碳水</span></div>
+        <div class="carb"><b id="sumC">≈200g</b><span>碳水</span></div>
         <div class="fat"><b id="sumF">50g</b><span>脂肪</span></div>
-        <div class="energy"><b id="sumKcal">≈2100</b><span>千卡</span></div>
+        <div class="energy"><b id="sumKcal">≈1900</b><span>千卡</span></div>
       </div>
-      <p class="summary-note" id="summaryNote">训练日包含练后餐；米饭、蔬菜和调料中的零碎营养已经用整十数吸收，不单独记账。</p>
+      <p class="summary-note" id="summaryNote">训练日生米共180g；“生米重量”不等于“碳水克数”，全天主要碳水约200g。</p>
 
       <div class="meals" style="margin-top:13px">
         <article class="meal card" data-card="breakfast">
@@ -199,23 +199,23 @@
 
         <article class="meal card" data-card="lunch">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="lunch" aria-label="午餐已完成"><span>✓</span></label><div><div class="meal-kicker">02 · 公司加热</div><h3 class="meal-name">午餐</h3></div></div>
-          <p class="food"><b>鸡胸肉200g（生重）</b><br>生米105g／熟饭约220g · 西兰花</p>
-          <div class="macros"><span class="macro p">蛋白 <b>55g</b></span><span class="macro c">碳水 <b>95g</b></span><span class="macro f">脂肪 <b>15g</b></span></div>
+          <p class="food"><b>鸡胸肉200g（生重）</b><br>生米90g／熟饭约185–200g · 西兰花</p>
+          <div class="macros"><span class="macro p">蛋白 <b>50g</b></span><span class="macro c">碳水 <b>约70g</b></span><span class="macro f">脂肪 <b>15g</b></span></div>
           <div class="meal-tip">晚间煎熟装盒，隔天从公司冰箱取出彻底加热。</div>
         </article>
 
         <article class="meal card" data-card="dinner">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="dinner" aria-label="晚餐已完成"><span>✓</span></label><div><div class="meal-kicker">03 · 公司加热</div><h3 class="meal-name">晚餐</h3></div></div>
-          <p class="food"><b>猪里脊200g（生重）</b><br>生米105g／熟饭约220g · 西兰花</p>
-          <div class="macros"><span class="macro p">蛋白 <b>55g</b></span><span class="macro c">碳水 <b>95g</b></span><span class="macro f">脂肪 <b>18g</b></span></div>
+          <p class="food"><b>猪里脊200g（生重）</b><br>生米90g／熟饭约185–200g · 西兰花</p>
+          <div class="macros"><span class="macro p">蛋白 <b>50g</b></span><span class="macro c">碳水 <b>约70g</b></span><span class="macro f">脂肪 <b>18g</b></span></div>
           <div class="meal-tip">和午餐做法一致，肉类分开腌制、分开装盒。</div>
         </article>
 
         <article class="meal card training-only" data-card="postworkout">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="postworkout" aria-label="练后餐已完成"><span>✓</span></label><div><div class="meal-kicker">04 · 仅训练日</div><h3 class="meal-name">练后餐</h3></div></div>
-          <p class="food"><b>蛋白粉粉末1勺（约30g）</b><br>香蕉1根</p>
-          <div class="macros"><span class="macro p">蛋白 <b>25g</b></span><span class="macro c">碳水 <b>30g</b></span><span class="macro f">脂肪 <b>2g</b></span></div>
-          <div class="meal-tip">一勺是30g粉末，不按30g纯蛋白计算。</div>
+          <p class="food"><b>蛋白粉粉末40g</b><br>香蕉1根</p>
+          <div class="macros"><span class="macro p">蛋白 <b>约32g</b></span><span class="macro c">碳水 <b>30g</b></span><span class="macro f">脂肪 <b>2g</b></span></div>
+          <div class="meal-tip">40g是粉末重量；按常见配方约提供30–34g蛋白，以包装营养表为准。</div>
         </article>
       </div>
 
@@ -228,15 +228,15 @@
     <section id="ratio">
       <div class="section-title"><h2>一周四练配比</h2><p>每周训练4天<br>每次约60分钟</p></div>
       <div class="ratio-card card">
-        <div class="ratio-head"><div><h3>按当前体重 78.5kg 换算</h3><p>这是训练频率对应的通用参考，不要求每天精确到1克。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
+        <div class="ratio-head"><div><h3>按当前体重 75kg 换算</h3><p>通用公式只作参照；当前执行教练给出的减脂阶段目标。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
         <div class="ratio-grid">
-          <div class="ratio-item c"><b>236g</b><span>碳水 · 78.5×3</span></div>
-          <div class="ratio-item p"><b>133g</b><span>蛋白质 · 78.5×1.7</span></div>
-          <div class="ratio-item f"><b>79g</b><span>脂肪 · 78.5×1</span></div>
+          <div class="ratio-item c"><b>225g</b><span>碳水 · 75×3</span></div>
+          <div class="ratio-item p"><b>128g</b><span>蛋白质 · 75×1.7</span></div>
+          <div class="ratio-item f"><b>75g</b><span>脂肪 · 75×1</span></div>
         </div>
         <div class="compare">
-          <div><b>训练日固定餐</b><span>约蛋白160g · 碳水250g · 脂肪50g。蛋白和碳水略高，<strong>不用继续加</strong>。</span></div>
-          <div><b>脂肪看周平均</b><span>工作日约50g；周末家常菜通常会补回一部分，不为了凑79g额外灌油。</span></div>
+          <div><b>教练当前减脂安排</b><span>全天生米180g，连同玉米和香蕉后，主要碳水约200g；约2.7g/kg。</span></div>
+          <div><b>为什么两套数字不同</b><span>225g是按训练频率估算的起点；约200g是当前减脂阶段的执行量，低约25g。</span></div>
         </div>
       </div>
     </section>
@@ -245,7 +245,7 @@
       <div class="section-title"><h2>晚间备餐</h2><p>一次做好<br>隔天两顿</p></div>
       <div class="steps">
         <article class="step card"><span class="no">1</span><h3>提前解冻</h3><p>鸡胸和里脊按每份200g冷冻。要吃的前一天移到冷藏室解冻。</p></article>
-        <article class="step card"><span class="no">2</span><h3>一次煮两顿</h3><p>生米共210g；鸡胸、里脊分别煎熟；西兰花焯水后加蒜、小米辣和少量油快炒。</p></article>
+        <article class="step card"><span class="no">2</span><h3>一次煮两顿</h3><p>生米共180g，煮好平均分两份；鸡胸、里脊分别煎熟；西兰花焯水后加蒜、小米辣和少量油快炒。</p></article>
         <article class="step card"><span class="no">3</span><h3>分盒冷藏</h3><p>午餐盒装鸡胸，晚餐盒装里脊。浅盒尽快冷藏，隔天到公司继续放冰箱。</p></article>
       </div>
       <details class="recipe card">
@@ -281,8 +281,8 @@
         <div class="shopping">
           <div class="shop-item"><span>鸡蛋</span><b>20个</b></div><div class="shop-item"><span>玉米</span><b>5根</b></div>
           <div class="shop-item"><span>鸡胸肉</span><b>1kg</b></div><div class="shop-item"><span>猪里脊</span><b>1kg</b></div>
-          <div class="shop-item"><span>生米</span><b>约1.05kg</b></div><div class="shop-item"><span>西兰花</span><b>约1.5kg</b></div>
-          <div class="shop-item"><span>香蕉</span><b>训练几天买几根</b></div><div class="shop-item"><span>蛋白粉</span><b>训练日30g</b></div>
+          <div class="shop-item"><span>生米</span><b>约900g</b></div><div class="shop-item"><span>西兰花</span><b>约1.5kg</b></div>
+          <div class="shop-item"><span>香蕉</span><b>训练几天买几根</b></div><div class="shop-item"><span>蛋白粉</span><b>训练日40g</b></div>
           <div class="shop-item"><span>混合坚果</span><b>约40g</b></div><div class="shop-item"><span>肌酸</span><b>42g／周</b></div>
         </div>
         <div class="shopping-foot">周末吃家常菜，不强行复制工作日菜单；油大的菜少配一点米饭即可，不做补偿性断食。</div>
@@ -292,7 +292,7 @@
     <section id="rules">
       <div class="section-title"><h2>只记四条</h2><p>执行优先<br>不追求小数</p></div>
       <div class="rules card">
-        <div class="rule"><i>01</i><p><b>米饭只记生米重量。</b><small>每天生米210g，煮熟后平均分成午餐和晚餐。</small></p></div>
+        <div class="rule"><i>01</i><p><b>全天生米180g。</b><small>午餐、晚餐各90g；生米180g不是碳水180g，熟饭重量随含水量变化。</small></p></div>
         <div class="rule"><i>02</i><p><b>调料不逐勺记账。</b><small>固定配方、固定肉量即可；只避免油越倒越多。</small></p></div>
         <div class="rule"><i>03</i><p><b>休息日只删除练后餐。</b><small>早餐、午餐、晚餐和肌酸都照旧。</small></p></div>
         <div class="rule"><i>04</i><p><b>看周平均，不纠结单日。</b><small>连续两周体重趋势不变，再调整米饭；先不频繁改菜单。</small></p></div>
@@ -306,14 +306,17 @@
         <details><summary>为什么虾仁不再作为日常主蛋白？</summary><div class="answer">冷冻虾仁解冻、烹调后会流失水分，成品看起来缩水明显；蛋白质不会因此凭空消失，但按每顿实际可吃份量和采购价格计算，成本通常高于鸡胸肉、猪里脊。虾仁可以偶尔吃，不再承担每天主要蛋白。</div></details>
         <details><summary>每天主要吃什么肉？</summary><div class="answer"><b>午餐鸡胸肉200g生重，晚餐猪里脊200g生重</b>。两种都比较瘦、蛋白质密度高，也适合分份腌制冷冻，是当前性价比和执行难度更平衡的组合。</div></details>
         <details><summary>牛腱还买吗？</summary><div class="answer">不作为日常顿顿摄入。鸡胸或里脊吃腻时，牛腱可以临时替换其中一顿的肉类；买回来再单独安排，不进入每周固定采购量。</div></details>
-        <details><summary>为什么练后写25g蛋白，不写30g？</summary><div class="answer">一勺约30g指的是<b>蛋白粉粉末重量</b>，多数产品实际提供约22–25g蛋白质。练后不用单独凑满30g，因为全天其他食物会把总蛋白补足。</div></details>
+        <details open><summary>“生米180g”和“碳水180g”是一回事吗？</summary><div class="answer"><b>不是。</b>当前是把每天生米从210g减到180g，即午、晚餐各90g。180g生米本身约含140g碳水，再加玉米和香蕉，全天主要碳水约200g。相比原计划少30g生米，约少23g碳水、90千卡。</div></details>
+        <details><summary>为什么蛋白粉改成40g？</summary><div class="answer">40g说的是<b>粉末重量，不是40g纯蛋白</b>。按常见75%–85%蛋白含量计算，约提供30–34g蛋白质；在减少碳水和总热量时，有助于维持全天蛋白摄入、饱腹感和训练恢复。最终以你手里产品的营养成分表换算。</div></details>
+        <details><summary>当前碳水和通用参考225g冲突吗？</summary><div class="answer">不冲突。225g来自“体重×3”的通用起始参考；当前主要碳水约200g，是教练结合减脂阶段给出的执行安排。页面简易记为早餐30g、午餐约70g、晚餐约70g、练后香蕉30g；西兰花和调料不逐克追加。</div></details>
+        <details><summary>什么情况要及时反馈教练？</summary><div class="answer">若连续两次训练明显掉力量或掉训练量、游泳耐力大幅下降、持续强烈饥饿、睡眠和恢复变差，或一周体重下降过快，应把实际记录反馈给教练调整；不要再自行减米饭。</div></details>
         <details><summary>调料、蒜和西兰花要不要每天计算？</summary><div class="answer">不用。页面采用简易记账，固定食材和大致用油即可。营养数字已经按整十数留出误差，不为每勺生抽、淀粉或每朵西兰花修改表格。</div></details>
         <details><summary>休息日怎么吃？</summary><div class="answer">早餐、午餐、晚餐完全照旧，饭后肌酸6g照旧；只删除蛋白粉加香蕉这一份练后餐。</div></details>
       </div>
     </section>
   </main>
 
-  <footer>V18 · 固定餐与饮水记录 · 三大营养使用可执行的整数估算，调料和品牌差异不追小数。完成状态只保存在当前浏览器。</footer>
+  <footer>V19 · 75kg减脂调整版 · 碳水按主要食材简易记账，蛋白粉以包装营养表为准。完成状态只保存在当前浏览器。</footer>
 
   <nav class="bottom-nav" aria-label="页面导航">
     <a href="#today" class="active">今天</a><a href="#water">饮水</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
@@ -325,8 +328,8 @@
     var dateKey=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
     var weekdays=['周日','周一','周二','周三','周四','周五','周六'];
     document.getElementById('dateText').textContent=(date.getMonth()+1)+'月'+date.getDate()+'日 · '+weekdays[date.getDay()];
-    var modeKey='fitness-v17-mode-'+dateKey;
-    var taskPrefix='fitness-v17-task-'+dateKey+'-';
+    var modeKey='fitness-v19-mode-'+dateKey;
+    var taskPrefix='fitness-v19-task-'+dateKey+'-';
     var mode=localStorage.getItem(modeKey)||'train';
     var buttons=Array.prototype.slice.call(document.querySelectorAll('[data-mode]'));
     var tasks=Array.prototype.slice.call(document.querySelectorAll('[data-task]'));
@@ -376,11 +379,11 @@
       buttons.forEach(function(button){button.classList.toggle('active',button.dataset.mode===mode);});
       document.querySelectorAll('.training-only').forEach(function(el){el.hidden=mode!=='train';});
       document.getElementById('modeTitle').textContent=mode==='train'?'训练日':'休息日';
-      document.getElementById('sumP').textContent=mode==='train'?'160g':'135g';
-      document.getElementById('sumC').textContent=mode==='train'?'250g':'220g';
+      document.getElementById('sumP').textContent=mode==='train'?'≈160g':'≈125g';
+      document.getElementById('sumC').textContent=mode==='train'?'≈200g':'≈170g';
       document.getElementById('sumF').textContent=mode==='train'?'50g':'48g';
-      document.getElementById('sumKcal').textContent=mode==='train'?'≈2100':'≈1850';
-      document.getElementById('summaryNote').textContent=mode==='train'?'训练日包含练后餐；米饭、蔬菜和调料中的零碎营养已用整十数吸收，不单独记账。':'休息日只删除练后餐，其余三餐和饭后6g肌酸完全不变。';
+      document.getElementById('sumKcal').textContent=mode==='train'?'≈1900':'≈1600';
+      document.getElementById('summaryNote').textContent=mode==='train'?'训练日生米共180g；“生米重量”不等于“碳水克数”，全天主要碳水约200g。':'休息日只删除蛋白粉和香蕉；约为蛋白125g、碳水170g、脂肪48g，其余三餐与肌酸不变。';
       update();
     }
     buttons.forEach(function(button){button.addEventListener('click',function(){setMode(button.dataset.mode);});});
@@ -399,7 +402,7 @@
     }
 
     var monday=new Date(date);monday.setDate(date.getDate()-((date.getDay()+6)%7));
-    var weekKey='fitness-v17-week-'+monday.getFullYear()+'-'+String(monday.getMonth()+1).padStart(2,'0')+'-'+String(monday.getDate()).padStart(2,'0')+'-';
+    var weekKey='fitness-v19-week-'+monday.getFullYear()+'-'+String(monday.getMonth()+1).padStart(2,'0')+'-'+String(monday.getDate()).padStart(2,'0')+'-';
     document.querySelectorAll('[data-session]').forEach(function(input){
       input.checked=localStorage.getItem(weekKey+input.dataset.session)==='1';input.closest('.session').classList.toggle('done',input.checked);
       input.addEventListener('change',function(){localStorage.setItem(weekKey+input.dataset.session,input.checked?'1':'0');input.closest('.session').classList.toggle('done',input.checked);});
