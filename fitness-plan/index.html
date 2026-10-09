@@ -195,18 +195,18 @@
       <article class="fat-choice card" aria-label="选择今天的脂肪来源">
         <div class="fat-choice-head"><h3>今天的脂肪来源</h3><span>OR · 每天只选一种</span></div>
         <div class="fat-options" role="radiogroup" aria-label="坚果或橄榄油二选一">
-          <label class="fat-option active"><input type="radio" name="fatSource" value="nuts" checked><b>坚果方案</b><small>混合坚果40g · 橄榄油0g</small></label>
+          <label class="fat-option active"><input type="radio" name="fatSource" value="nuts" checked><b>坚果方案</b><small>厨房秤称重40g · 橄榄油0g</small></label>
           <label class="fat-option"><input type="radio" name="fatSource" value="oil"><b>橄榄油方案</b><small>混合坚果0g · 早餐橄榄油20g</small></label>
         </div>
-        <div class="fat-result"><b id="fatChoiceTitle">今天吃混合坚果40g</b><span id="fatChoiceAction">早餐吃；午晚餐空气炸锅不放油。不要再额外补橄榄油。</span></div>
+        <div class="fat-result"><b id="fatChoiceTitle">早餐称重混合坚果40g</b><span id="fatChoiceAction">以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。</span></div>
       </article>
 
       <div class="meals" style="margin-top:13px">
         <article class="meal card" data-card="breakfast">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="breakfast" aria-label="早餐已完成"><span>✓</span></label><div><div class="meal-kicker">01 · 每天相同</div><h3 class="meal-name">早餐</h3></div></div>
-          <p class="food"><b>2个全蛋＋2个蛋白</b><br>玉米1根 · <span id="breakfastFatSource">山姆混合坚果40g</span></p>
+          <p class="food"><b>2个全蛋＋2个蛋白</b><br>玉米1根 · <span id="breakfastFatSource">山姆混合坚果40g（称重）</span></p>
           <div class="macros"><span class="macro p">蛋白 <b id="breakfastP">约30g</b></span><span class="macro c">碳水 <b id="breakfastC">约40g</b></span><span class="macro f">脂肪 <b id="breakfastF">约33g</b></span></div>
-          <div class="meal-tip" id="breakfastTip">坚果40g约等于25–30颗腰果大小；第一次称好并记住固定小碗的份量。</div>
+          <div class="meal-tip" id="breakfastTip">用厨房秤每次称重40g，不按颗数估算；坚果种类和大小不同，颗数会明显变化。</div>
         </article>
 
         <article class="meal card" data-card="lunch">
@@ -247,7 +247,7 @@
           <div class="ratio-item f"><b>75g</b><span>脂肪 · 75×1</span></div>
         </div>
         <div class="compare">
-          <div><b>坚果方案</b><span>约蛋白160g · 碳水210g · 脂肪50g；早餐混合坚果40g。</span></div>
+          <div><b>坚果方案</b><span>约蛋白160g · 碳水210g · 脂肪50g；早餐用厨房秤称混合坚果40g。</span></div>
           <div><b>橄榄油方案</b><span>约蛋白155g · 碳水200g · 脂肪48g；早餐随餐摄入橄榄油20g。</span></div>
         </div>
       </div>
@@ -307,7 +307,7 @@
       <div class="section-title"><h2>只记四条</h2><p>执行优先<br>不追求小数</p></div>
       <div class="rules card">
         <div class="rule"><i>01</i><p><b>全天生米180g。</b><small>午餐、晚餐各90g；生米180g不是碳水180g，熟饭重量随含水量变化。</small></p></div>
-        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>一天只执行一种：坚果40g，或者早餐橄榄油20g；不能两份都吃。</small></p></div>
+        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>一天只执行一种：厨房秤称坚果40g，或者早餐橄榄油20g；坚果不按颗数估算。</small></p></div>
         <div class="rule"><i>03</i><p><b>休息日只删除练后餐。</b><small>早餐、午餐、晚餐和肌酸都照旧。</small></p></div>
         <div class="rule"><i>04</i><p><b>看周平均，不纠结单日。</b><small>连续两周体重趋势不变，再调整米饭；先不频繁改菜单。</small></p></div>
       </div>
@@ -406,17 +406,17 @@
       }else{
         document.getElementById('summaryNote').textContent=oil?'休息日删除练后餐；坚果0g、早餐橄榄油20g，约蛋白125g、碳水170g、脂肪46g。':'休息日删除练后餐；坚果40g、橄榄油0g，约蛋白130g、碳水180g、脂肪47g。';
       }
-      document.getElementById('breakfastFatSource').textContent=oil?'橄榄油20g（不吃坚果）':'山姆混合坚果40g';
+      document.getElementById('breakfastFatSource').textContent=oil?'橄榄油20g（不吃坚果）':'山姆混合坚果40g（称重）';
       document.getElementById('breakfastP').textContent=oil?'约24g':'约30g';
       document.getElementById('breakfastC').textContent=oil?'约30g':'约40g';
       document.getElementById('breakfastF').textContent=oil?'约32g':'约33g';
       document.getElementById('lunchF').textContent='约6g';
       document.getElementById('dinnerF').textContent='约8g';
-      document.getElementById('breakfastTip').textContent=oil?'今天不吃坚果；橄榄油20g随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'坚果40g约等于25–30颗腰果大小；第一次称好并记住固定小碗的份量。';
+      document.getElementById('breakfastTip').textContent=oil?'今天不吃坚果；橄榄油20g随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'用厨房秤每次称重40g，不按颗数估算；坚果种类和大小不同，颗数会明显变化。';
       document.getElementById('lunchTip').textContent=oil?'鸡胸只放生抽，空气炸锅不放油；公司不带橄榄油。':'鸡胸只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
       document.getElementById('dinnerTip').textContent=oil?'里脊只放生抽，空气炸锅不放油；公司不带橄榄油。':'里脊只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
-      document.getElementById('fatChoiceTitle').textContent=oil?'今天早餐用橄榄油20g':'今天吃混合坚果40g';
-      document.getElementById('fatChoiceAction').textContent=oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':'早餐吃；午晚餐空气炸锅不放油。不要再额外补橄榄油。';
+      document.getElementById('fatChoiceTitle').textContent=oil?'今天早餐用橄榄油20g':'早餐称重混合坚果40g';
+      document.getElementById('fatChoiceAction').textContent=oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':'以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。';
     }
     function setFatSource(next){
       fatSource=next==='oil'?'oil':'nuts';
