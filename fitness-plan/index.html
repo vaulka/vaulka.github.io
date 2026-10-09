@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123f3a">
-  <title>减脂 · 引体执行清单 V22</title>
+  <title>减脂 · 引体执行清单 V23</title>
   <style>
     :root{
       --ink:#18302d;--muted:#6a7a77;--line:#dfe7e2;--paper:#f4f5f0;--card:#fffefa;
@@ -135,7 +135,7 @@
     <header class="hero">
       <div class="hero-top">
         <div><p class="eyebrow">Nutrition × Pull-up</p><h1>减脂执行清单</h1><p>不排时间，只看今天要完成的餐和训练。</p></div>
-        <span class="version">V22 · 早餐补油版</span>
+        <span class="version">V23 · 训练日微调版</span>
       </div>
       <div class="profile" aria-label="身体数据">
         <div><b>170 cm</b><span>身高</span></div><div><b>75 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
@@ -187,26 +187,26 @@
       <div class="macro-summary card" aria-label="全天营养估算">
         <div class="protein"><b id="sumP">160g</b><span>蛋白质</span></div>
         <div class="carb"><b id="sumC">≈210g</b><span>碳水</span></div>
-        <div class="fat"><b id="sumF">50g</b><span>脂肪</span></div>
-        <div class="energy"><b id="sumKcal">≈1900</b><span>千卡</span></div>
+        <div class="fat"><b id="sumF">≈44g</b><span>脂肪</span></div>
+        <div class="energy"><b id="sumKcal">≈1870</b><span>千卡</span></div>
       </div>
-      <p class="summary-note" id="summaryNote">训练日生米共180g；烹调不放油，脂肪主要来自2个蛋黄、40g混合坚果和肉类本身。</p>
+      <p class="summary-note" id="summaryNote">训练日生米共180g；烹调不放油，混合坚果称重30g，全天脂肪约44g。</p>
 
       <article class="fat-choice card" aria-label="选择今天的脂肪来源">
         <div class="fat-choice-head"><h3>今天的脂肪来源</h3><span>OR · 每天只选一种</span></div>
         <div class="fat-options" role="radiogroup" aria-label="坚果或橄榄油二选一">
-          <label class="fat-option active"><input type="radio" name="fatSource" value="nuts" checked><b>坚果方案</b><small>厨房秤称重40g · 橄榄油0g</small></label>
-          <label class="fat-option"><input type="radio" name="fatSource" value="oil"><b>橄榄油方案</b><small>混合坚果0g · 早餐橄榄油20g</small></label>
+          <label class="fat-option active"><input type="radio" name="fatSource" value="nuts" checked><b>坚果方案</b><small id="nutsOptionDetail">训练日称重30g · 橄榄油0g</small></label>
+          <label class="fat-option"><input type="radio" name="fatSource" value="oil"><b>橄榄油方案</b><small id="oilOptionDetail">训练日坚果0g · 早餐橄榄油15g</small></label>
         </div>
-        <div class="fat-result"><b id="fatChoiceTitle">早餐称重混合坚果40g</b><span id="fatChoiceAction">以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。</span></div>
+        <div class="fat-result"><b id="fatChoiceTitle">早餐称重混合坚果30g</b><span id="fatChoiceAction">训练日以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。</span></div>
       </article>
 
       <div class="meals" style="margin-top:13px">
         <article class="meal card" data-card="breakfast">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="breakfast" aria-label="早餐已完成"><span>✓</span></label><div><div class="meal-kicker">01 · 每天相同</div><h3 class="meal-name">早餐</h3></div></div>
-          <p class="food"><b>2个全蛋＋2个蛋白</b><br>玉米1根 · <span id="breakfastFatSource">山姆混合坚果40g（称重）</span></p>
-          <div class="macros"><span class="macro p">蛋白 <b id="breakfastP">约30g</b></span><span class="macro c">碳水 <b id="breakfastC">约40g</b></span><span class="macro f">脂肪 <b id="breakfastF">约33g</b></span></div>
-          <div class="meal-tip" id="breakfastTip">用厨房秤每次称重40g，不按颗数估算；坚果种类和大小不同，颗数会明显变化。</div>
+          <p class="food"><b>2个全蛋＋2个蛋白</b><br>玉米1根 · <span id="breakfastFatSource">山姆混合坚果30g（称重）</span></p>
+          <div class="macros"><span class="macro p">蛋白 <b id="breakfastP">约28g</b></span><span class="macro c">碳水 <b id="breakfastC">约38g</b></span><span class="macro f">脂肪 <b id="breakfastF">约28g</b></span></div>
+          <div class="meal-tip" id="breakfastTip">训练日用厨房秤称重30g，不按颗数估算；坚果种类和大小不同，颗数会明显变化。</div>
         </article>
 
         <article class="meal card" data-card="lunch">
@@ -238,7 +238,7 @@
     </section>
 
     <section id="ratio">
-      <div class="section-title"><h2>一周四练配比</h2><p>每周训练4天<br>每次约60分钟</p></div>
+      <div class="section-title"><h2>一周四练配比</h2><p>力量60分钟<br>拉伸10＋有氧15</p></div>
       <div class="ratio-card card">
         <div class="ratio-head"><div><h3>按当前体重 75kg 换算</h3><p>通用公式只作参照；当前执行教练给出的减脂阶段目标。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
         <div class="ratio-grid">
@@ -247,8 +247,8 @@
           <div class="ratio-item f"><b>75g</b><span>脂肪 · 75×1</span></div>
         </div>
         <div class="compare">
-          <div><b>坚果方案</b><span>约蛋白160g · 碳水210g · 脂肪50g；早餐用厨房秤称混合坚果40g。</span></div>
-          <div><b>橄榄油方案</b><span>约蛋白155g · 碳水200g · 脂肪48g；早餐随餐摄入橄榄油20g。</span></div>
+          <div><b>训练日 · 坚果方案</b><span>约蛋白160g · 碳水208g · 脂肪44g；早餐用厨房秤称混合坚果30g。</span></div>
+          <div><b>训练日 · 橄榄油方案</b><span>约蛋白155g · 碳水200g · 脂肪43g；早餐随餐摄入橄榄油15g。</span></div>
         </div>
       </div>
     </section>
@@ -265,7 +265,7 @@
         <ul>
           <li>鸡胸肉和猪里脊只用生抽调味，不放料酒、老抽、淀粉或烹调油。</li>
           <li>腌制1小时必须放冰箱冷藏，不在室温放置；再按200g一份冷冻。</li>
-          <li>选择橄榄油方案时，早餐随鸡蛋、玉米摄入20g橄榄油；午餐和晚餐不带油、不加油。</li>
+          <li>选择橄榄油方案时，训练日早餐摄入15g，休息日仍按20g；午餐和晚餐不带油、不加油。</li>
           <li>生鸡肉与猪肉使用的夹子、碗和砧板及时清洗，避免碰到熟食。</li>
           <li>饭盒只是冷藏和微波容器，不用来过夜保温；公司加热到整盒中心持续冒热气。</li>
         </ul>
@@ -276,14 +276,14 @@
       <div class="section-title"><h2>本周四练</h2><p>不绑定星期<br>完成一次勾一次</p></div>
       <div class="card">
         <div class="week-grid" id="weekGrid">
-          <label class="session"><input type="checkbox" data-session="1"><strong>第1练</strong><span>约60分钟</span></label>
-          <label class="session"><input type="checkbox" data-session="2"><strong>第2练</strong><span>约60分钟</span></label>
-          <label class="session"><input type="checkbox" data-session="3"><strong>第3练</strong><span>约60分钟</span></label>
-          <label class="session"><input type="checkbox" data-session="4"><strong>第4练</strong><span>约60分钟</span></label>
+          <label class="session"><input type="checkbox" data-session="1"><strong>第1练</strong><span>力量60＋拉伸10＋有氧15</span></label>
+          <label class="session"><input type="checkbox" data-session="2"><strong>第2练</strong><span>力量60＋拉伸10＋有氧15</span></label>
+          <label class="session"><input type="checkbox" data-session="3"><strong>第3练</strong><span>力量60＋拉伸10＋有氧15</span></label>
+          <label class="session"><input type="checkbox" data-session="4"><strong>第4练</strong><span>力量60＋拉伸10＋有氧15</span></label>
         </div>
         <div class="train-copy">
           <p><b>目标：</b>减脂，同时练出第一个标准引体向上。训练动作、热身和收操按私教当日安排执行。</p>
-          <p><b>饮食切换：</b>当天完成力量或游泳，就选“训练日”并保留练后餐；没训练就选“休息日”，其余三餐不变。</p>
+          <p><b>饮食切换：</b>当天完成力量训练，就选“训练日”并保留练后餐；目前不安排游泳。没训练就选“休息日”，其余三餐不变。</p>
         </div>
       </div>
     </section>
@@ -296,7 +296,7 @@
           <div class="shop-item"><span>鸡胸肉</span><b>1kg</b></div><div class="shop-item"><span>猪里脊</span><b>1kg</b></div>
           <div class="shop-item"><span>生米</span><b>约900g</b></div><div class="shop-item"><span>西兰花</span><b>约1.5kg</b></div>
           <div class="shop-item"><span>香蕉</span><b>训练几天买几根</b></div><div class="shop-item"><span>蛋白粉</span><b>训练日40g</b></div>
-          <div class="shop-item"><span>混合坚果 · 方案A</span><b>200g／5天</b></div><div class="shop-item"><span>橄榄油 · 方案B</span><b>100g／5天</b></div>
+          <div class="shop-item"><span>混合坚果 · 方案A</span><b>训练日30g／天</b></div><div class="shop-item"><span>橄榄油 · 方案B</span><b>训练日15g／天</b></div>
           <div class="shop-item"><span>肌酸</span><b>42g／周</b></div>
         </div>
         <div class="shopping-foot">周末吃家常菜，不强行复制工作日菜单；油大的菜少配一点米饭即可，不做补偿性断食。</div>
@@ -307,19 +307,19 @@
       <div class="section-title"><h2>只记四条</h2><p>执行优先<br>不追求小数</p></div>
       <div class="rules card">
         <div class="rule"><i>01</i><p><b>全天生米180g。</b><small>午餐、晚餐各90g；生米180g不是碳水180g，熟饭重量随含水量变化。</small></p></div>
-        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>一天只执行一种：厨房秤称坚果40g，或者早餐橄榄油20g；坚果不按颗数估算。</small></p></div>
+        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>训练日只选一种：称重坚果30g，或者早餐橄榄油15g；休息日原方案不变。</small></p></div>
         <div class="rule"><i>03</i><p><b>休息日只删除练后餐。</b><small>早餐、午餐、晚餐和肌酸都照旧。</small></p></div>
-        <div class="rule"><i>04</i><p><b>看周平均，不纠结单日。</b><small>连续两周体重趋势不变，再调整米饭；先不频繁改菜单。</small></p></div>
+        <div class="rule"><i>04</i><p><b>先观察两周，不再继续削。</b><small>看晨起体重7日均值；若仍每周下降超过0.75kg或力量下滑，反馈教练，不再减米饭或脂肪。</small></p></div>
       </div>
     </section>
 
     <section id="faq">
       <div class="section-title"><h2>FAQ · 已确认口径</h2><p>以后有争议<br>先查这里</p></div>
       <div class="faq card">
-        <details open><summary>坚果和橄榄油怎么二选一？</summary><div class="answer"><b>方案A：混合坚果40g、橄榄油0g；方案B：混合坚果0g、早餐橄榄油20g。</b>坚果方案训练日脂肪约50g，橄榄油方案约48g。不是用40g橄榄油替换40g坚果，也不能同一天把两份都吃完。</div></details>
-        <details><summary>早餐橄榄油20g怎么吃、怎么称？</summary><div class="answer">早餐开始前，把小杯或小碟放在厨房秤上归零，称20g；随鸡蛋、玉米分几口摄入，或淋在食物上。不要空腹一口闷，午餐和晚餐不带油、不加油。20g约22mL，直接称重量更准确。</div></details>
+        <details open><summary>训练日坚果和橄榄油怎么二选一？</summary><div class="answer"><b>方案A：混合坚果称重30g、橄榄油0g；方案B：混合坚果0g、早餐橄榄油15g。</b>训练日脂肪约43–44g，只作小幅下调；休息日原来的40g坚果或20g橄榄油方案不变。</div></details>
+        <details><summary>训练日早餐橄榄油15g怎么吃、怎么称？</summary><div class="answer">早餐开始前，把小杯或小碟放在厨房秤上归零，称15g；随鸡蛋、玉米分几口摄入，或淋在食物上。不要空腹一口闷，午餐和晚餐不带油、不加油。休息日仍按原来的20g执行。</div></details>
         <details><summary>怎样从坚果逐步换成橄榄油？</summary><div class="answer">按“天数”过渡，不在同一天混搭。第一周每周选1–2天橄榄油方案，其余天选坚果方案；第二周提高到3–4天；适应后再全部切换。页面会记住上一次选择，每天确认一次即可。</div></details>
-        <details><summary>两种方案营养完全一样吗？</summary><div class="answer">脂肪接近，但不完全一样。坚果还有约5–7g蛋白质、少量碳水、纤维和矿物质；橄榄油几乎只有脂肪。因此切到橄榄油方案后，全天蛋白质约从160g变为155g、碳水约从210g变为200g，仍能覆盖当前训练计划。</div></details>
+        <details><summary>两种方案营养完全一样吗？</summary><div class="answer">脂肪接近，但不完全一样。坚果还有少量蛋白质、碳水、纤维和矿物质；橄榄油几乎只有脂肪。训练日坚果方案约蛋白160g、碳水208g、脂肪44g；橄榄油方案约蛋白155g、碳水200g、脂肪43g。</div></details>
         <details open><summary>为什么当前菜单不放牛奶？</summary><div class="answer">早餐鸡蛋、午晚餐肉类和练后蛋白粉已经能覆盖蛋白质；坚果、蛋黄和烹调油也提供脂肪，因此牛奶不是必需项。<b>脱脂牛奶本身并不高脂</b>，这里只是为了减少采购和执行步骤，所以不纳入固定菜单，也不纳入营养记账。</div></details>
         <details><summary>为什么虾仁不再作为日常主蛋白？</summary><div class="answer">冷冻虾仁解冻、烹调后会流失水分，成品看起来缩水明显；蛋白质不会因此凭空消失，但按每顿实际可吃份量和采购价格计算，成本通常高于鸡胸肉、猪里脊。虾仁可以偶尔吃，不再承担每天主要蛋白。</div></details>
         <details><summary>每天主要吃什么肉？</summary><div class="answer"><b>午餐鸡胸肉200g生重，晚餐猪里脊200g生重</b>。两种都比较瘦、蛋白质密度高，也适合分份腌制冷冻，是当前性价比和执行难度更平衡的组合。</div></details>
@@ -327,14 +327,14 @@
         <details open><summary>“生米180g”和“碳水180g”是一回事吗？</summary><div class="answer"><b>不是。</b>当前是把每天生米从210g减到180g，即午、晚餐各90g。180g生米本身约含140g碳水，再加玉米和香蕉，全天主要碳水约200g。相比原计划少30g生米，约少23g碳水、90千卡。</div></details>
         <details><summary>为什么蛋白粉改成40g？</summary><div class="answer">40g说的是<b>粉末重量，不是40g纯蛋白</b>。按常见75%–85%蛋白含量计算，约提供30–34g蛋白质；在减少碳水和总热量时，有助于维持全天蛋白摄入、饱腹感和训练恢复。最终以你手里产品的营养成分表换算。</div></details>
         <details><summary>当前碳水和通用参考225g冲突吗？</summary><div class="answer">不冲突。225g来自“体重×3”的通用起始参考；当前简易估算约210g，是教练结合减脂阶段给出的执行安排。生米仍是每天180g；坚果本身也含少量碳水，因此更新后的全天数字会比只数玉米、米饭和香蕉略高。</div></details>
-        <details><summary>什么情况要及时反馈教练？</summary><div class="answer">若连续两次训练明显掉力量或掉训练量、游泳耐力大幅下降、持续强烈饥饿、睡眠和恢复变差，或一周体重下降过快，应把实际记录反馈给教练调整；不要再自行减米饭。</div></details>
-        <details><summary>生抽和西兰花要不要每天计算？</summary><div class="answer">不用。鸡胸和里脊只放生抽调味，进空气炸锅时不放油；生抽基本不贡献脂肪。只有选择橄榄油方案时，才把早餐称好的20g橄榄油计入当天；页面不为每勺生抽或每朵西兰花修改表格。</div></details>
+        <details><summary>什么情况要及时反馈教练？</summary><div class="answer">你从78.5kg到75kg用了4周，平均每周约下降0.88kg，已经接近偏快区间。若接下来连续两周的晨起7日均值仍每周下降超过0.75kg，或连续两次训练明显掉力量、持续强烈饥饿、睡眠和恢复变差，应反馈教练；不要再自行减米饭或脂肪。</div></details>
+        <details><summary>生抽和西兰花要不要每天计算？</summary><div class="answer">不用。鸡胸和里脊只放生抽调味，进空气炸锅时不放油；生抽基本不贡献脂肪。选择橄榄油方案时，训练日早餐称15g，休息日称20g；页面不为每勺生抽或每朵西兰花修改表格。</div></details>
         <details><summary>休息日怎么吃？</summary><div class="answer">早餐、午餐、晚餐完全照旧，饭后肌酸6g照旧；只删除蛋白粉加香蕉这一份练后餐。</div></details>
       </div>
     </section>
   </main>
 
-  <footer>V22 · 75kg减脂调整版 · 坚果40g OR 早餐橄榄油20g，每天只选一种。完成状态只保存在当前浏览器。</footer>
+  <footer>V23 · 训练日坚果30g OR 早餐橄榄油15g；休息日原方案不变。完成状态只保存在当前浏览器。</footer>
 
   <nav class="bottom-nav" aria-label="页面导航">
     <a href="#today" class="active">今天</a><a href="#water">饮水</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
@@ -398,25 +398,27 @@
       var oil=fatSource==='oil';
       var train=mode==='train';
       document.getElementById('sumP').textContent=oil?(train?'≈155g':'≈125g'):(train?'≈160g':'≈130g');
-      document.getElementById('sumC').textContent=oil?(train?'≈200g':'≈170g'):(train?'≈210g':'≈180g');
-      document.getElementById('sumF').textContent=oil?(train?'≈48g':'≈46g'):(train?'≈50g':'≈47g');
-      document.getElementById('sumKcal').textContent=oil?(train?'≈1850':'≈1580'):(train?'≈1900':'≈1650');
+      document.getElementById('sumC').textContent=oil?(train?'≈200g':'≈170g'):(train?'≈208g':'≈180g');
+      document.getElementById('sumF').textContent=oil?(train?'≈43g':'≈46g'):(train?'≈44g':'≈47g');
+      document.getElementById('sumKcal').textContent=oil?(train?'≈1810':'≈1580'):(train?'≈1870':'≈1650');
+      document.getElementById('nutsOptionDetail').textContent=train?'训练日称重30g · 橄榄油0g':'休息日称重40g · 橄榄油0g';
+      document.getElementById('oilOptionDetail').textContent=train?'训练日坚果0g · 早餐橄榄油15g':'休息日坚果0g · 早餐橄榄油20g';
       if(train){
-        document.getElementById('summaryNote').textContent=oil?'训练日选择橄榄油方案：坚果0g，早餐随餐摄入橄榄油20g；午晚餐不带油、不加油，全天脂肪约48g。':'训练日选择坚果方案：早餐混合坚果40g，午晚餐不额外加油；全天脂肪约50g。';
+        document.getElementById('summaryNote').textContent=oil?'训练日选择橄榄油方案：坚果0g，早餐随餐摄入橄榄油15g；午晚餐不带油、不加油，全天脂肪约43g。':'训练日选择坚果方案：早餐称重混合坚果30g，午晚餐不额外加油；全天脂肪约44g。';
       }else{
         document.getElementById('summaryNote').textContent=oil?'休息日删除练后餐；坚果0g、早餐橄榄油20g，约蛋白125g、碳水170g、脂肪46g。':'休息日删除练后餐；坚果40g、橄榄油0g，约蛋白130g、碳水180g、脂肪47g。';
       }
-      document.getElementById('breakfastFatSource').textContent=oil?'橄榄油20g（不吃坚果）':'山姆混合坚果40g（称重）';
-      document.getElementById('breakfastP').textContent=oil?'约24g':'约30g';
-      document.getElementById('breakfastC').textContent=oil?'约30g':'约40g';
-      document.getElementById('breakfastF').textContent=oil?'约32g':'约33g';
+      document.getElementById('breakfastFatSource').textContent=oil?'橄榄油'+(train?'15g':'20g')+'（不吃坚果）':'山姆混合坚果'+(train?'30g':'40g')+'（称重）';
+      document.getElementById('breakfastP').textContent=oil?'约24g':(train?'约28g':'约30g');
+      document.getElementById('breakfastC').textContent=oil?'约30g':(train?'约38g':'约40g');
+      document.getElementById('breakfastF').textContent=oil?(train?'约27g':'约32g'):(train?'约28g':'约33g');
       document.getElementById('lunchF').textContent='约6g';
       document.getElementById('dinnerF').textContent='约8g';
-      document.getElementById('breakfastTip').textContent=oil?'今天不吃坚果；橄榄油20g随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'用厨房秤每次称重40g，不按颗数估算；坚果种类和大小不同，颗数会明显变化。';
+      document.getElementById('breakfastTip').textContent=oil?'今天不吃坚果；橄榄油'+(train?'15g':'20g')+'随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'用厨房秤称重'+(train?'30g':'40g')+'，不按颗数估算；坚果种类和大小不同，颗数会明显变化。';
       document.getElementById('lunchTip').textContent=oil?'鸡胸只放生抽，空气炸锅不放油；公司不带橄榄油。':'鸡胸只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
       document.getElementById('dinnerTip').textContent=oil?'里脊只放生抽，空气炸锅不放油；公司不带橄榄油。':'里脊只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
-      document.getElementById('fatChoiceTitle').textContent=oil?'今天早餐用橄榄油20g':'早餐称重混合坚果40g';
-      document.getElementById('fatChoiceAction').textContent=oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':'以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。';
+      document.getElementById('fatChoiceTitle').textContent=oil?'今天早餐用橄榄油'+(train?'15g':'20g'):'早餐称重混合坚果'+(train?'30g':'40g');
+      document.getElementById('fatChoiceAction').textContent=oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':(train?'训练日':'休息日')+'以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。';
     }
     function setFatSource(next){
       fatSource=next==='oil'?'oil':'nuts';
