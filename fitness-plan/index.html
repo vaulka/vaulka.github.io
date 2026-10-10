@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123f3a">
-  <title>减脂 · 引体执行清单 V23</title>
+  <title>减脂 · 腹肌 · 引体执行清单 V25</title>
   <style>
     :root{
       --ink:#18302d;--muted:#6a7a77;--line:#dfe7e2;--paper:#f4f5f0;--card:#fffefa;
@@ -29,7 +29,7 @@
     h1{margin:0;font-size:clamp(29px,7vw,54px);letter-spacing:-.04em;line-height:1.06}
     .hero p{margin:12px 0 0;color:var(--muted);font-size:14px}
     .version{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);padding:7px 11px;color:var(--muted);font-size:12px;font-weight:700}
-    .profile{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+    .profile{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
     .profile div{padding:13px 12px;border:1px solid rgba(255,255,255,.55);border-radius:17px;background:rgba(255,255,255,.62);backdrop-filter:blur(10px)}
     .profile b{display:block;font-size:19px;line-height:1.1}.profile span{display:block;margin-top:4px;color:var(--muted);font-size:11px}
 
@@ -38,7 +38,7 @@
     .mode-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:14px}
     .date{font-size:13px;color:rgba(255,255,255,.7)}
     .date strong{display:block;margin-top:2px;color:#fff;font-size:22px;letter-spacing:-.02em}
-    .segmented{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.12)}
+    .segmented{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.12)}
     .segmented button{border:0;border-radius:10px;padding:9px 13px;background:transparent;color:rgba(255,255,255,.7);font-size:13px;font-weight:750;cursor:pointer}
     .segmented button.active{background:#fff;color:var(--deep);box-shadow:0 3px 10px rgba(0,0,0,.12)}
     .next{position:relative;z-index:1;margin-top:16px;padding-top:15px;border-top:1px solid rgba(255,255,255,.14)}
@@ -58,10 +58,11 @@
     .fat-choice{margin-top:13px;padding:16px}.fat-choice-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.fat-choice-head h3{margin:0;font-size:17px}.fat-choice-head span{color:var(--danger);font-size:11px;font-weight:750}
     .fat-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.fat-option{position:relative;display:block;border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer}.fat-option input{position:absolute;inset:0;opacity:0;cursor:pointer}.fat-option b{display:block;font-size:14px}.fat-option small{display:block;margin-top:3px;color:var(--muted);font-size:11px}.fat-option.active{border-color:var(--green);background:var(--green-soft)}.fat-option.active b{color:var(--green)}
     .fat-result{margin-top:9px;padding:11px 12px;border-radius:13px;background:#f7f8f4}.fat-result b{display:block;font-size:13px}.fat-result span{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+    .fat-choice.is-paused .fat-options{opacity:.42}.fat-choice.is-paused .fat-option{cursor:not-allowed}
 
     .ratio-card{padding:18px}.ratio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.ratio-head h3{margin:0;font-size:18px}.ratio-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.ratio-formula{flex:0 0 auto;border-radius:11px;background:var(--deep);color:#fff;padding:7px 10px;font-size:11px;font-weight:750}
     .ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.ratio-item{padding:13px 10px;border-radius:15px;text-align:center}.ratio-item b{display:block;font-size:20px}.ratio-item span{display:block;margin-top:2px;font-size:11px}.ratio-item.p{background:var(--green-soft);color:var(--green)}.ratio-item.c{background:var(--orange-soft);color:#b85f32}.ratio-item.f{background:var(--purple-soft);color:var(--purple)}
-    .compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.compare div{padding:12px;border:1px solid var(--line);border-radius:14px}.compare b{display:block;font-size:13px}.compare span{display:block;margin-top:3px;color:var(--muted);font-size:11px}.compare strong{color:var(--green)}
+    .compare{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.compare div{padding:12px;border:1px solid var(--line);border-radius:14px}.compare b{display:block;font-size:13px}.compare span{display:block;margin-top:3px;color:var(--muted);font-size:11px}.compare strong{color:var(--green)}
 
     .meals{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .meal{position:relative;overflow:hidden;padding:18px}
@@ -108,6 +109,7 @@
     .session{position:relative;border:1px solid var(--line);border-radius:15px;background:#fff;padding:14px 10px;text-align:center;cursor:pointer}
     .session input{position:absolute;inset:0;opacity:0;cursor:pointer}.session strong{display:block;font-size:16px}.session span{display:block;margin-top:3px;color:var(--muted);font-size:11px}.session.done{border-color:#9dc9b8;background:var(--green-soft)}.session.done strong{color:var(--green)}
     .train-copy{padding:3px 18px 18px}.train-copy p{margin:8px 0;color:var(--muted);font-size:13px}.train-copy b{color:var(--ink)}
+    .fish-week{margin:0 18px 15px;padding-top:15px;border-top:1px solid var(--line)}.fish-week-title{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}.fish-week-title b{font-size:14px}.fish-week-title span{color:var(--muted);font-size:11px;text-align:right}
 
     .shopping{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px}
     .shop-item{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:13px;background:#f7f8f4}
@@ -117,14 +119,37 @@
     .rules{padding:8px 18px}.rule{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.rule:last-child{border-bottom:0}.rule i{font-style:normal;color:var(--orange);font-weight:850}.rule p{margin:0;font-size:13px}.rule small{display:block;margin-top:3px;color:var(--muted)}
     .faq details{border-bottom:1px solid var(--line)}.faq details:last-child{border-bottom:0}.faq summary{position:relative;padding:16px 42px 16px 18px;cursor:pointer;list-style:none;font-size:14px;font-weight:760}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"＋";position:absolute;right:18px;top:14px;color:var(--green);font-size:20px}.faq details[open] summary:after{content:"−"}.faq .answer{padding:0 18px 17px;color:var(--muted);font-size:13px}.faq .answer b{color:var(--ink)}
 
+    .goal-overview{overflow:hidden;background:linear-gradient(140deg,#103d38 0%,#1d5b51 62%,#2c7868 100%);color:#fff;border:0}
+    .goal-overview-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:20px}
+    .goal-overview h3{margin:0;font-size:21px;letter-spacing:-.02em}.goal-overview p{max-width:590px;margin:6px 0 0;color:rgba(255,255,255,.72);font-size:12px}
+    .goal-kicker{display:block;margin-bottom:5px;color:#f2bd8b;font-size:10px;font-weight:850;letter-spacing:.14em}
+    .goal-badge{flex:0 0 auto;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(255,255,255,.10);padding:9px 11px;text-align:right}.goal-badge b{display:block;font-size:18px}.goal-badge span{display:block;color:rgba(255,255,255,.65);font-size:10px}
+    .baseline-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,.13)}
+    .baseline-grid div{padding:14px 10px;border-right:1px solid rgba(255,255,255,.12);text-align:center}.baseline-grid div:last-child{border-right:0}.baseline-grid b{display:block;font-size:18px}.baseline-grid span{display:block;margin-top:3px;color:rgba(255,255,255,.60);font-size:10px}
+
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+    .milestone{position:relative;overflow:hidden;padding:17px 16px 15px;min-height:258px}
+    .milestone:before{content:"";position:absolute;left:0;top:0;width:5px;height:100%;background:var(--line)}
+    .milestone[data-tone="start"]:before{background:var(--blue)}.milestone[data-tone="shape"]:before{background:var(--orange)}.milestone[data-tone="abs"]:before{background:var(--green)}.milestone[data-tone="final"]:before{background:var(--purple)}
+    .milestone.done{border-color:#9dc9b8;background:#f1faf6}.milestone.done .milestone-title{text-decoration:line-through;opacity:.64}
+    .milestone-check{position:absolute;right:13px;top:13px;width:28px;height:28px}.milestone-check input{position:absolute;inset:0;opacity:0;cursor:pointer}.milestone-check span{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid #c4d0ca;border-radius:9px;color:transparent;background:#fff;font-weight:900}.milestone-check input:checked+span{border-color:var(--green);background:var(--green);color:#fff}
+    .milestone-step{color:var(--muted);font-size:10px;font-weight:850;letter-spacing:.12em}.milestone-title{margin:6px 38px 0 0;font-size:20px;line-height:1.1}.milestone-title small{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-weight:650}
+    .milestone-time{display:inline-block;margin-top:12px;border-radius:9px;background:#f2f4f1;padding:5px 8px;color:var(--deep);font-size:11px;font-weight:800}.milestone ul{margin:12px 0 0;padding-left:17px}.milestone li{margin:5px 0;color:var(--muted);font-size:11.5px}.milestone strong{color:var(--ink)}
+    .goal-panels{display:grid;grid-template-columns:1.15fr .85fr;gap:10px;margin-top:12px}.goal-panel{padding:17px}.goal-panel h3{margin:0;font-size:17px}.goal-panel>p{margin:4px 0 0;color:var(--muted);font-size:11.5px}
+    .signal-list{margin-top:12px}.signal{display:grid;grid-template-columns:10px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.signal i{width:10px;height:10px;margin-top:5px;border-radius:50%;background:var(--green)}.signal.warn i{background:var(--orange)}.signal.stop i{background:var(--danger)}.signal b{display:block;font-size:12.5px}.signal span{display:block;margin-top:2px;color:var(--muted);font-size:11px}
+    .metric-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.metric-list div{padding:11px;border-radius:13px;background:#f6f7f3}.metric-list b{display:block;font-size:12px}.metric-list span{display:block;margin-top:3px;color:var(--muted);font-size:10.5px}
+    .goal-note{margin-top:12px;padding:14px 16px;border:1px solid #eadfcf;border-radius:17px;background:#fff8ef;color:#705440;font-size:11.5px}.goal-note b{color:#8f562f}
+    .cardio-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 14px 14px}.cardio-row .session{text-align:left;padding:13px 14px}.cardio-row .session strong{font-size:14px}.cardio-row .session span{font-size:10.5px}
+
     footer{width:min(960px,calc(100% - 28px));margin:26px auto 4px;color:var(--muted);font-size:11px;text-align:center}
     .bottom-nav{position:fixed;z-index:50;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;grid-template-columns:repeat(6,1fr);width:min(520px,calc(100% - 28px));padding:6px;border:1px solid rgba(214,224,218,.9);border-radius:18px;background:rgba(255,254,250,.92);box-shadow:0 14px 35px rgba(24,48,45,.16);backdrop-filter:blur(16px)}
     .bottom-nav a{padding:8px 4px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:750;text-align:center;text-decoration:none}.bottom-nav a.active{background:var(--deep);color:#fff}
 
     @media(max-width:700px){
-      main{width:min(100% - 22px,620px)}.hero{padding-top:21px}.hero-top{gap:8px}.version{font-size:10px}.profile{gap:6px}.profile div{padding:11px 9px}.profile b{font-size:17px}
-      .mode-head{display:block}.segmented{margin-top:14px}.macro-summary{grid-template-columns:1fr 1fr}.macro-summary div:nth-child(2){border-right:0}.macro-summary div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      main{width:min(100% - 22px,620px)}.hero{padding-top:21px}.hero-top{gap:8px}.version{font-size:10px}.profile{grid-template-columns:1fr 1fr;gap:6px}.profile div{padding:11px 9px}.profile b{font-size:17px}
+      .mode-head{display:block}.segmented{margin-top:14px}.segmented button{padding:9px 7px;font-size:12px}.macro-summary{grid-template-columns:1fr 1fr}.macro-summary div:nth-child(2){border-right:0}.macro-summary div:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .meals{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.week-grid{grid-template-columns:1fr 1fr}.shopping{grid-template-columns:1fr}.section-title p{max-width:150px}.ratio-head{display:block}.ratio-formula{display:inline-block;margin-top:10px}.compare{grid-template-columns:1fr}
+      .goal-overview-top{display:block}.goal-badge{display:inline-block;margin-top:13px;text-align:left}.baseline-grid{grid-template-columns:1fr 1fr}.baseline-grid div{border-bottom:1px solid rgba(255,255,255,.12)}.baseline-grid div:nth-child(2n){border-right:0}.baseline-grid div:last-child{grid-column:1/-1;border-bottom:0}.roadmap{grid-template-columns:1fr}.milestone{min-height:0}.goal-panels{grid-template-columns:1fr}.metric-list{grid-template-columns:1fr}.cardio-row{grid-template-columns:1fr}
     }
     @media(min-width:900px){body{padding-bottom:30px}.bottom-nav{left:22px;top:50%;bottom:auto;transform:translateY(-50%);width:92px;grid-template-columns:1fr}.bottom-nav a{padding:12px 6px}}
     @media print{body{background:#fff;padding:0}.bottom-nav{display:none}.card{box-shadow:none}.mode-card{background:#fff;color:var(--ink);border:1px solid var(--line)}.date,.next span,.next small{color:var(--muted)}.date strong,.next b{color:var(--ink)}}
@@ -134,11 +159,11 @@
   <main>
     <header class="hero">
       <div class="hero-top">
-        <div><p class="eyebrow">Nutrition × Pull-up</p><h1>减脂执行清单</h1><p>不排时间，只看今天要完成的餐和训练。</p></div>
-        <span class="version">V23 · 训练日微调版</span>
+        <div><p class="eyebrow">Nutrition × Strength × Conditioning</p><h1>减脂增肌执行清单</h1><p>今天按清单执行，长期按阶段目标复盘。</p></div>
+        <span class="version">V25 · 腹肌阶段预期</span>
       </div>
       <div class="profile" aria-label="身体数据">
-        <div><b>170 cm</b><span>身高</span></div><div><b>75 kg</b><span>当前体重</span></div><div><b>70 kg</b><span>目标体重</span></div>
+        <div><b>170 cm</b><span>身高</span></div><div><b>74.85 kg</b><span>当前体重</span></div><div><b>100 cm</b><span>当前腰围</span></div><div><b>65 kg</b><span>阶段检查点</span></div>
       </div>
     </header>
 
@@ -147,10 +172,10 @@
         <div class="mode-head">
           <div class="date"><span id="dateText">今天</span><strong id="modeTitle">训练日</strong></div>
           <div class="segmented" role="group" aria-label="选择今天类型">
-            <button type="button" class="active" data-mode="train">训练日</button><button type="button" data-mode="rest">休息日</button>
+            <button type="button" class="active" data-mode="train">训练日</button><button type="button" data-mode="fish">三文鱼日</button><button type="button" data-mode="rest">休息日</button>
           </div>
         </div>
-        <div class="next" aria-live="polite"><span>下一项</span><b id="nextTask">先完成早餐</b><small id="progressText">0 / 6 已完成</small><div class="bar"><i id="progressBar"></i></div></div>
+        <div class="next" aria-live="polite"><span>下一项</span><b id="nextTask">先完成早餐</b><small id="progressText">0 / 5 已完成</small><div class="bar"><i id="progressBar"></i></div></div>
       </div>
     </section>
 
@@ -192,8 +217,8 @@
       </div>
       <p class="summary-note" id="summaryNote">训练日生米共180g；烹调不放油，混合坚果称重30g，全天脂肪约44g。</p>
 
-      <article class="fat-choice card" aria-label="选择今天的脂肪来源">
-        <div class="fat-choice-head"><h3>今天的脂肪来源</h3><span>OR · 每天只选一种</span></div>
+      <article class="fat-choice card" id="fatChoiceCard" aria-label="选择今天的脂肪来源">
+        <div class="fat-choice-head"><h3 id="fatChoiceHeading">今天的脂肪来源</h3><span id="fatChoiceBadge">OR · 每天只选一种</span></div>
         <div class="fat-options" role="radiogroup" aria-label="坚果或橄榄油二选一">
           <label class="fat-option active"><input type="radio" name="fatSource" value="nuts" checked><b>坚果方案</b><small id="nutsOptionDetail">训练日称重30g · 橄榄油0g</small></label>
           <label class="fat-option"><input type="radio" name="fatSource" value="oil"><b>橄榄油方案</b><small id="oilOptionDetail">训练日坚果0g · 早餐橄榄油15g</small></label>
@@ -211,8 +236,8 @@
 
         <article class="meal card" data-card="lunch">
           <div class="meal-top"><label class="check"><input type="checkbox" data-task="lunch" aria-label="午餐已完成"><span>✓</span></label><div><div class="meal-kicker">02 · 公司加热</div><h3 class="meal-name">午餐</h3></div></div>
-          <p class="food"><b>鸡胸肉200g（生重）</b><br>生米90g／熟饭约185–200g · 西兰花</p>
-          <div class="macros"><span class="macro p">蛋白 <b>约50g</b></span><span class="macro c">碳水 <b>约70g</b></span><span class="macro f">脂肪 <b id="lunchF">约6g</b></span></div>
+          <p class="food"><b id="lunchMeat">鸡胸肉200g（生重）</b><br>生米90g／熟饭约185–200g · 西兰花</p>
+          <div class="macros"><span class="macro p">蛋白 <b id="lunchP">约50g</b></span><span class="macro c">碳水 <b>约70g</b></span><span class="macro f">脂肪 <b id="lunchF">约6g</b></span></div>
           <div class="meal-tip" id="lunchTip">鸡胸不放油，空气炸锅做熟；隔天从公司冰箱取出彻底加热。</div>
         </article>
 
@@ -240,15 +265,16 @@
     <section id="ratio">
       <div class="section-title"><h2>一周四练配比</h2><p>力量60分钟<br>拉伸10＋有氧15</p></div>
       <div class="ratio-card card">
-        <div class="ratio-head"><div><h3>按当前体重 75kg 换算</h3><p>通用公式只作参照；当前执行教练给出的减脂阶段目标。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
+        <div class="ratio-head"><div><h3>按当前体重 74.85kg 换算</h3><p>通用公式只作参照；当前执行教练给出的减脂阶段目标。</p></div><span class="ratio-formula">碳水3 · 蛋白1.7 · 脂肪1 g/kg</span></div>
         <div class="ratio-grid">
-          <div class="ratio-item c"><b>225g</b><span>碳水 · 75×3</span></div>
-          <div class="ratio-item p"><b>128g</b><span>蛋白质 · 75×1.7</span></div>
-          <div class="ratio-item f"><b>75g</b><span>脂肪 · 75×1</span></div>
+          <div class="ratio-item c"><b>≈225g</b><span>碳水 · 74.85×3</span></div>
+          <div class="ratio-item p"><b>≈127g</b><span>蛋白质 · 74.85×1.7</span></div>
+          <div class="ratio-item f"><b>≈75g</b><span>脂肪 · 74.85×1</span></div>
         </div>
         <div class="compare">
           <div><b>训练日 · 坚果方案</b><span>约蛋白160g · 碳水208g · 脂肪44g；早餐用厨房秤称混合坚果30g。</span></div>
           <div><b>训练日 · 橄榄油方案</b><span>约蛋白155g · 碳水200g · 脂肪43g；早餐随餐摄入橄榄油15g。</span></div>
+          <div><b>三文鱼训练日 · 不额外补脂肪</b><span>约蛋白145g · 碳水200g · 脂肪56g；午餐200g三文鱼替换鸡胸，当天坚果和橄榄油都不吃。</span></div>
         </div>
       </div>
     </section>
@@ -260,6 +286,16 @@
         <article class="step card"><span class="no">2</span><h3>一次煮两顿</h3><p>生米共180g，煮好平均分两份；鸡胸、里脊只放生抽，用空气炸锅做熟；西兰花直接焯水。</p></article>
         <article class="step card"><span class="no">3</span><h3>分盒冷藏</h3><p>午餐盒装鸡胸，晚餐盒装里脊。浅盒尽快冷藏，隔天到公司继续放冰箱。</p></article>
       </div>
+      <details class="recipe card" open>
+        <summary>三文鱼400g · 一次做好两顿</summary>
+        <ul>
+          <li>每周1小袋400g，冷藏解冻后用空气炸锅一次做熟，分成2个200g浅玻璃盒。</li>
+          <li>优先安排在连续两个训练日的午餐，每次用200g三文鱼替换200g鸡胸肉。</li>
+          <li>两个三文鱼日都不吃坚果、不喝橄榄油；米饭、西兰花、晚餐里脊和练后餐不变。</li>
+          <li>做熟后2小时内冷藏，两份优先在48小时内吃完；若两个训练日不相邻，第2份冷却后直接冷冻，食用前一天移到冷藏。</li>
+          <li>到公司立即放冰箱，微波时盒盖留排气口，加热到中心热透。</li>
+        </ul>
+      </details>
       <details class="recipe card">
         <summary>腌料与操作 · 展开查看</summary>
         <ul>
@@ -281,11 +317,119 @@
           <label class="session"><input type="checkbox" data-session="3"><strong>第3练</strong><span>力量60＋拉伸10＋有氧15</span></label>
           <label class="session"><input type="checkbox" data-session="4"><strong>第4练</strong><span>力量60＋拉伸10＋有氧15</span></label>
         </div>
+        <div class="cardio-row">
+          <label class="session"><input type="checkbox" data-week-cardio="ride"><strong>周六 · 可选骑行55–70分钟</strong><span>不是硬性任务；有时间、天气和恢复都合适再骑。骑时可做4–5组受控冲刺，其余时间稳定慢骑。</span></label>
+          <label class="session"><input type="checkbox" data-week-cardio="rest"><strong>周日 · 完整休息</strong><span>最多轻松散步或拉伸，不追加第二次高强度骑行。</span></label>
+        </div>
+        <div class="fish-week">
+          <div class="fish-week-title"><b>本周三文鱼 · 400g</b><span>一袋分两盒<br>各替换一顿鸡胸</span></div>
+          <div class="week-grid">
+            <label class="session"><input type="checkbox" data-fish-session="1"><strong>第1顿 · 200g</strong><span>训练日午餐，当天不补坚果/橄榄油</span></label>
+            <label class="session"><input type="checkbox" data-fish-session="2"><strong>第2顿 · 200g</strong><span>另一个训练日午餐</span></label>
+          </div>
+        </div>
         <div class="train-copy">
-          <p><b>目标：</b>减脂，同时练出第一个标准引体向上。训练动作、热身和收操按私教当日安排执行。</p>
-          <p><b>饮食切换：</b>当天完成力量训练，就选“训练日”并保留练后餐；目前不安排游泳。没训练就选“休息日”，其余三餐不变。</p>
+          <p><b>目标：</b>在减脂过程中保住并增加肌肉，练出第一个标准引体向上，逐步让腹部轮廓显现。训练动作、热身和收操按私教当日安排执行。</p>
+          <p><b>手表记录：</b>从热身开始直接选择“功能性力量训练”，热身、正式力量和组间休息记录为同一节；力量结束后步行再切换运动类型。</p>
+          <p><b>饮食切换：</b>普通力量日选“训练日”；吃三文鱼的两天选“三文鱼日”；没训练选“休息日”。两种训练日都保留练后餐。</p>
         </div>
       </div>
+    </section>
+
+    <section id="goals">
+      <div class="section-title"><h2>预期 · 八块腹肌路线</h2><p>看趋势和阶段<br>不赌单日体重</p></div>
+
+      <article class="goal-overview card">
+        <div class="goal-overview-top">
+          <div><span class="goal-kicker">2026-10 · APPLE 健康数据基线</span><h3>训练量已经够，下一阶段拼稳定和保肌</h3><p>以下预期按170cm、74.85kg、腰围100cm和当前执行速度估算；体脂秤不参与判断。腹部和后背是主要储脂区，通常也是最后变清晰的位置。</p></div>
+          <div class="goal-badge"><b>−3.65kg</b><span>37天 · 约0.69kg／周</span></div>
+        </div>
+        <div class="baseline-grid" aria-label="最近训练基线">
+          <div><b>17次</b><span>近28天完整训练</span></div>
+          <div><b>≈71分钟</b><span>平均单次训练</span></div>
+          <div><b>8,636步</b><span>最近日均步数</span></div>
+          <div><b>4次／周</b><span>固定力量频率</span></div>
+          <div><b>可选加分</b><span>周六有条件再骑</span></div>
+        </div>
+      </article>
+
+      <div class="roadmap" aria-label="减脂阶段预期">
+        <article class="milestone card" data-tone="start" data-milestone-card="140">
+          <label class="milestone-check" title="标记此阶段已完成"><input type="checkbox" data-milestone="140" aria-label="140斤阶段已完成"><span>✓</span></label>
+          <div class="milestone-step">阶段 01 · 先缩腹</div>
+          <h3 class="milestone-title">70kg<small>约140斤</small></h3>
+          <span class="milestone-time">预计从现在起 2–3个月</span>
+          <ul>
+            <li><strong>变化：</strong>腰带和上衣更松，正侧面肚子明显缩小。</li>
+            <li><strong>腹肌：</strong>大概率还不清楚，不因没出腹肌而继续猛砍饮食。</li>
+            <li><strong>检查：</strong>腰围是否稳定下降，目标先跨过95cm附近。</li>
+          </ul>
+        </article>
+
+        <article class="milestone card" data-tone="shape" data-milestone-card="136">
+          <label class="milestone-check" title="标记此阶段已完成"><input type="checkbox" data-milestone="136" aria-label="136斤阶段已完成"><span>✓</span></label>
+          <div class="milestone-step">阶段 02 · 轮廓出现</div>
+          <h3 class="milestone-title">66–68kg<small>约132–136斤</small></h3>
+          <span class="milestone-time">预计从现在起 3–5个月</span>
+          <ul>
+            <li><strong>变化：</strong>侧腰和后背变薄，腹部褶皱减少。</li>
+            <li><strong>腹肌：</strong>光线好、主动收紧时可能出现上腹轮廓。</li>
+            <li><strong>检查：</strong>腰围大致向85–90cm靠近，拍固定角度照片比较。</li>
+          </ul>
+        </article>
+
+        <article class="milestone card" data-tone="abs" data-milestone-card="130">
+          <label class="milestone-check" title="标记此阶段已完成"><input type="checkbox" data-milestone="130" aria-label="130斤阶段已完成"><span>✓</span></label>
+          <div class="milestone-step">阶段 03 · 正式验收</div>
+          <h3 class="milestone-title">63–65kg<small>约126–130斤</small></h3>
+          <span class="milestone-time">预计从现在起 5–8个月</span>
+          <ul>
+            <li><strong>变化：</strong>腹部、侧腰和后背脂肪大幅减少，体型偏精瘦。</li>
+            <li><strong>腹肌：</strong>比较可能出现明显四块或六块。</li>
+            <li><strong>决策：</strong>先在65kg拍照、量腰围；是否继续减，不提前决定。</li>
+          </ul>
+        </article>
+
+        <article class="milestone card" data-tone="final" data-milestone-card="124">
+          <label class="milestone-check" title="标记此阶段已完成"><input type="checkbox" data-milestone="124" aria-label="124斤阶段已完成"><span>✓</span></label>
+          <div class="milestone-step">阶段 04 · 终极目标</div>
+          <h3 class="milestone-title">60–63kg<small>约120–126斤</small></h3>
+          <span class="milestone-time">预计从现在起 7–12个月</span>
+          <ul>
+            <li><strong>变化：</strong>下腹皮下脂肪继续变薄，腹肌分割更深。</li>
+            <li><strong>腹肌：</strong>有八块先天结构的人，才可能完整显现。</li>
+            <li><strong>底线：</strong>如果65kg已经足够清晰，不为了数字继续减到60kg。</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="goal-panels">
+        <article class="goal-panel card">
+          <h3>每周只看这五个指标</h3>
+          <p>体脂秤忽略；所有测量尽量在相同条件下完成。</p>
+          <div class="metric-list">
+            <div><b>晨起体重7日均值</b><span>每天记录，周与周比较，不评价单日涨跌。</span></div>
+            <div><b>腰围每周1次</b><span>晨起、自然呼气、同一位置，不收腹。</span></div>
+            <div><b>照片每2周1次</b><span>正面／侧面／背面，同光线、同距离。</span></div>
+            <div><b>主要动作表现</b><span>重量、次数或动作质量至少有一项维持或进步。</span></div>
+            <div><b>恢复状态</b><span>睡眠、食欲、排便、腿部疲劳和训练意愿。</span></div>
+            <div><b>骑行属于可选项</b><span>骑了就按结构完成；没骑不补课，不影响本周达标。</span></div>
+          </div>
+        </article>
+
+        <article class="goal-panel card">
+          <h3>什么时候保持，什么时候调整</h3>
+          <p>一次只改一个变量，至少观察两周。</p>
+          <div class="signal-list">
+            <div class="signal"><i></i><div><b>绿色 · 原样继续</b><span>每周下降0.4–0.7kg，腰围下降，力量和睡眠稳定。</span></div></div>
+            <div class="signal warn"><i></i><div><b>黄色 · 不再加码</b><span>连续两周每周下降超过0.75kg，或连续两次力量明显下降：不加有氧、不再减米饭。</span></div></div>
+            <div class="signal warn"><i></i><div><b>停滞 · 只改一项</b><span>连续三周体重均值和腰围都不动：若时间允许，可增加一次30–45分钟轻松骑；或每日减少100–150千卡，二选一。</span></div></div>
+            <div class="signal stop"><i></i><div><b>红色 · 先恢复</b><span>持续失眠、明显乏力、异常心悸、胸痛或头晕：停止冲刺并评估身体状况。</span></div></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="goal-note"><b>预期不是保证：</b>体重与腰围不会按固定比例下降；腹部和后背可能晚于四肢变化。八块腹肌还受腹直肌先天分块影响。阶段时间按每周四次力量和当前饮食执行估算，不把周六骑行算成前提；骑行只是有条件时的加分项。</div>
     </section>
 
     <section id="shopping">
@@ -293,10 +437,11 @@
       <div class="card">
         <div class="shopping">
           <div class="shop-item"><span>鸡蛋</span><b>20个</b></div><div class="shop-item"><span>玉米</span><b>5根</b></div>
-          <div class="shop-item"><span>鸡胸肉</span><b>1kg</b></div><div class="shop-item"><span>猪里脊</span><b>1kg</b></div>
+          <div class="shop-item"><span>鸡胸肉</span><b>600g</b></div><div class="shop-item"><span>三文鱼</span><b>400g／2顿</b></div>
+          <div class="shop-item"><span>猪里脊</span><b>1kg</b></div>
           <div class="shop-item"><span>生米</span><b>约900g</b></div><div class="shop-item"><span>西兰花</span><b>约1.5kg</b></div>
           <div class="shop-item"><span>香蕉</span><b>训练几天买几根</b></div><div class="shop-item"><span>蛋白粉</span><b>训练日40g</b></div>
-          <div class="shop-item"><span>混合坚果 · 方案A</span><b>训练日30g／天</b></div><div class="shop-item"><span>橄榄油 · 方案B</span><b>训练日15g／天</b></div>
+          <div class="shop-item"><span>混合坚果 · 方案A</span><b>普通训练日30g</b></div><div class="shop-item"><span>橄榄油 · 方案B</span><b>普通训练日15g</b></div>
           <div class="shop-item"><span>肌酸</span><b>42g／周</b></div>
         </div>
         <div class="shopping-foot">周末吃家常菜，不强行复制工作日菜单；油大的菜少配一点米饭即可，不做补偿性断食。</div>
@@ -307,7 +452,7 @@
       <div class="section-title"><h2>只记四条</h2><p>执行优先<br>不追求小数</p></div>
       <div class="rules card">
         <div class="rule"><i>01</i><p><b>全天生米180g。</b><small>午餐、晚餐各90g；生米180g不是碳水180g，熟饭重量随含水量变化。</small></p></div>
-        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>训练日只选一种：称重坚果30g，或者早餐橄榄油15g；休息日原方案不变。</small></p></div>
+        <div class="rule"><i>02</i><p><b>坚果和橄榄油是 OR。</b><small>普通训练日只选一种：称重坚果30g，或早餐橄榄油15g；三文鱼日两种都不吃。</small></p></div>
         <div class="rule"><i>03</i><p><b>休息日只删除练后餐。</b><small>早餐、午餐、晚餐和肌酸都照旧。</small></p></div>
         <div class="rule"><i>04</i><p><b>先观察两周，不再继续削。</b><small>看晨起体重7日均值；若仍每周下降超过0.75kg或力量下滑，反馈教练，不再减米饭或脂肪。</small></p></div>
       </div>
@@ -316,6 +461,9 @@
     <section id="faq">
       <div class="section-title"><h2>FAQ · 已确认口径</h2><p>以后有争议<br>先查这里</p></div>
       <div class="faq card">
+        <details open><summary>一周的400g三文鱼怎么吃？</summary><div class="answer"><b>一次做熟，分成2份、每份200g，分别放到两个训练日的午餐。</b>每顿替换200g鸡胸肉，当天不再吃坚果或橄榄油；晚餐里脊、米饭、西兰花和练后餐不变。两顿合计400g后不再把鱼油列为固定项。</div></details>
+        <details><summary>三文鱼日为什么取消坚果和橄榄油？</summary><div class="answer">这款三文鱼200g约含32.8g脂肪，已经替代了当天的主动补脂来源。取消坚果/橄榄油后，全天仍约蛋白145g、碳水200g、脂肪56g，不会影响减脂期的蛋白质下限。</div></details>
+        <details><summary>做好的三文鱼可以冷藏到第二天吗？</summary><div class="answer">可以。用浅玻璃盒分装，做熟后2小时内冷藏，两份优先在48小时内吃完。若两个训练日不相邻，第2盒冷却后直接冷冻，前一天移至冷藏解冻。早上保持冷藏运输，到公司立即放冰箱；微波时留排气口，加热到中心热透。</div></details>
         <details open><summary>训练日坚果和橄榄油怎么二选一？</summary><div class="answer"><b>方案A：混合坚果称重30g、橄榄油0g；方案B：混合坚果0g、早餐橄榄油15g。</b>训练日脂肪约43–44g，只作小幅下调；休息日原来的40g坚果或20g橄榄油方案不变。</div></details>
         <details><summary>训练日早餐橄榄油15g怎么吃、怎么称？</summary><div class="answer">早餐开始前，把小杯或小碟放在厨房秤上归零，称15g；随鸡蛋、玉米分几口摄入，或淋在食物上。不要空腹一口闷，午餐和晚餐不带油、不加油。休息日仍按原来的20g执行。</div></details>
         <details><summary>怎样从坚果逐步换成橄榄油？</summary><div class="answer">按“天数”过渡，不在同一天混搭。第一周每周选1–2天橄榄油方案，其余天选坚果方案；第二周提高到3–4天；适应后再全部切换。页面会记住上一次选择，每天确认一次即可。</div></details>
@@ -327,17 +475,18 @@
         <details open><summary>“生米180g”和“碳水180g”是一回事吗？</summary><div class="answer"><b>不是。</b>当前是把每天生米从210g减到180g，即午、晚餐各90g。180g生米本身约含140g碳水，再加玉米和香蕉，全天主要碳水约200g。相比原计划少30g生米，约少23g碳水、90千卡。</div></details>
         <details><summary>为什么蛋白粉改成40g？</summary><div class="answer">40g说的是<b>粉末重量，不是40g纯蛋白</b>。按常见75%–85%蛋白含量计算，约提供30–34g蛋白质；在减少碳水和总热量时，有助于维持全天蛋白摄入、饱腹感和训练恢复。最终以你手里产品的营养成分表换算。</div></details>
         <details><summary>当前碳水和通用参考225g冲突吗？</summary><div class="answer">不冲突。225g来自“体重×3”的通用起始参考；当前简易估算约210g，是教练结合减脂阶段给出的执行安排。生米仍是每天180g；坚果本身也含少量碳水，因此更新后的全天数字会比只数玉米、米饭和香蕉略高。</div></details>
-        <details><summary>什么情况要及时反馈教练？</summary><div class="answer">你从78.5kg到75kg用了4周，平均每周约下降0.88kg，已经接近偏快区间。若接下来连续两周的晨起7日均值仍每周下降超过0.75kg，或连续两次训练明显掉力量、持续强烈饥饿、睡眠和恢复变差，应反馈教练；不要再自行减米饭或脂肪。</div></details>
+        <details><summary>周六骑行必须完成吗？</summary><div class="answer"><b>不必须，也不属于每周达标条件。</b>四次力量训练和当前饮食才是主线；周六只有在时间、天气、腿部恢复都合适时再骑。没骑不用补课，页面里的腹肌阶段时间也没有把骑行当成固定前提。</div></details>
+        <details><summary>什么情况要及时反馈教练？</summary><div class="answer">你从78.5kg到74.85kg用了约37天，平均每周约下降0.69kg，目前速度有效但已经不慢。若接下来连续两周的晨起7日均值仍每周下降超过0.75kg，或连续两次训练明显掉力量、持续强烈饥饿、睡眠和恢复变差，应反馈教练；不要再自行减米饭或脂肪。</div></details>
         <details><summary>生抽和西兰花要不要每天计算？</summary><div class="answer">不用。鸡胸和里脊只放生抽调味，进空气炸锅时不放油；生抽基本不贡献脂肪。选择橄榄油方案时，训练日早餐称15g，休息日称20g；页面不为每勺生抽或每朵西兰花修改表格。</div></details>
         <details><summary>休息日怎么吃？</summary><div class="answer">早餐、午餐、晚餐完全照旧，饭后肌酸6g照旧；只删除蛋白粉加香蕉这一份练后餐。</div></details>
       </div>
     </section>
   </main>
 
-  <footer>V23 · 训练日坚果30g OR 早餐橄榄油15g；休息日原方案不变。完成状态只保存在当前浏览器。</footer>
+  <footer>V25 · 新增腹肌阶段预期与训练趋势；每周四次力量是主线，周六骑行仅为可选加分。完成状态只保存在当前浏览器。</footer>
 
   <nav class="bottom-nav" aria-label="页面导航">
-    <a href="#today" class="active">今天</a><a href="#water">饮水</a><a href="#meals">每顿</a><a href="#ratio">配比</a><a href="#prep">备餐</a><a href="#faq">问答</a>
+    <a href="#today" class="active">今天</a><a href="#meals">每顿</a><a href="#training">训练</a><a href="#goals">目标</a><a href="#prep">备餐</a><a href="#faq">问答</a>
   </nav>
 
   <script>
@@ -349,6 +498,7 @@
     var modeKey='fitness-v22-mode-'+dateKey;
     var taskPrefix='fitness-v22-task-'+dateKey+'-';
     var mode=localStorage.getItem(modeKey)||'train';
+    if(['train','fish','rest'].indexOf(mode)===-1)mode='train';
     var buttons=Array.prototype.slice.call(document.querySelectorAll('[data-mode]'));
     var tasks=Array.prototype.slice.call(document.querySelectorAll('[data-task]'));
     var fatSourceKey='fitness-fat-source';
@@ -396,29 +546,38 @@
 
     function updateNutrition(){
       var oil=fatSource==='oil';
-      var train=mode==='train';
-      document.getElementById('sumP').textContent=oil?(train?'≈155g':'≈125g'):(train?'≈160g':'≈130g');
-      document.getElementById('sumC').textContent=oil?(train?'≈200g':'≈170g'):(train?'≈208g':'≈180g');
-      document.getElementById('sumF').textContent=oil?(train?'≈43g':'≈46g'):(train?'≈44g':'≈47g');
-      document.getElementById('sumKcal').textContent=oil?(train?'≈1810':'≈1580'):(train?'≈1870':'≈1650');
-      document.getElementById('nutsOptionDetail').textContent=train?'训练日称重30g · 橄榄油0g':'休息日称重40g · 橄榄油0g';
-      document.getElementById('oilOptionDetail').textContent=train?'训练日坚果0g · 早餐橄榄油15g':'休息日坚果0g · 早餐橄榄油20g';
-      if(train){
+      var fish=mode==='fish';
+      var train=mode!=='rest';
+      document.getElementById('fatChoiceCard').classList.toggle('is-paused',fish);
+      fatInputs.forEach(function(input){input.disabled=fish;});
+      document.getElementById('fatChoiceHeading').textContent=fish?'三文鱼日已有足够脂肪':'今天的脂肪来源';
+      document.getElementById('fatChoiceBadge').textContent=fish?'今天不额外补':'OR · 每天只选一种';
+      document.getElementById('sumP').textContent=fish?'≈145g':(oil?(train?'≈155g':'≈125g'):(train?'≈160g':'≈130g'));
+      document.getElementById('sumC').textContent=fish?'≈200g':(oil?(train?'≈200g':'≈170g'):(train?'≈208g':'≈180g'));
+      document.getElementById('sumF').textContent=fish?'≈56g':(oil?(train?'≈43g':'≈46g'):(train?'≈44g':'≈47g'));
+      document.getElementById('sumKcal').textContent=fish?'≈1880':(oil?(train?'≈1810':'≈1580'):(train?'≈1870':'≈1650'));
+      document.getElementById('nutsOptionDetail').textContent=fish?'三文鱼日暂停':(train?'训练日称重30g · 橄榄油0g':'休息日称重40g · 橄榄油0g');
+      document.getElementById('oilOptionDetail').textContent=fish?'三文鱼日暂停':(train?'训练日坚果0g · 早餐橄榄油15g':'休息日坚果0g · 早餐橄榄油20g');
+      if(fish){
+        document.getElementById('summaryNote').textContent='三文鱼训练日：午餐200g三文鱼替换鸡胸；坚果0g、橄榄油0g，其他食物不变。';
+      }else if(train){
         document.getElementById('summaryNote').textContent=oil?'训练日选择橄榄油方案：坚果0g，早餐随餐摄入橄榄油15g；午晚餐不带油、不加油，全天脂肪约43g。':'训练日选择坚果方案：早餐称重混合坚果30g，午晚餐不额外加油；全天脂肪约44g。';
       }else{
         document.getElementById('summaryNote').textContent=oil?'休息日删除练后餐；坚果0g、早餐橄榄油20g，约蛋白125g、碳水170g、脂肪46g。':'休息日删除练后餐；坚果40g、橄榄油0g，约蛋白130g、碳水180g、脂肪47g。';
       }
-      document.getElementById('breakfastFatSource').textContent=oil?'橄榄油'+(train?'15g':'20g')+'（不吃坚果）':'山姆混合坚果'+(train?'30g':'40g')+'（称重）';
-      document.getElementById('breakfastP').textContent=oil?'约24g':(train?'约28g':'约30g');
-      document.getElementById('breakfastC').textContent=oil?'约30g':(train?'约38g':'约40g');
-      document.getElementById('breakfastF').textContent=oil?(train?'约27g':'约32g'):(train?'约28g':'约33g');
-      document.getElementById('lunchF').textContent='约6g';
+      document.getElementById('breakfastFatSource').textContent=fish?'三文鱼日不吃坚果/橄榄油':(oil?'橄榄油'+(train?'15g':'20g')+'（不吃坚果）':'山姆混合坚果'+(train?'30g':'40g')+'（称重）');
+      document.getElementById('breakfastP').textContent=fish?'约24g':(oil?'约24g':(train?'约28g':'约30g'));
+      document.getElementById('breakfastC').textContent=fish?'约30g':(oil?'约30g':(train?'约38g':'约40g'));
+      document.getElementById('breakfastF').textContent=fish?'约12g':(oil?(train?'约27g':'约32g'):(train?'约28g':'约33g'));
+      document.getElementById('lunchMeat').textContent=fish?'三文鱼200g（生重）':'鸡胸肉200g（生重）';
+      document.getElementById('lunchP').textContent=fish?'约40g':'约50g';
+      document.getElementById('lunchF').textContent=fish?'约33g':'约6g';
       document.getElementById('dinnerF').textContent='约8g';
-      document.getElementById('breakfastTip').textContent=oil?'今天不吃坚果；橄榄油'+(train?'15g':'20g')+'随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'用厨房秤称重'+(train?'30g':'40g')+'，不按颗数估算；坚果种类和大小不同，颗数会明显变化。';
-      document.getElementById('lunchTip').textContent=oil?'鸡胸只放生抽，空气炸锅不放油；公司不带橄榄油。':'鸡胸只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
-      document.getElementById('dinnerTip').textContent=oil?'里脊只放生抽，空气炸锅不放油；公司不带橄榄油。':'里脊只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。';
-      document.getElementById('fatChoiceTitle').textContent=oil?'今天早餐用橄榄油'+(train?'15g':'20g'):'早餐称重混合坚果'+(train?'30g':'40g');
-      document.getElementById('fatChoiceAction').textContent=oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':(train?'训练日':'休息日')+'以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。';
+      document.getElementById('breakfastTip').textContent=fish?'今天午餐的三文鱼已提供足够脂肪；早餐不再补坚果或橄榄油。':(oil?'今天不吃坚果；橄榄油'+(train?'15g':'20g')+'随鸡蛋和玉米在早餐摄入，不要空腹一口闷。':'用厨房秤称重'+(train?'30g':'40g')+'，不按颗数估算；坚果种类和大小不同，颗数会明显变化。');
+      document.getElementById('lunchTip').textContent=fish?'一袋400g一次做熟后分两盒；今天吃其中200g，到公司立即冷藏并彻底复热。':(oil?'鸡胸只放生抽，空气炸锅不放油；公司不带橄榄油。':'鸡胸只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。');
+      document.getElementById('dinnerTip').textContent=fish?'晚餐仍是里脊200g；三文鱼只替换今天的鸡胸午餐，不放额外用油。':(oil?'里脊只放生抽，空气炸锅不放油；公司不带橄榄油。':'里脊只放生抽，空气炸锅不放油；今天执行坚果方案，不再额外加油。');
+      document.getElementById('fatChoiceTitle').textContent=fish?'今天坚果0g · 橄榄油0g':(oil?'今天早餐用橄榄油'+(train?'15g':'20g'):'早餐称重混合坚果'+(train?'30g':'40g'));
+      document.getElementById('fatChoiceAction').textContent=fish?'三文鱼200g约含32.8g脂肪，今天不再额外补脂肪。':(oil?'坚果不吃；随鸡蛋、玉米在早餐摄入，午晚餐不带油、不加油。':(train?'训练日':'休息日')+'以厨房秤读数为准，不按颗数估算；午晚餐不额外加油。');
     }
     function setFatSource(next){
       fatSource=next==='oil'?'oil':'nuts';
@@ -428,12 +587,12 @@
     }
     fatInputs.forEach(function(input){input.addEventListener('change',function(){if(input.checked)setFatSource(input.value);});});
 
-    function visibleTasks(){return tasks.filter(function(input){return !input.closest('.training-only')||mode==='train';});}
+    function visibleTasks(){return tasks.filter(function(input){return !input.closest('.training-only')||mode!=='rest';});}
     function setMode(next){
       mode=next;localStorage.setItem(modeKey,mode);
       buttons.forEach(function(button){button.classList.toggle('active',button.dataset.mode===mode);});
-      document.querySelectorAll('.training-only').forEach(function(el){el.hidden=mode!=='train';});
-      document.getElementById('modeTitle').textContent=mode==='train'?'训练日':'休息日';
+      document.querySelectorAll('.training-only').forEach(function(el){el.hidden=mode==='rest';});
+      document.getElementById('modeTitle').textContent=mode==='fish'?'三文鱼训练日':(mode==='train'?'训练日':'休息日');
       updateNutrition();
       update();
     }
@@ -458,11 +617,26 @@
       input.checked=localStorage.getItem(weekKey+input.dataset.session)==='1';input.closest('.session').classList.toggle('done',input.checked);
       input.addEventListener('change',function(){localStorage.setItem(weekKey+input.dataset.session,input.checked?'1':'0');input.closest('.session').classList.toggle('done',input.checked);});
     });
+    document.querySelectorAll('[data-week-cardio]').forEach(function(input){
+      var key=weekKey+'bonus-'+input.dataset.weekCardio;
+      input.checked=localStorage.getItem(key)==='1';input.closest('.session').classList.toggle('done',input.checked);
+      input.addEventListener('change',function(){localStorage.setItem(key,input.checked?'1':'0');input.closest('.session').classList.toggle('done',input.checked);});
+    });
+    var fishWeekKey='fitness-v24-fish-'+monday.getFullYear()+'-'+String(monday.getMonth()+1).padStart(2,'0')+'-'+String(monday.getDate()).padStart(2,'0')+'-';
+    document.querySelectorAll('[data-fish-session]').forEach(function(input){
+      input.checked=localStorage.getItem(fishWeekKey+input.dataset.fishSession)==='1';input.closest('.session').classList.toggle('done',input.checked);
+      input.addEventListener('change',function(){localStorage.setItem(fishWeekKey+input.dataset.fishSession,input.checked?'1':'0');input.closest('.session').classList.toggle('done',input.checked);});
+    });
+    document.querySelectorAll('[data-milestone]').forEach(function(input){
+      var key='fitness-v25-milestone-'+input.dataset.milestone;
+      input.checked=localStorage.getItem(key)==='1';input.closest('[data-milestone-card]').classList.toggle('done',input.checked);
+      input.addEventListener('change',function(){localStorage.setItem(key,input.checked?'1':'0');input.closest('[data-milestone-card]').classList.toggle('done',input.checked);});
+    });
 
     var nav=Array.prototype.slice.call(document.querySelectorAll('.bottom-nav a'));
     if('IntersectionObserver' in window){
       var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){nav.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id);});}});},{rootMargin:'-20% 0px -65% 0px'});
-      ['today','water','meals','ratio','prep','faq'].forEach(function(id){var el=document.getElementById(id);if(el)observer.observe(el);});
+      ['today','meals','training','goals','prep','faq'].forEach(function(id){var el=document.getElementById(id);if(el)observer.observe(el);});
     }
     setFatSource(fatSource);
     setMode(mode);
